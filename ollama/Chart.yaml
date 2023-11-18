@@ -1,0 +1,24 @@
+apiVersion: v2
+name: ollama
+description: Get up and running with large language models locally.
+
+type: application
+
+version: 0.1.0
+
+appVersion: "0.1.10"
+
+kubeVersion: "^1.13.0-0"
+home: https://ollama.ai/
+icon: https://ollama.ai/public/ollama.png
+keywords:
+  - ai
+  - llm
+  - llama
+  - mistral
+sources:
+  - https://github.com/jmorganca/ollama
+  - https://github.com/otwld/ollama-helm
+maintainers:
+  - name: Outworld
+    email: tech@outworld.fr
