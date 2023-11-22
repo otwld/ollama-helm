@@ -8,11 +8,17 @@ image:
   repository: ollama/ollama
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "0.1.10"
+  tag: "0.1.11"
 
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
+
+ollama:
+  # If you want to use GPU, set it to true
+  gpu:
+    enable: false
+    nbrGpu: 1
 
 serviceAccount:
   # Specifies whether a service account should be created
@@ -42,6 +48,7 @@ securityContext: {}
 service:
   type: ClusterIP
   port: 11434
+
 
 ingress:
   enabled: true

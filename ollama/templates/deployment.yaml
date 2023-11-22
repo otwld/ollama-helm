@@ -48,13 +48,30 @@ spec:
             httpGet:
               path: /
               port: http
+          env:
+          {{- if .Values.ollama.gpu.enable }}
+            - name: PATH
+              value: /usr/local/nvidia/bin:/usr/local/nvidia/lib64:/usr/bin:/usr/sbin:/bin:/sbin
+            - name: LD_LIBRARY_PATH
+              value: /usr/local/nvidia/lib64
+          {{- end}}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+            {{- if .Values.ollama.gpu.enable }}
+            limits:
+              nvidia.com/gpu: "{{ .Values.ollama.gpu.nbrGpu }}:{{ .Values.ollama.gpu.nbrGpu | default 1 }}"
+            {{- end}}
           {{- with .Values.volumeMounts }}
           volumeMounts:
             {{- toYaml . | nindent 12 }}
           {{- end }}
       {{- with .Values.volumes }}
+      {{- if .Values.ollama.gpu.enable }}
+      tolerations:
+        - key: nvidia.com/gpu
+          operator: Exists
+          effect: NoSchedule
+      {{- end }}
       volumes:
         {{- toYaml . | nindent 8 }}
       {{- end }}

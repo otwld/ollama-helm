@@ -6,7 +6,7 @@ type: application
 
 version: 0.1.0
 
-appVersion: "0.1.10"
+appVersion: "0.1.11"
 
 kubeVersion: "^1.13.0-0"
 home: https://ollama.ai/
