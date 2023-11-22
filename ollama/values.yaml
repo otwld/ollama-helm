@@ -89,7 +89,7 @@ volumeMounts: []
 #   readOnly: true
 
 persistentVolume:
-  enabled: true
+  enabled: false
 
   ## Ollama server data Persistent Volume access modes
   ## Must match those of existing PV or dynamic provisioner
