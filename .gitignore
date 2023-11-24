@@ -10,6 +10,7 @@ node_modules
 
 # IDEs and editors
 /.idea
+.cr-release-packages
 .project
 .classpath
 .c9/
