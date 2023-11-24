@@ -8,7 +8,11 @@ version: 0.1.0
 
 appVersion: "0.1.11"
 
-kubeVersion: "^1.13.0-0"
+annotations:
+  artifacthub.io/category: ai-machine-learning
+
+
+kubeVersion: "^1.16.0-0"
 home: https://ollama.ai/
 icon: https://ollama.ai/public/ollama.png
 keywords:

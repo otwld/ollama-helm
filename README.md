@@ -4,66 +4,45 @@
 
 This Chart is for installing [Ollama](https://github.com/jmorganca/ollama).
 
-## Installing Ollama
+## Requirements
 
-See the [drone chart installation guide](./docs/install.md).
+Kubernetes : `>= 1.16.0-0`
 
-## Configuring Ollama
+## Install Ollama chart
 
-### GPU
-
-The drone server deployment can be used to leverage the Kubernetes secrets to configure values like `DRONE_RPC_SECRET` or other source code repository e.g. `DRONE_GITHUB_CLIENT_ID`, `DRONE_GITHUB_CLIENT_SECRET`. Refer to the [Drone server reference](https://docs.drone.io/installation/reference/) for a more complete list of options.
-
-Here is an example that creates the secrets from environment variables `DRONE_RPC_SECRET`, `DRONE_GITHUB_CLIENT_ID` and `DRONE_GITHUB_CLIENT_SECRET`,
-
-```shell
-kubectl create secret my-drone-secret generic \
-  --from-literal=DRONE_RPC_SECRET=$DRONE_RPC_SECRET \
-  --from-literal=DRONE_GITHUB_CLIENT_ID=$DRONE_GITHUB_CLIENT_ID \
-  --from-literal=DRONE_GITHUB_CLIENT_SECRET=$DRONE_GITHUB_CLIENT_SECRET 
-```
-
-### Helm Values
-
-Once you have created the secret then you can refer to the secret in `values.yaml` like,
-
-```yaml
-...
-extraSecretNamesForEnvFrom:
-  - my-drone-secret
-...
-```
-
-See [values.yaml](values.yaml) to see the Chart's default values.
-
-To adjust an existing Drone install's configuration:
+To install the `ollama` chart in the `ollama` namespace:
 
 ```console
-# If you have a values file:
-helm upgrade drone drone/drone --namespace drone --values drone-values.yaml
-# If you want to change one value and don't have a values file:
-helm upgrade drone drone/drone --namespace drone --reuse-values --set someKey=someVal
-```
-
-## Upgrading Drone server
-
-Read the [release notes](https://discourse.drone.io/c/announcements/6) to make sure there are no backwards incompatible changes. Make adjustments to your values as needed, then run `helm upgrade`:
-
-```console
-# This pulls the latest version of the drone chart from the repo.
+helm repo add otwld CHANGEME
 helm repo update
-helm upgrade drone drone/drone --namespace drone --values drone-values.yaml
+helm install ollama otwld/ollama --namespace ollama
 ```
 
-## Uninstalling Drone server
+## Upgrading Ollama chart
 
-To uninstall/delete the `drone` deployment in the `drone` namespace:
+First please read the [release notes](https://github.com/jmorganca/ollama/releases) of Ollama to make sure there are no backwards incompatible changes.
+
+Make adjustments to your values as needed, then run `helm upgrade`:
+
+```console
+# This pulls the latest version of the ollama chart from the repo.
+helm repo update
+helm upgrade ollama otwld/ollama --namespace ollama --values ollama-values.yaml
+```
+
+## Uninstalling Ollama chart
+
+To uninstall/delete the `ollama` deployment in the `ollama` namespace:
 
 ```console
 helm delete ollama --namespace ollama
 ```
 
 Substitute your values if they differ from the examples. See `helm delete --help` for a full reference on `delete` parameters and flags.
+
+### Helm Values
+
+See [values.yaml](values.yaml) to see the Chart's default values.
 
 ## Support
 
