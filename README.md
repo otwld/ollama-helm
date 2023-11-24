@@ -1,4 +1,4 @@
-# Ollma
+# Ollama Helm Chart
 
 [Ollama](https://ollama.ai/) Get up and running with large language models, locally.
 
@@ -13,9 +13,9 @@ Kubernetes : `>= 1.16.0-0`
 To install the `ollama` chart in the `ollama` namespace:
 
 ```console
-helm repo add otwld CHANGEME
+helm repo add ollama-helm https://otwld.github.io/ollama-helm/
 helm repo update
-helm install ollama otwld/ollama --namespace ollama
+helm install ollama ollama-helm/ollama --namespace ollama
 ```
 
 ## Upgrading Ollama chart
