@@ -117,7 +117,7 @@ persistentVolume:
 
   ## Ollama server data Persistent Volume mount root path
   ##
-  mountPath: /data
+  mountPath: /usr/share/ollama
 
   ## Ollama server data Persistent Volume size
   ##
