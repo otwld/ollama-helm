@@ -105,7 +105,7 @@ persistentVolume:
   accessModes:
     - ReadWriteOnce
 
-  ## Drone server data Persistent Volume annotations
+  ## Ollama server data Persistent Volume annotations
   ##
   annotations: {}
 
@@ -115,7 +115,7 @@ persistentVolume:
   ##
   existingClaim: ""
 
-  ## Drone server data Persistent Volume mount root path
+  ## Ollama server data Persistent Volume mount root path
   ##
   mountPath: /data
 
