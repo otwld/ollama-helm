@@ -57,13 +57,13 @@ spec:
           volumeMounts:
             {{- toYaml . | nindent 12 }}
           {{- end }}
-      {{- with .Values.volumes }}
       {{- if .Values.ollama.gpu.enable }}
       tolerations:
         - key: nvidia.com/gpu
           operator: Exists
           effect: NoSchedule
       {{- end }}
+      {{- with .Values.volumes }}
       volumes:
         {{- toYaml . | nindent 8 }}
       {{- end }}
