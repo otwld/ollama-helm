@@ -55,14 +55,10 @@ spec:
             {{- end}}
           {{- with .Values.volumeMounts }}
           volumeMounts:
+            - name: ollama-data
+              mountPath: /root/.ollama
             {{- toYaml . | nindent 12 }}
           {{- end }}
-      {{- if .Values.ollama.gpu.enable }}
-      tolerations:
-        - key: nvidia.com/gpu
-          operator: Exists
-          effect: NoSchedule
-      {{- end }}
       {{- with .Values.volumes }}
       volumes:
         {{- toYaml . | nindent 8 }}
@@ -75,7 +71,14 @@ spec:
       affinity:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- with .Values.tolerations }}
+      {{- if or (.Values.ollama.gpu.enable) (.Values.tolerations) }}
       tolerations:
-        {{- toYaml . | nindent 8 }}
+        {{- if .Values.ollama.gpu.enable }}
+        - key: nvidia.com/gpu
+          operator: Exists
+          effect: NoSchedule
+        {{- end }}
+        {{- with .Values.tolerations }}
+          {{- toYaml . | nindent 8 }}
+        {{- end }}
       {{- end }}
