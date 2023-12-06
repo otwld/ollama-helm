@@ -19,7 +19,7 @@ spec:
       {{- end }}
       labels:
         {{- include "ollama.labels" . | nindent 8 }}
-	{{- with .Values.podLabels }}
+ {{- with .Values.podLabels }}
         {{- toYaml . | nindent 8 }}
         {{- end }}
     spec:
@@ -53,16 +53,48 @@ spec:
             limits:
               nvidia.com/gpu: "{{ .Values.ollama.gpu.nbrGpu }}:{{ .Values.ollama.gpu.nbrGpu | default 1 }}"
             {{- end}}
-          {{- with .Values.volumeMounts }}
           volumeMounts:
             - name: ollama-data
               mountPath: /root/.ollama
-            {{- toYaml . | nindent 12 }}
+            {{- with .Values.volumeMounts }}
+              {{- toYaml . | nindent 12 }}
+            {{- end }}
+          {{- if .Values.livenessProbe.enabled }}
+          livenessProbe:
+            httpGet:
+              path: {{ .Values.livenessProbe.path }}
+              port: http
+            initialDelaySeconds: {{ .Values.livenessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.livenessProbe.periodSeconds }}
+            timeoutSeconds: {{ .Values.livenessProbe.timeoutSeconds }}
+            successThreshold: {{ .Values.livenessProbe.successThreshold }}
+            failureThreshold: {{ .Values.livenessProbe.failureThreshold }}
           {{- end }}
-      {{- with .Values.volumes }}
+          {{- if .Values.readinessProbe.enabled }}
+          readinessProbe:
+            httpGet:
+              path: {{ .Values.readinessProbe.path }}
+              port: http
+            initialDelaySeconds: {{ .Values.readinessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.readinessProbe.periodSeconds }}
+            timeoutSeconds: {{ .Values.readinessProbe.timeoutSeconds }}
+            successThreshold: {{ .Values.readinessProbe.successThreshold }}
+            failureThreshold: {{ .Values.readinessProbe.failureThreshold }}
+          {{- end }}
       volumes:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
+        - name: ollama-data
+        {{- if .Values.persistentVolume.enabled }}
+          {{- if .Values.persistentVolume.existingClaim }}
+          persistentVolumeClaim:
+            claimName: {{ .Values.persistentVolume.existingClaim }}
+          {{- else }}
+          persistentVolumeClaim:
+            claimName: {{ template "ollama.fullname" . }}
+          {{- end }}
+        {{- end }}
+        {{- with .Values.volumes }}
+          {{- toYaml . | nindent 8 }}
+        {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
