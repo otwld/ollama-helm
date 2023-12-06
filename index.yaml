@@ -5,6 +5,32 @@ entries:
       artifacthub.io/category: ai-machine-learning
     apiVersion: v2
     appVersion: 0.1.13
+    created: "2023-12-06T14:20:19.714366+01:00"
+    description: Get up and running with large language models locally.
+    digest: 0aef0d3172427e701754c946f75488d34974d160455e3a87ed94e46873e0192d
+    home: https://ollama.ai/
+    icon: https://ollama.ai/public/ollama.png
+    keywords:
+    - ai
+    - llm
+    - llama
+    - mistral
+    kubeVersion: ^1.16.0-0
+    maintainers:
+    - email: tech@outworld.fr
+      name: Outworld
+    name: ollama
+    sources:
+    - https://github.com/jmorganca/ollama
+    - https://github.com/otwld/ollama-helm
+    type: application
+    urls:
+    - https://github.com/otwld/ollama-helm/releases/download/ollama-0.3.1/ollama-0.3.1.tgz
+    version: 0.3.1
+  - annotations:
+      artifacthub.io/category: ai-machine-learning
+    apiVersion: v2
+    appVersion: 0.1.13
     created: "2023-12-04T09:35:35.967557+01:00"
     description: Get up and running with large language models locally.
     digest: 616c1566d33fce08e822b85855358fd86f11b58d0799bfb36f6b5ff8937f7f5c
@@ -131,4 +157,4 @@ entries:
     urls:
     - https://github.com/otwld/ollama-helm/releases/download/ollama-0.1.0/ollama-0.1.0.tgz
     version: 0.1.0
-generated: "2023-12-04T09:35:35.967584+01:00"
+generated: "2023-12-06T14:20:19.714405+01:00"
