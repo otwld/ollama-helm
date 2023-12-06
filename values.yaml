@@ -115,10 +115,6 @@ persistentVolume:
   ##
   existingClaim: ""
 
-  ## Ollama server data Persistent Volume mount root path
-  ##
-  mountPath: /root/.ollama
-
   ## Ollama server data Persistent Volume size
   ##
   size: 30Gi
