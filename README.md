@@ -27,7 +27,7 @@ Make adjustments to your values as needed, then run `helm upgrade`:
 ```console
 # This pulls the latest version of the ollama chart from the repo.
 helm repo update
-helm upgrade ollama ollama-helm/ollama --namespace ollama --values ollama-values.yaml
+helm upgrade ollama ollama-helm/ollama --namespace ollama --values values.yaml
 ```
 
 ## Uninstalling Ollama chart
