@@ -8,7 +8,7 @@ image:
   repository: ollama/ollama
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "0.1.15"
+  tag: "0.1.16"
 
 imagePullSecrets: []
 nameOverride: ""
