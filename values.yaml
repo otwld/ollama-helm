@@ -8,7 +8,7 @@ image:
   repository: ollama/ollama
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "0.1.16"
+  tag: ""
 
 imagePullSecrets: []
 nameOverride: ""
@@ -17,8 +17,8 @@ fullnameOverride: ""
 ollama:
   # If you want to use GPU, set it to true
   gpu:
-    enable: false
-    nbrGpu: 1
+    enabled: false
+    number: 1
 
 serviceAccount:
   # Specifies whether a service account should be created
@@ -53,7 +53,7 @@ service:
 ingress:
   enabled: false
   className: ""
-  annotations:
+  annotations: {}
     # kubernetes.io/ingress.class: traefik
     # kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
@@ -74,6 +74,9 @@ resources:
   requests:
     memory: 4096Mi
     cpu: 2000m
+  limits:
+    memory: 8192Mi
+    cpu: 4000m
 
 ## Configure extra options for liveness probe
 ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/#configure-probes
