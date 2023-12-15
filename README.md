@@ -1,5 +1,8 @@
 # Ollama Helm Chart
 
+[![Artifact Hub](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/ollama-helm)](https://artifacthub.io/packages/search?repo=ollama-helm)
+
+
 [Ollama](https://ollama.ai/) Get up and running with large language models, locally.
 
 This Chart is for installing [Ollama](https://github.com/jmorganca/ollama).
