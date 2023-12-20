@@ -4,12 +4,15 @@ description: Get up and running with large language models locally.
 
 type: application
 
-version: 0.6.1
+version: 0.7.0
 
-appVersion: "0.1.16"
+appVersion: "0.1.17"
 
 annotations:
   artifacthub.io/category: ai-machine-learning
+  artifacthub.io/changes: |
+    - kind: changed
+      description: upgrade ollama to 0.1.17
 
 
 kubeVersion: "^1.16.0-0"
