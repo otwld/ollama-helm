@@ -41,7 +41,7 @@ spec:
               containerPort: {{ .Values.service.port }}
               protocol: TCP
           env:
-          {{- if or .Values.ollama.gpu.enabled .Values.ollama.gpu.enable }}
+          {{- if .Values.ollama.gpu.enabled }}
             - name: PATH
               value: /usr/local/nvidia/bin:/usr/local/cuda/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
             - name: LD_LIBRARY_PATH
@@ -52,8 +52,8 @@ spec:
           {{- if .Values.resources }}
           resources:
             {{- $limits := default dict .Values.resources.limits }}
-            {{- if or .Values.ollama.gpu.enabled .Values.ollama.gpu.enable }}
-              {{- $gpuLimit := dict "nvidia.com/gpu" (.Values.ollama.gpu.number | .Values.ollama.gpu.nbrGpu | default 1) }}
+            {{- if .Values.ollama.gpu.enabled }}
+              {{- $gpuLimit := dict "nvidia.com/gpu" (.Values.ollama.gpu.number | default 1) }}
               {{- $limits = merge $limits $gpuLimit }}
             {{- end }}
             {{- $ressources := merge .Values.resources (dict "limits" $limits) }}
@@ -108,7 +108,7 @@ spec:
       {{- end }}
       {{- if or .Values.ollama.gpu.enabled .Values.tolerations }}
       tolerations:
-        {{- if or .Values.ollama.gpu.enabled .Values.ollama.gpu.enable }}
+        {{- if .Values.ollama.gpu.enabled }}
         - key: nvidia.com/gpu
           operator: Exists
           effect: NoSchedule
