@@ -13,6 +13,10 @@ annotations:
   artifacthub.io/changes: |
     - kind: changed
       description: upgrade ollama to 0.1.17
+    - kind: changed
+      description: key ollama.gpu.nbrGpu renamed to ollama.gpu.number
+    - kind: changed
+      description: key ollama.gpu.enable renamed to ollama.gpu.enabled
 
 
 kubeVersion: "^1.16.0-0"
