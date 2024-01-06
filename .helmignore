@@ -19,5 +19,6 @@
 # Various IDEs
 .project
 .idea/
+.drone.yml
 *.tmproj
 .vscode/
