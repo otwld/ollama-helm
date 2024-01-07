@@ -1,6 +1,6 @@
 kind: pipeline
 type: docker
-name: tests
+name: test
 
 trigger:
   event:
@@ -11,7 +11,6 @@ steps:
     image: alpine/helm
     commands:
       - helm lint
-      - ls
 
 ---
 kind: pipeline
@@ -24,7 +23,7 @@ trigger:
     - custom
 
 steps:
-  - name: publish helm chart
+  - name: publish helm chart to github pages
     image: otwld/drone-chart-releaser-github-pages
     settings:
       cr_token:
