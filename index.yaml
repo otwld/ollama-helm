@@ -5,6 +5,35 @@ entries:
       artifacthub.io/category: ai-machine-learning
       artifacthub.io/changes: |
         - kind: changed
+          description: add `runtimeClassName` for specify Pod runtime
+    apiVersion: v2
+    appVersion: 0.1.20
+    created: "2024-01-15T19:26:58.886479+01:00"
+    description: Get up and running with large language models locally.
+    digest: 9389bf91da75e01cb6089107eb14b94c380a81eaf7b14814ce389d63c30f8179
+    home: https://ollama.ai/
+    icon: https://ollama.ai/public/ollama.png
+    keywords:
+    - ai
+    - llm
+    - llama
+    - mistral
+    kubeVersion: ^1.16.0-0
+    maintainers:
+    - email: tech@outworld.fr
+      name: Outworld
+    name: ollama
+    sources:
+    - https://github.com/jmorganca/ollama
+    - https://github.com/otwld/ollama-helm
+    type: application
+    urls:
+    - https://github.com/otwld/ollama-helm/releases/download/ollama-0.10.2/ollama-0.10.2.tgz
+    version: 0.10.2
+  - annotations:
+      artifacthub.io/category: ai-machine-learning
+      artifacthub.io/changes: |
+        - kind: changed
           description: add `ollama.defaultModel` for specify default model to serve at startup
     apiVersion: v2
     appVersion: 0.1.20
@@ -436,4 +465,4 @@ entries:
     urls:
     - https://github.com/otwld/ollama-helm/releases/download/ollama-0.1.0/ollama-0.1.0.tgz
     version: 0.1.0
-generated: "2024-01-15T13:55:00.701731+01:00"
+generated: "2024-01-15T19:26:58.88654+01:00"
