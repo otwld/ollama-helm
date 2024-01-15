@@ -48,6 +48,8 @@ securityContext: {}
   # runAsNonRoot: true
   # runAsUser: 1000
 
+runtimeClassName: ""
+
 service:
   type: ClusterIP
   port: 11434
