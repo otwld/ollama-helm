@@ -40,8 +40,8 @@ spec:
             - name: http
               containerPort: {{ .Values.service.port }}
               protocol: TCP
-          env:
           {{- if .Values.ollama.gpu.enabled }}
+          env:
             - name: PATH
               value: /usr/local/nvidia/bin:/usr/local/cuda/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
             - name: LD_LIBRARY_PATH
@@ -49,6 +49,13 @@ spec:
             - name: NVIDIA_DRIVER_CAPABILITIES
               value: compute,utility
           {{- end}}
+          args:
+          {{- if .Values.ollama.defaultModel }}
+          - {{ .Values.ollama.defaultModel | nindent 12 }}
+          {{- end}}
+          {{- with .Values.extraArgs }}
+             {{- toYaml . | nindent 12 }}
+          {{- end }}
           {{- if .Values.resources }}
           resources:
             {{- $limits := default dict .Values.resources.limits }}
