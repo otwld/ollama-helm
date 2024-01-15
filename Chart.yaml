@@ -12,7 +12,7 @@ annotations:
   artifacthub.io/category: ai-machine-learning
   artifacthub.io/changes: |
     - kind: changed
-      description: add `ollama.defaultModel` for specify default model to serve at startup
+      description: add `runtimeClassName` for specify Pod runtime
 
 
 kubeVersion: "^1.16.0-0"
