@@ -30,6 +30,9 @@ spec:
       serviceAccountName: {{ include "ollama.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      {{- if .Values.runtimeClassName }}
+      runtimeClassName: {{ .Values.runtimeClassName | quote }}
+      {{- end }}
       containers:
         - name: {{ .Chart.Name }}
           securityContext:
