@@ -50,9 +50,6 @@ spec:
               value: compute,utility
           {{- end}}
           args:
-          {{- if .Values.ollama.defaultModel }}
-          - {{ .Values.ollama.defaultModel | nindent 12 }}
-          {{- end}}
           {{- with .Values.extraArgs }}
              {{- toYaml . | nindent 12 }}
           {{- end }}
@@ -93,6 +90,12 @@ spec:
             timeoutSeconds: {{ .Values.readinessProbe.timeoutSeconds }}
             successThreshold: {{ .Values.readinessProbe.successThreshold }}
             failureThreshold: {{ .Values.readinessProbe.failureThreshold }}
+          {{- end }}
+          {{- if .Values.ollama.defaultModel }}
+          lifecycle:
+            postStart:
+              exec:
+                command: ["/bin/ollama", "pull", "{{ .Values.ollama.defaultModel }}"]
           {{- end }}
       volumes:
         - name: ollama-data
