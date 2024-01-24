@@ -5,7 +5,7 @@
 
 [Ollama](https://ollama.ai/) Get up and running with large language models, locally.
 
-This Chart is for installing [Ollama](https://github.com/ollama/ollama/ollama).
+This Chart is for installing [Ollama](https://github.com/ollama/ollama).
 
 ## Requirements
 
