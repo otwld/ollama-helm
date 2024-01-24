@@ -5,7 +5,7 @@
 
 [Ollama](https://ollama.ai/) Get up and running with large language models, locally.
 
-This Chart is for installing [Ollama](https://github.com/jmorganca/ollama).
+This Chart is for installing [Ollama](https://github.com/ollama/ollama/ollama).
 
 ## Requirements
 
@@ -23,7 +23,7 @@ helm install ollama ollama-helm/ollama --namespace ollama
 
 ## Upgrading Ollama chart
 
-First please read the [release notes](https://github.com/jmorganca/ollama/releases) of Ollama to make sure there are no backwards incompatible changes.
+First please read the [release notes](https://github.com/ollama/ollama/releases) of Ollama to make sure there are no backwards incompatible changes.
 
 Make adjustments to your values as needed, then run `helm upgrade`:
 
@@ -49,5 +49,5 @@ See [values.yaml](values.yaml) to see the Chart's default values.
 
 ## Support
 
-- For questions, suggestions, and discussion about Ollama please refer to the [Ollama issue page](https://github.com/jmorganca/ollama/issues)
-- For questions, suggestions, and discussion about this chart please visite [Ollama-Helm issue](https://github.com/otwld/ollama-helm/issues)
+- For questions, suggestions, and discussion about Ollama please refer to the [Ollama issue page](https://github.com/ollama/ollama/issues)
+- For questions, suggestions, and discussion about this chart please visite [Ollama-Helm issue page](https://github.com/otwld/ollama-helm/issues)
