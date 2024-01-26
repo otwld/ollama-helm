@@ -4,15 +4,15 @@ description: Get up and running with large language models locally.
 
 type: application
 
-version: 0.10.2
+version: 0.11.0
 
-appVersion: "0.1.20"
+appVersion: "0.1.21"
 
 annotations:
   artifacthub.io/category: ai-machine-learning
   artifacthub.io/changes: |
     - kind: changed
-      description: add `runtimeClassName` for specify Pod runtime
+      description: upgrade ollama to 0.1.21
 
 
 kubeVersion: "^1.16.0-0"
@@ -24,7 +24,7 @@ keywords:
   - llama
   - mistral
 sources:
-  - https://github.com/jmorganca/ollama
+  - https://github.com/ollama/ollama
   - https://github.com/otwld/ollama-helm
 maintainers:
   - name: Outworld
