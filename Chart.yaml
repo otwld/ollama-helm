@@ -6,13 +6,13 @@ type: application
 
 version: 0.11.0
 
-appVersion: "0.1.21"
+appVersion: "0.1.22"
 
 annotations:
   artifacthub.io/category: ai-machine-learning
   artifacthub.io/changes: |
     - kind: changed
-      description: upgrade ollama to 0.1.21
+      description: upgrade ollama to 0.1.22
 
 
 kubeVersion: "^1.16.0-0"
