@@ -91,24 +91,23 @@ ingress:
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | affinity | object | `{}` | Affinity for pod assignment |
-| autoscaling.enabled | bool | `false` |  |
-| autoscaling.maxReplicas | int | `100` |  |
-| autoscaling.minReplicas | int | `1` |  |
-| autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
+| autoscaling.enabled | bool | `false` | Enable autoscaling |
+| autoscaling.maxReplicas | int | `100` | Number of maximum replicas |
+| autoscaling.minReplicas | int | `1` | Number of minimum replicas |
+| autoscaling.targetCPUUtilizationPercentage | int | `80` | CPU usage to target replica |
 | extraArgs | list | `[]` | Additional arguments on the output Deployment definition. |
 | fullnameOverride | string | `""` | String to fully override template |
-| image | object | `{"pullPolicy":"IfNotPresent","repository":"ollama/ollama","tag":""}` | Docker image |
 | image.pullPolicy | string | `"IfNotPresent"` | Docker pull policy |
 | image.repository | string | `"ollama/ollama"` | Docker image registry |
 | image.tag | string | `""` | Docker image tag, overrides the image tag whose default is the chart appVersion. |
 | imagePullSecrets | list | `[]` | Docker registry secret names as an array |
-| ingress | object | `{"annotations":{},"className":"","enabled":false,"hosts":[{"host":"ollama.local","paths":[{"path":"/","pathType":"Prefix"}]}],"tls":[]}` | Configure the ingress resource that allows you to access the |
 | ingress.annotations | object | `{}` | Additional annotations for the Ingress resource. |
 | ingress.className | string | `""` | IngressClass that will be used to implement the Ingress (Kubernetes 1.18+) |
 | ingress.enabled | bool | `false` | Enable ingress controller resource |
-| ingress.hosts | list | `[{"host":"ollama.local","paths":[{"path":"/","pathType":"Prefix"}]}]` | The list of hostnames to be covered with this ingress record. |
+| ingress.hosts[0].host | string | `"ollama.local"` |  |
+| ingress.hosts[0].paths[0].path | string | `"/"` |  |
+| ingress.hosts[0].paths[0].pathType | string | `"Prefix"` |  |
 | ingress.tls | list | `[]` | The tls configuration for hostnames to be covered with this ingress record. |
-| livenessProbe | object | `{"enabled":true,"failureThreshold":6,"initialDelaySeconds":60,"path":"/","periodSeconds":10,"successThreshold":1,"timeoutSeconds":5}` | ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/#configure-probes |
 | livenessProbe.enabled | bool | `true` | Enable livenessProbe |
 | livenessProbe.failureThreshold | int | `6` | Failure threshold for livenessProbe |
 | livenessProbe.initialDelaySeconds | int | `60` | Initial delay seconds for livenessProbe |
@@ -118,23 +117,20 @@ ingress:
 | livenessProbe.timeoutSeconds | int | `5` | Timeout seconds for livenessProbe |
 | nameOverride | string | `""` | String to partially override template  (will maintain the release name) |
 | nodeSelector | object | `{}` | Node labels for pod assignment. |
-| ollama | object | `{"defaultModel":"llama2","gpu":{"enabled":false,"number":1}}` | Ollama parameters |
 | ollama.defaultModel | string | `"llama2"` | Default model to serve, if not set, no model will be served at container startup |
 | ollama.gpu.enabled | bool | `false` | Enable GPU integration |
 | ollama.gpu.number | int | `1` | Specify the number of GPU |
-| persistentVolume | object | `{"accessModes":["ReadWriteOnce"],"annotations":{},"enabled":false,"existingClaim":"","size":"30Gi","storageClass":"","subPath":"","volumeMode":""}` | ref: https://kubernetes.io/docs/concepts/storage/persistent-volumes/ |
-| persistentVolume.accessModes | list | `["ReadWriteOnce"]` | Ref: http://kubernetes.io/docs/user-guide/persistent-volumes/ |
+| persistentVolume.accessModes | list | `["ReadWriteOnce"]` | Ollama server data Persistent Volume access modes Must match those of existing PV or dynamic provisioner Ref: http://kubernetes.io/docs/user-guide/persistent-volumes/ |
 | persistentVolume.annotations | object | `{}` | Ollama server data Persistent Volume annotations |
 | persistentVolume.enabled | bool | `false` | Enable persistence using PVC |
-| persistentVolume.existingClaim | string | `""` | Requires server.persistentVolume.enabled: true |
+| persistentVolume.existingClaim | string | `""` | If you'd like to bring your own PVC for persisting Ollama state, pass the name of the created + ready PVC here. If set, this Chart will not create the default PVC. Requires server.persistentVolume.enabled: true |
 | persistentVolume.size | string | `"30Gi"` | Ollama server data Persistent Volume size |
-| persistentVolume.storageClass | string | `""` | If undefined (the default) or set to null, no storageClassName spec is #   set, choosing the default provisioner.  (gp2 on AWS, standard on #   GKE, AWS & OpenStack) |
-| persistentVolume.subPath | string | `""` | Useful if the volume's root directory is not empty |
-| persistentVolume.volumeMode | string | `""` | set, choosing the default mode. |
+| persistentVolume.storageClass | string | `""` | Ollama server data Persistent Volume Storage Class If defined, storageClassName: <storageClass> If set to "-", storageClassName: "", which disables dynamic provisioning If undefined (the default) or set to null, no storageClassName spec is set, choosing the default provisioner.  (gp2 on AWS, standard on GKE, AWS & OpenStack) |
+| persistentVolume.subPath | string | `""` | Subdirectory of Ollama server data Persistent Volume to mount Useful if the volume's root directory is not empty |
+| persistentVolume.volumeMode | string | `""` | Ollama server data Persistent Volume Binding Mode If defined, volumeMode: <volumeMode> If empty (the default) or set to null, no volumeBindingMode spec is set, choosing the default mode. |
 | podAnnotations | object | `{}` | Map of annotations to add to the pods |
 | podLabels | object | `{}` | Map of labels to add to the pods |
 | podSecurityContext | object | `{}` | Pod Security Context |
-| readinessProbe | object | `{"enabled":true,"failureThreshold":6,"initialDelaySeconds":30,"path":"/","periodSeconds":5,"successThreshold":1,"timeoutSeconds":3}` | ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/#configure-probes |
 | readinessProbe.enabled | bool | `true` | Enable readinessProbe |
 | readinessProbe.failureThreshold | int | `6` | Failure threshold for readinessProbe |
 | readinessProbe.initialDelaySeconds | int | `30` | Initial delay seconds for readinessProbe |
@@ -143,26 +139,19 @@ ingress:
 | readinessProbe.successThreshold | int | `1` | Success threshold for readinessProbe |
 | readinessProbe.timeoutSeconds | int | `3` | Timeout seconds for readinessProbe |
 | replicaCount | int | `1` | Number of replicas |
-| resources | object | `{"limits":{"cpu":"4000m","memory":"8192Mi"},"requests":{"cpu":"2000m","memory":"4096Mi"}}` | ref: http://kubernetes.io/docs/user-guide/compute-resources/ |
 | resources.limits | object | `{"cpu":"4000m","memory":"8192Mi"}` | Pod limit |
 | resources.requests | object | `{"cpu":"2000m","memory":"4096Mi"}` | Pod requests |
-| runtimeClassName | string | `""` |  |
+| runtimeClassName | string | `""` | Specify runtime class |
 | securityContext | object | `{}` | Container Security Context |
-| service.port | int | `11434` |  |
-| service.type | string | `"ClusterIP"` |  |
-| serviceAccount | object | `{"annotations":{},"automount":true,"create":true,"name":""}` | ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/ |
+| service.port | int | `11434` | Service port |
+| service.type | string | `"ClusterIP"` | Service type |
 | serviceAccount.annotations | object | `{}` | Annotations to add to the service account |
 | serviceAccount.automount | bool | `true` | Automatically mount a ServiceAccount's API credentials? |
 | serviceAccount.create | bool | `true` | Specifies whether a service account should be created |
-| serviceAccount.name | string | `""` | If not set and create is true, a name is generated using the fullname template |
+| serviceAccount.name | string | `""` | The name of the service account to use. If not set and create is true, a name is generated using the fullname template |
 | tolerations | list | `[]` | Tolerations for pod assignment |
 | volumeMounts | list | `[]` | Additional volumeMounts on the output Deployment definition. |
 | volumes | list | `[]` | Additional volumes on the output Deployment definition. |
-
-
-
-
-
 
 
 ## Support
