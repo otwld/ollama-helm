@@ -1,11 +1,11 @@
-# -- Default values for ollama-helm.
-# -- This is a YAML-formatted file.
-# -- Declare variables to be passed into your templates.
+# Default values for ollama-helm.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
 
 # -- Number of replicas
 replicaCount: 1
 
-# -- Docker image
+# Docker image
 image:
   # -- Docker image registry
   repository: ollama/ollama
@@ -22,10 +22,10 @@ imagePullSecrets: []
 # -- String to partially override template  (will maintain the release name)
 nameOverride: ""
 
-# --  String to fully override template
+# -- String to fully override template
 fullnameOverride: ""
 
-# -- Ollama parameters
+# Ollama parameters
 ollama:
   gpu:
     # -- Enable GPU integration
@@ -37,8 +37,8 @@ ollama:
   # -- Default model to serve, if not set, no model will be served at container startup
   defaultModel: "llama2"
 
-# -- Service account for Gitea to use.
-# -- ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/
+# Service account
+# ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/
 serviceAccount:
   # -- Specifies whether a service account should be created
   create: true
@@ -50,7 +50,7 @@ serviceAccount:
   annotations: {}
 
   # -- The name of the service account to use.
-  # -- If not set and create is true, a name is generated using the fullname template
+  # If not set and create is true, a name is generated using the fullname template
   name: ""
 
 # -- Map of annotations to add to the pods
@@ -61,26 +61,30 @@ podLabels: {}
 
 # -- Pod Security Context
 podSecurityContext: {}
-  # -- fsGroup: 2000
+  # fsGroup: 2000
 
 # -- Container Security Context
 securityContext: {}
-  # -- capabilities:
-  #   drop:
+  # capabilities:
+  #  drop:
   #   - ALL
-  # -- readOnlyRootFilesystem: true
-  # -- runAsNonRoot: true
-  # -- runAsUser: 1000
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
 
-# --
+# -- Specify runtime class
 runtimeClassName: ""
 
-# --
+# Configure Service
 service:
+
+  # -- Service type
   type: ClusterIP
+
+  # -- Service port
   port: 11434
 
-# -- Configure the ingress resource that allows you to access the
+# Configure the ingress resource that allows you to access the
 ingress:
   # -- Enable ingress controller resource
   enabled: false
@@ -88,13 +92,13 @@ ingress:
   # -- IngressClass that will be used to implement the Ingress (Kubernetes 1.18+)
   className: ""
 
-  # --  Additional annotations for the Ingress resource.
+  # -- Additional annotations for the Ingress resource.
   annotations: {}
-    # -- kubernetes.io/ingress.class: traefik
-    # -- kubernetes.io/ingress.class: nginx
-    # -- kubernetes.io/tls-acme: "true"
+    # kubernetes.io/ingress.class: traefik
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
 
-  # --  The list of hostnames to be covered with this ingress record.
+  # The list of hostnames to be covered with this ingress record.
   hosts:
     - host: ollama.local
       paths:
@@ -107,8 +111,8 @@ ingress:
   #    hosts:
   #      - chart-example.local
 
-# -- Configure resource requests and limits
-# -- ref: http://kubernetes.io/docs/user-guide/compute-resources/
+# Configure resource requests and limits
+# ref: http://kubernetes.io/docs/user-guide/compute-resources/
 resources:
   # -- Pod requests
   requests:
@@ -119,8 +123,8 @@ resources:
     memory: 8192Mi
     cpu: 4000m
 
-# -- Configure extra options for liveness probe
-# -- ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/#configure-probes
+# Configure extra options for liveness probe
+# ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/#configure-probes
 livenessProbe:
   # -- Enable livenessProbe
   enabled: true
@@ -143,8 +147,8 @@ livenessProbe:
   # -- Success threshold for livenessProbe
   successThreshold: 1
 
-# -- Configure extra options for readiness probe
-# -- ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/#configure-probes
+# Configure extra options for readiness probe
+# ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/#configure-probes
 readinessProbe:
   # -- Enable readinessProbe
   enabled: true
@@ -167,18 +171,18 @@ readinessProbe:
   # -- Success threshold for readinessProbe
   successThreshold: 1
 
-# --
+# Configure autoscaling
 autoscaling:
-  # --
+  # -- Enable autoscaling
   enabled: false
 
-  # --
+  # -- Number of minimum replicas
   minReplicas: 1
 
-  # --
+  # -- Number of maximum replicas
   maxReplicas: 100
 
-  # --
+  # -- CPU usage to target replica
   targetCPUUtilizationPercentage: 80
 
   # -- targetMemoryUtilizationPercentage: 80
@@ -200,15 +204,15 @@ volumeMounts: []
 extraArgs: []
 
 
-# -- Enable persistence using Persistent Volume Claims
-# -- ref: https://kubernetes.io/docs/concepts/storage/persistent-volumes/
+# Enable persistence using Persistent Volume Claims
+# ref: https://kubernetes.io/docs/concepts/storage/persistent-volumes/
 persistentVolume:
   # -- Enable persistence using PVC
   enabled: false
 
   # -- Ollama server data Persistent Volume access modes
-  # -- Must match those of existing PV or dynamic provisioner
-  # -- Ref: http://kubernetes.io/docs/user-guide/persistent-volumes/
+  # Must match those of existing PV or dynamic provisioner
+  # Ref: http://kubernetes.io/docs/user-guide/persistent-volumes/
   accessModes:
     - ReadWriteOnce
 
@@ -216,32 +220,32 @@ persistentVolume:
   annotations: {}
 
   # -- If you'd like to bring your own PVC for persisting Ollama state, pass the name of the
-  # -- created + ready PVC here. If set, this Chart will not create the default PVC.
-  # -- Requires server.persistentVolume.enabled: true
+  # created + ready PVC here. If set, this Chart will not create the default PVC.
+  # Requires server.persistentVolume.enabled: true
   existingClaim: ""
 
   # -- Ollama server data Persistent Volume size
   size: 30Gi
 
   # -- Ollama server data Persistent Volume Storage Class
-  # -- If defined, storageClassName: <storageClass>
-  # -- If set to "-", storageClassName: "", which disables dynamic provisioning
-  # -- If undefined (the default) or set to null, no storageClassName spec is
-  ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
-  ##   GKE, AWS & OpenStack)
+  # If defined, storageClassName: <storageClass>
+  # If set to "-", storageClassName: "", which disables dynamic provisioning
+  # If undefined (the default) or set to null, no storageClassName spec is
+  # set, choosing the default provisioner.  (gp2 on AWS, standard on
+  # GKE, AWS & OpenStack)
   storageClass: ""
 
   # -- Ollama server data Persistent Volume Binding Mode
-  # -- If defined, volumeMode: <volumeMode>
-  # -- If empty (the default) or set to null, no volumeBindingMode spec is
-  # -- set, choosing the default mode.
+  # If defined, volumeMode: <volumeMode>
+  # If empty (the default) or set to null, no volumeBindingMode spec is
+  # set, choosing the default mode.
   volumeMode: ""
 
   # -- Subdirectory of Ollama server data Persistent Volume to mount
-  # -- Useful if the volume's root directory is not empty
+  # Useful if the volume's root directory is not empty
   subPath: ""
 
-# --  Node labels for pod assignment.
+# -- Node labels for pod assignment.
 nodeSelector: {}
 
 # -- Tolerations for pod assignment
