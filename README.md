@@ -139,8 +139,10 @@ ingress:
 | readinessProbe.successThreshold | int | `1` | Success threshold for readinessProbe |
 | readinessProbe.timeoutSeconds | int | `3` | Timeout seconds for readinessProbe |
 | replicaCount | int | `1` | Number of replicas |
-| resources.limits | object | `{"cpu":"4000m","memory":"8192Mi"}` | Pod limit |
-| resources.requests | object | `{"cpu":"2000m","memory":"4096Mi"}` | Pod requests |
+| resources.limits.cpu | string | `"4000m"` | CPU limit |
+| resources.limits.memory | string | `"8192Mi"` | Memory limit |
+| resources.requests.cpu | string | `"2000m"` | CPU request |
+| resources.requests.memory | string | `"4096Mi"` | Memory request |
 | runtimeClassName | string | `""` | Specify runtime class |
 | securityContext | object | `{}` | Container Security Context |
 | service.port | int | `11434` | Service port |
@@ -152,7 +154,6 @@ ingress:
 | tolerations | list | `[]` | Tolerations for pod assignment |
 | volumeMounts | list | `[]` | Additional volumeMounts on the output Deployment definition. |
 | volumes | list | `[]` | Additional volumes on the output Deployment definition. |
-
 
 ## Support
 
