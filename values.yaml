@@ -114,13 +114,20 @@ ingress:
 # Configure resource requests and limits
 # ref: http://kubernetes.io/docs/user-guide/compute-resources/
 resources:
-  # -- Pod requests
+  # Pod requests
   requests:
+    # -- Memory request
     memory: 4096Mi
+
+    # -- CPU request
     cpu: 2000m
-  # -- Pod limit
+
+  # Pod limit
   limits:
+    # -- Memory limit
     memory: 8192Mi
+
+    # -- CPU limit
     cpu: 4000m
 
 # Configure extra options for liveness probe
