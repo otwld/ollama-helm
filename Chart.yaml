@@ -4,15 +4,21 @@ description: Get up and running with large language models locally.
 
 type: application
 
-version: 0.17.0
+version: 0.18.0
 
-appVersion: "0.1.27"
+appVersion: "0.1.28"
 
 annotations:
   artifacthub.io/category: ai-machine-learning
   artifacthub.io/changes: |
     - kind: changed
-      description: upgrade ollama to 0.1.27
+      description: upgrade ollama to 0.1.28
+    - kind: added
+      description: add key ollama.models for pulling multiple models at startup
+    - kind: added
+      description: add key ollama.insecure for pulling in secure mode
+    - kind: deprecated
+      description: key ollama.defaultModel is now deprecated and will be removed in future
 
 
 kubeVersion: "^1.16.0-0"
