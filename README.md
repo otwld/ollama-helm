@@ -57,7 +57,7 @@ Substitute your values if they differ from the examples. See `helm delete --help
 ## Examples
 - **It's highly recommended to run an updated version of Kubernetes for deploying ollama with GPU**
 
-### Basic values.yaml example with GPU and default model
+### Basic values.yaml example with GPU and two models pull at startup
 ```
 ollama:
   gpu:
@@ -65,14 +65,17 @@ ollama:
     enabled: true
     # -- Specify the number of GPU to 2
     number: 2
-  # -- Set default model to mistral
-  defaultModel: "mistral"
+  # -- List of models to pull at container startup
+  models: 
+    - mistral
+    - llama2
 ```
 ---
 ### Basic values.yaml example with Ingress
 ```
 ollama:
-  defaultModel: "llama2"
+  models:
+    - llama2
 ingress:
   enabled: true
     hosts:
@@ -82,7 +85,7 @@ ingress:
           pathType: Prefix
 ```
 
-- *APi is now reachable at `ollama.domain.lan`*
+- *API is now reachable at `ollama.domain.lan`*
 
 ## Helm Values
 
@@ -117,9 +120,10 @@ ingress:
 | livenessProbe.timeoutSeconds | int | `5` | Timeout seconds for livenessProbe |
 | nameOverride | string | `""` | String to partially override template  (will maintain the release name) |
 | nodeSelector | object | `{}` | Node labels for pod assignment. |
-| ollama.defaultModel | string | `"llama2"` | Default model to serve, if not set, no model will be served at container startup |
 | ollama.gpu.enabled | bool | `false` | Enable GPU integration |
 | ollama.gpu.number | int | `1` | Specify the number of GPU |
+| ollama.insecure | bool | `false` | Add insecure flag for pulling at container startup |
+| ollama.models | list | `["llama2"]` | List of models to pull at container startup |
 | persistentVolume.accessModes | list | `["ReadWriteOnce"]` | Ollama server data Persistent Volume access modes Must match those of existing PV or dynamic provisioner Ref: http://kubernetes.io/docs/user-guide/persistent-volumes/ |
 | persistentVolume.annotations | object | `{}` | Ollama server data Persistent Volume annotations |
 | persistentVolume.enabled | bool | `false` | Enable persistence using PVC |

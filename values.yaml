@@ -34,8 +34,13 @@ ollama:
     # -- Specify the number of GPU
     number: 1
 
-  # -- Default model to serve, if not set, no model will be served at container startup
-  defaultModel: "llama2"
+  # -- List of models to pull at container startup
+  models:
+    - llama2
+    - mistral
+
+  # -- Add insecure flag for pulling at container startup
+  insecure: false
 
 # Service account
 # ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/

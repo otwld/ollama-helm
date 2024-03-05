@@ -60,3 +60,18 @@ Create the name of the service account to use
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
 {{- end }}
+
+{{/*
+Create the model list
+*/}}
+{{- define "ollama.modelList" -}}
+{{- $modelList := default list}}
+{{- if .Values.ollama.models}}
+{{- $modelList = concat $modelList .Values.ollama.models }}
+{{- end}}
+{{- if .Values.ollama.defaultModel}}
+{{- $modelList = append $modelList .Values.ollama.defaultModel }}
+{{- end}}
+{{- $modelList = $modelList | uniq}}
+{{- default (join " " $modelList) -}}
+{{- end -}}
