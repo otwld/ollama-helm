@@ -35,9 +35,10 @@ ollama:
     number: 1
 
   # -- List of models to pull at container startup
-  models:
-    - llama2
-    - mistral
+  # models:
+  #  - llama2
+  #  - mistral
+  models: {}
 
   # -- Add insecure flag for pulling at container startup
   insecure: false
