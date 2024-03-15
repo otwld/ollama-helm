@@ -5,6 +5,37 @@ entries:
       artifacthub.io/category: ai-machine-learning
       artifacthub.io/changes: |
         - kind: changed
+          description: upgrade ollama to 0.1.29
+        - kind: changed
+          description: clear ollama.models in default values
+    apiVersion: v2
+    appVersion: 0.1.29
+    created: "2024-03-15T09:41:29.720686+01:00"
+    description: Get up and running with large language models locally.
+    digest: 301dd2447955f442a367d2da13aa7640b54771916a0a9290a2c67547be553c37
+    home: https://ollama.ai/
+    icon: https://ollama.ai/public/ollama.png
+    keywords:
+    - ai
+    - llm
+    - llama
+    - mistral
+    kubeVersion: ^1.16.0-0
+    maintainers:
+    - email: tech@outworld.fr
+      name: Outworld
+    name: ollama
+    sources:
+    - https://github.com/ollama/ollama
+    - https://github.com/otwld/ollama-helm
+    type: application
+    urls:
+    - https://github.com/otwld/ollama-helm/releases/download/ollama-0.19.0/ollama-0.19.0.tgz
+    version: 0.19.0
+  - annotations:
+      artifacthub.io/category: ai-machine-learning
+      artifacthub.io/changes: |
+        - kind: changed
           description: upgrade ollama to 0.1.28
         - kind: added
           description: add key ollama.models for pulling multiple models at startup
@@ -703,4 +734,4 @@ entries:
     urls:
     - https://github.com/otwld/ollama-helm/releases/download/ollama-0.1.0/ollama-0.1.0.tgz
     version: 0.1.0
-generated: "2024-03-06T00:05:33.422948+01:00"
+generated: "2024-03-15T09:41:29.72099+01:00"
