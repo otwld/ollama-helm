@@ -233,7 +233,7 @@ extraEnv: []
 # ref: https://kubernetes.io/docs/concepts/storage/persistent-volumes/
 persistentVolume:
   # -- Enable persistence using PVC
-  enabled: true
+  enabled: false
 
   # -- Ollama server data Persistent Volume access modes
   # Must match those of existing PV or dynamic provisioner
