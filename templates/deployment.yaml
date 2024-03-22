@@ -37,21 +37,26 @@ spec:
         - name: {{ .Chart.Name }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag |  default (ternary (printf "%s-rocm" .Chart.AppVersion) (.Chart.AppVersion) (and (.Values.ollama.gpu.enabled) (eq .Values.ollama.gpu.type "amd"))) }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - name: http
               containerPort: {{ .Values.service.port }}
               protocol: TCP
-          {{- if .Values.ollama.gpu.enabled }}
           env:
+            {{- if and .Values.ollama.gpu.enabled (or (eq .Values.ollama.gpu.type "nvidia") (not .Values.ollama.gpu.type))}}
             - name: PATH
               value: /usr/local/nvidia/bin:/usr/local/cuda/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
             - name: LD_LIBRARY_PATH
               value: /usr/local/nvidia/lib:/usr/local/nvidia/lib64
             - name: NVIDIA_DRIVER_CAPABILITIES
               value: compute,utility
-          {{- end}}
+            - name: NVIDIA_VISIBLE_DEVICES
+              value: all
+            {{- end}}
+            {{- with .Values.extraEnv }}
+              {{- toYaml . | nindent 12 }}
+            {{- end }}
           args:
           {{- with .Values.extraArgs }}
              {{- toYaml . | nindent 12 }}
@@ -60,8 +65,14 @@ spec:
           resources:
             {{- $limits := default dict .Values.resources.limits }}
             {{- if .Values.ollama.gpu.enabled }}
-              {{- $gpuLimit := dict "nvidia.com/gpu" (.Values.ollama.gpu.number | default 1) }}
-              {{- $limits = merge $limits $gpuLimit }}
+              {{- if or (eq .Values.ollama.gpu.type "nvidia") (not .Values.ollama.gpu.type) }}
+                {{- $gpuLimit := dict "nvidia.com/gpu" (.Values.ollama.gpu.number | default 1) }}
+                {{- $limits = merge $limits $gpuLimit }}
+              {{- end }}
+              {{- if eq .Values.ollama.gpu.type "amd" }}
+                {{- $gpuLimit := dict "amd.com/gpu" (.Values.ollama.gpu.number | default 1) }}
+                {{- $limits = merge $limits $gpuLimit }}
+              {{- end }}
             {{- end }}
             {{- $ressources := merge .Values.resources (dict "limits" $limits) }}
             {{- toYaml $ressources | nindent 12 }}
@@ -121,7 +132,7 @@ spec:
       {{- end }}
       {{- if or .Values.ollama.gpu.enabled .Values.tolerations }}
       tolerations:
-        {{- if .Values.ollama.gpu.enabled }}
+        {{- if and .Values.ollama.gpu.enabled (or (eq .Values.ollama.gpu.type "nvidia") (not .Values.ollama.gpu.type)) }}
         - key: nvidia.com/gpu
           operator: Exists
           effect: NoSchedule
