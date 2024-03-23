@@ -31,10 +31,17 @@ ollama:
     # -- Enable GPU integration
     enabled: false
 
+    # -- GPU type: 'nvidia' or 'amd'
+    # If 'ollama.gpu.enabled', default value is nvidia
+    # If set to 'amd', this will add 'rocm' suffix to image tag if 'image.tag' is not override
+    # This is due cause AMD and CPU/CUDA are different images
+    type: 'nvidia'
+
     # -- Specify the number of GPU
     number: 1
 
   # -- List of models to pull at container startup
+  # The more you add, the longer the container will take to start if models are not present
   # models:
   #  - llama2
   #  - mistral
@@ -215,6 +222,11 @@ volumeMounts: []
 
 # -- Additional arguments on the output Deployment definition.
 extraArgs: []
+
+# -- Additional environments variables on the output Deployment definition.
+extraEnv: []
+#  - name: OLLAMA_DEBUG
+#    value: "1"
 
 
 # Enable persistence using Persistent Volume Claims

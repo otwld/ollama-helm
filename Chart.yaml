@@ -4,17 +4,17 @@ description: Get up and running with large language models locally.
 
 type: application
 
-version: 0.19.0
+version: 0.20.0
 
 appVersion: "0.1.29"
 
 annotations:
   artifacthub.io/category: ai-machine-learning
   artifacthub.io/changes: |
-    - kind: changed
-      description: upgrade ollama to 0.1.29
-    - kind: changed
-      description: clear ollama.models in default values
+    - kind: added
+      description: add 'extraEnv' key to add additional environments variables
+    - kind: added
+      description: add support for AMD graphic cards
 
 
 kubeVersion: "^1.16.0-0"
