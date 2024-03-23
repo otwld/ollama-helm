@@ -4,6 +4,37 @@ entries:
   - annotations:
       artifacthub.io/category: ai-machine-learning
       artifacthub.io/changes: |
+        - kind: added
+          description: add 'extraEnv' key to add additional environments variables
+        - kind: added
+          description: add support for AMD graphic cards
+    apiVersion: v2
+    appVersion: 0.1.29
+    created: "2024-03-23T15:31:12.604274+01:00"
+    description: Get up and running with large language models locally.
+    digest: 6cb47930482efac9ca0908dcdc5ea914383991f7eeeabe11e7810c5be523906f
+    home: https://ollama.ai/
+    icon: https://ollama.ai/public/ollama.png
+    keywords:
+    - ai
+    - llm
+    - llama
+    - mistral
+    kubeVersion: ^1.16.0-0
+    maintainers:
+    - email: tech@outworld.fr
+      name: Outworld
+    name: ollama
+    sources:
+    - https://github.com/ollama/ollama
+    - https://github.com/otwld/ollama-helm
+    type: application
+    urls:
+    - https://github.com/otwld/ollama-helm/releases/download/ollama-0.20.0/ollama-0.20.0.tgz
+    version: 0.20.0
+  - annotations:
+      artifacthub.io/category: ai-machine-learning
+      artifacthub.io/changes: |
         - kind: changed
           description: upgrade ollama to 0.1.29
         - kind: changed
@@ -734,4 +765,4 @@ entries:
     urls:
     - https://github.com/otwld/ollama-helm/releases/download/ollama-0.1.0/ollama-0.1.0.tgz
     version: 0.1.0
-generated: "2024-03-15T09:41:29.72099+01:00"
+generated: "2024-03-23T15:31:12.604608+01:00"
