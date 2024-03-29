@@ -74,7 +74,7 @@ spec:
                 {{- $limits = merge $limits $gpuLimit }}
               {{- end }}
             {{- end }}
-            {{- $ressources := merge .Values.resources (dict "limits" $limits) }}
+            {{- $ressources := deepCopy (dict "limits" $limits) | mergeOverwrite .Values.resources }}
             {{- toYaml $ressources | nindent 12 }}
           {{- end}}
           volumeMounts:
