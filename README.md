@@ -153,10 +153,10 @@ ingress:
 | readinessProbe.successThreshold | int | `1` | Success threshold for readinessProbe |
 | readinessProbe.timeoutSeconds | int | `3` | Timeout seconds for readinessProbe |
 | replicaCount | int | `1` | Number of replicas |
-| resources.limits.cpu | string | `"4000m"` | CPU limit |
-| resources.limits.memory | string | `"8192Mi"` | Memory limit |
-| resources.requests.cpu | string | `"2000m"` | CPU request |
-| resources.requests.memory | string | `"4096Mi"` | Memory request |
+| resources.limits.cpu | string | `""` | CPU limit |
+| resources.limits.memory | string | `""` | Memory limit |
+| resources.requests.cpu | string | `""` | CPU request |
+| resources.requests.memory | string | `""` | Memory request |
 | runtimeClassName | string | `""` | Specify runtime class |
 | securityContext | object | `{}` | Container Security Context |
 | service.port | int | `11434` | Service port |
