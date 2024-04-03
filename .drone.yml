@@ -21,7 +21,7 @@ steps:
     image: otwld/drone-kind
     privileged: true
     settings:
-      verbose: "true"
+      verbose: 1
       cluster_name: "helm-testing"
     volumes:
       - name: dockersock
