@@ -34,11 +34,23 @@ steps:
     commands:
       - ct install --chart-dirs . --charts .
     depends_on:
-      - kind
+      - create kind cluster
     volumes:
       - name: kubeconfig
         path: /root/.kube
 
+  - name: clean kind cluster
+    image: otwld/drone-kind
+    settings:
+      cluster_name: "helm-testing"
+      clean: true
+    depends_on:
+      - test chart
+    volumes:
+      - name: dockersock
+        path: /var/run
+      - name: kubeconfig
+        path: /root/.kube
 
 
 services:
