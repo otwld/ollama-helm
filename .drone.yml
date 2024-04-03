@@ -12,23 +12,12 @@ steps:
     commands:
       - helm lint
 
-  - name: template chart
+  - name: local render template chart
     image: alpine/helm
     commands:
       - helm template ollama-test . --debug
 
-  - name: test
-    image: docker:dind
-    volumes:
-      - name: dockersock
-        path: /var/run
-    commands:
-      - sleep 5 # give docker enough time to start
-      - docker ps -a
-    depends_on:
-      - docker
-
-  - name: kind
+  - name: create kind cluster
     image: otwld/drone-kind
     privileged: true
     settings:
@@ -50,8 +39,22 @@ steps:
       - name: kubeconfig
         path: /root/.kube
 
+  - name: clean kind cluster
+    image: otwld/drone-kind
+    settings:
+      cluster_name: "helm-testing"
+      clean: true
+    depends_on:
+      - test chart
+    volumes:
+      - name: dockersock
+        path: /var/run
+      - name: kubeconfig
+        path: /root/.kube
+
+
 services:
-- name: docker
+- name: docker-service
   image: docker:dind
   privileged: true
   volumes:
