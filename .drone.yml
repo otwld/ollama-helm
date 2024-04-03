@@ -36,6 +36,8 @@ steps:
     depends_on:
       - create kind cluster
     volumes:
+      - name: dockersock
+        path: /var/run
       - name: kubeconfig
         path: /root/.kube
 
