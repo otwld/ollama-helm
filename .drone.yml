@@ -12,6 +12,26 @@ steps:
     commands:
       - helm lint
 
+  - name: template chart
+    image: alpine/helm
+    commands:
+      - helm template ollama-test . --debug
+
+
+services:
+  - name: kind
+    image: otwld:drone-kind
+    privileged: true
+    settings:
+      verbose: true
+      cluster_name: "helm-testing"
+    volumes:
+      - name: dockersock
+        path: /var/run
+
+volumes:
+  - name: dockersock
+    temp: { }
 ---
 kind: pipeline
 type: docker
@@ -19,8 +39,10 @@ name: publish
 
 
 trigger:
+  event:
+  - promote
   branch:
-    - custom
+   - main
 
 steps:
   - name: publish helm chart to github pages
