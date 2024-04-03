@@ -18,11 +18,14 @@ steps:
       - helm template ollama-test . --debug
 
   - name: test chart
-    image: alpine/helm
+    image: quay.io/helmpack/chart-testing
     commands:
-      - helm test ollama . --namespace ollama-test
+      - ct install
     depends_on:
-      - kind
+      - kind --chart-dirs . --charts .
+    volumes:
+      - name: kubeconfig
+        path: /root/.kube
 
 
 services:
@@ -37,9 +40,13 @@ services:
     volumes:
       - name: dockersock
         path: /var/run
+      - name: kubeconfig
+        path: /root/.kube
 
 volumes:
   - name: dockersock
+    temp: {}
+  - name: kubeconfig
     temp: {}
 
 ---
