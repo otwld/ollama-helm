@@ -17,6 +17,17 @@ steps:
     commands:
       - helm template ollama-test . --debug
 
+  - name: test
+    image: docker:dind
+    volumes:
+      - name: dockersock
+        path: /var/run
+    commands:
+      - sleep 5 # give docker enough time to start
+      - docker ps -a
+    depends_on:
+      - docker
+
   - name: kind
     image: otwld/drone-kind
     privileged: true
@@ -39,6 +50,13 @@ steps:
       - name: kubeconfig
         path: /root/.kube
 
+services:
+- name: docker
+  image: docker:dind
+  privileged: true
+  volumes:
+  - name: dockersock
+    path: /var/run
 
 volumes:
   - name: dockersock
