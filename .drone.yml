@@ -20,9 +20,9 @@ steps:
   - name: test chart
     image: quay.io/helmpack/chart-testing
     commands:
-      - ct install
+      - ct install --chart-dirs . --charts .
     depends_on:
-      - kind --chart-dirs . --charts .
+      - kind
     volumes:
       - name: kubeconfig
         path: /root/.kube
