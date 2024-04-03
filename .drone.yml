@@ -30,7 +30,7 @@ steps:
 
 services:
   - name: kind
-    image: otwld:drone-kind
+    image: otwld/drone-kind
     privileged: true
     settings:
       verbose: true
