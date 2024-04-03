@@ -34,6 +34,7 @@ steps:
 
   - name: test chart
     image: quay.io/helmpack/chart-testing
+    privileged: true
     commands:
       - sed -i -e "s/0.0.0.0/127.0.0.1/g" $HOME/.kube/config
       - ls /root/.kube
@@ -42,6 +43,19 @@ steps:
       - ct install --chart-dirs . --charts .
     depends_on:
       - create kind cluster
+    volumes:
+      - name: dockersock
+        path: /var/run
+      - name: kubeconfig
+        path: /root/.kube
+
+  - name: delete kind cluster
+    image: otwld/drone-kind
+    privileged: true
+    settings:
+      clean: true
+    depends_on:
+      - test chart
     volumes:
       - name: dockersock
         path: /var/run
