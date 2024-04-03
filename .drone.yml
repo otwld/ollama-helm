@@ -17,7 +17,32 @@ steps:
     commands:
       - helm template ollama-test . --debug
 
-  - name: create kind cluster
+  - name: test chart
+    image: quay.io/helmpack/chart-testing
+    commands:
+      - ls /root/.kube
+      - cat /root/.kube/config
+      - kubectl cluster-info
+      - ct install --chart-dirs . --charts .
+    depends_on:
+      - kind
+    volumes:
+      - name: dockersock
+        path: /var/run
+      - name: kubeconfig
+        path: /root/.kube
+
+
+
+services:
+  - name: docker-service
+    image: docker:dind
+    privileged: true
+    volumes:
+    - name: dockersock
+      path: /var/run
+
+  - name: kind
     image: otwld/drone-kind
     privileged: true
     settings:
@@ -30,31 +55,6 @@ steps:
         path: /root/.kube
     depends_on:
       - docker-service
-
-  - name: test chart
-    image: quay.io/helmpack/chart-testing
-    commands:
-      - ls /root/.kube
-      - cat /root/.kube/config
-      - kubectl cluster-info
-      - ct install --chart-dirs . --charts .
-    depends_on:
-      - create kind cluster
-    volumes:
-      - name: dockersock
-        path: /var/run
-      - name: kubeconfig
-        path: /root/.kube
-
-
-
-services:
-- name: docker-service
-  image: docker:dind
-  privileged: true
-  volumes:
-  - name: dockersock
-    path: /var/run
 
 volumes:
   - name: dockersock
