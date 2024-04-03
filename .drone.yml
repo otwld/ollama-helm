@@ -17,6 +17,18 @@ steps:
     commands:
       - helm template ollama-test . --debug
 
+  - name: kind
+    image: otwld/drone-kind
+    privileged: true
+    settings:
+      verbose: true
+      cluster_name: "helm-testing"
+    volumes:
+      - name: dockersock
+        path: /var/run
+      - name: kubeconfig
+        path: /root/.kube
+
   - name: test chart
     image: quay.io/helmpack/chart-testing
     commands:
@@ -27,21 +39,6 @@ steps:
       - name: kubeconfig
         path: /root/.kube
 
-
-services:
-  - name: kind
-    image: otwld/drone-kind
-    privileged: true
-    settings:
-      verbose: true
-      cluster_name: "helm-testing"
-    command:
-      - kubectl create namespace ollama-test
-    volumes:
-      - name: dockersock
-        path: /var/run
-      - name: kubeconfig
-        path: /root/.kube
 
 volumes:
   - name: dockersock
