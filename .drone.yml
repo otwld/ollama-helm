@@ -17,6 +17,13 @@ steps:
     commands:
       - helm template ollama-test . --debug
 
+  - name: test chart
+    image: alpine/helm
+    commands:
+      - helm test ollama . --namespace ollama-test
+    depends_on:
+      - kind
+
 
 services:
   - name: kind
@@ -25,13 +32,16 @@ services:
     settings:
       verbose: true
       cluster_name: "helm-testing"
+    command:
+      - kubectl create namespace ollama-test
     volumes:
       - name: dockersock
         path: /var/run
 
 volumes:
   - name: dockersock
-    temp: { }
+    temp: {}
+
 ---
 kind: pipeline
 type: docker
