@@ -20,7 +20,6 @@ steps:
   - name: create kind cluster
     image: otwld/drone-kind
     privileged: true
-    detach: true
     settings:
       verbose: 1
       config: 'kind-config.yml'
@@ -37,6 +36,7 @@ steps:
     image: quay.io/helmpack/chart-testing
     privileged: true
     commands:
+      - wait 360s
       - sed -i -e "s/0.0.0.0/127.0.0.1/g" $HOME/.kube/config
       - cat /root/.kube/config
       - kubectl cluster-info
