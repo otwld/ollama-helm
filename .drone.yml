@@ -45,7 +45,7 @@ steps:
       cluster_name: "helm-testing"
       clean: true
     depends_on:
-      - test chart
+      - "test chart"
     volumes:
       - name: dockersock
         path: /var/run
