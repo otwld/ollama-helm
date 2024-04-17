@@ -5,7 +5,7 @@
 
 [Ollama](https://ollama.ai/), get up and running with large language models, locally.
 
-This Chart is for deploying [Ollama](https://github.com/ollama/ollama). 
+This Community Chart is for deploying [Ollama](https://github.com/ollama/ollama). 
 
 ## Requirements
 
@@ -69,8 +69,8 @@ ollama:
     # -- GPU type: 'nvidia' or 'amd'
     type: 'nvidia'
     
-    # -- Specify the number of GPU to 2
-    number: 2
+    # -- Specify the number of GPU to 1
+    number: 1
    
   # -- List of models to pull at container startup
   models: 
