@@ -161,6 +161,7 @@ ingress:
 | securityContext | object | `{}` | Container Security Context |
 | service.port | int | `11434` | Service port |
 | service.type | string | `"ClusterIP"` | Service type |
+| service.nodePort | int | `31434` | Service nodePort when service.type is NodePort |
 | serviceAccount.annotations | object | `{}` | Annotations to add to the service account |
 | serviceAccount.automount | bool | `true` | Automatically mount a ServiceAccount's API credentials? |
 | serviceAccount.create | bool | `true` | Specifies whether a service account should be created |
