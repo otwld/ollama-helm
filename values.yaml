@@ -98,7 +98,7 @@ service:
   port: 11434
 
   # -- Service node port when service type is 'NodePort'
-  nodePort: # 31434
+  nodePort: 31434
 
 # Configure the ingress resource that allows you to access the
 ingress:
