@@ -4,15 +4,15 @@ description: Get up and running with large language models locally.
 
 type: application
 
-version: 0.24.0
+version: 0.24.1
 
 appVersion: "0.1.33"
 
 annotations:
   artifacthub.io/category: ai-machine-learning
   artifacthub.io/changes: |
-    - kind: changed
-      description: upgrade ollama to 0.1.33
+    - kind: added
+      description: add support for NodePort
 
 
 kubeVersion: "^1.16.0-0"
