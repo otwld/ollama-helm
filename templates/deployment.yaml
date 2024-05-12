@@ -8,6 +8,9 @@ spec:
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
   {{- end }}
+  {{- if .Values.updateStrategy }}
+  strategy: {{ .Values.updateStrategy | quote }}
+  {{- end }}
   selector:
     matchLabels:
       {{- include "ollama.selectorLabels" . | nindent 6 }}
