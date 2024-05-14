@@ -285,4 +285,4 @@ affinity: {}
 # -- How to replace existing pods
 updateStrategy:
   # -- Can be "Recreate" or "RollingUpdate". Default is RollingUpdate
-  type: Recreate
+  type: ""
