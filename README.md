@@ -167,6 +167,7 @@ ingress:
 | serviceAccount.create | bool | `true` | Specifies whether a service account should be created |
 | serviceAccount.name | string | `""` | The name of the service account to use. If not set and create is true, a name is generated using the fullname template |
 | tolerations | list | `[]` | Tolerations for pod assignment |
+| updateStrategy.type | string | `""` | How to replace existing pods. Can be `Recreate` or `RollingUpdate` |
 | volumeMounts | list | `[]` | Additional volumeMounts on the output Deployment definition. |
 | volumes | list | `[]` | Additional volumes on the output Deployment definition. |
 ----------------------------------------------
