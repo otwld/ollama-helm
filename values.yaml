@@ -100,6 +100,9 @@ service:
   # -- Service node port when service type is 'NodePort'
   nodePort: 31434
 
+  # -- Annotations to add to the service
+  annotations: {}
+
 # Configure the ingress resource that allows you to access the
 ingress:
   # -- Enable ingress controller resource

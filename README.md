@@ -159,6 +159,7 @@ ingress:
 | resources.requests.memory | string | `""` | Memory request |
 | runtimeClassName | string | `""` | Specify runtime class |
 | securityContext | object | `{}` | Container Security Context |
+| service.annotations | object | `{}` | Annotations to add to the service |
 | service.port | int | `11434` | Service port |
 | service.type | string | `"ClusterIP"` | Service type |
 | service.nodePort | int | `31434` | Service nodePort when service.type is NodePort |
