@@ -4,7 +4,7 @@ metadata:
   name: {{ include "ollama.fullname" . }}
   labels:
     {{- include "ollama.labels" . | nindent 4 }}
-  {{- with .Values.serviceAccount.annotations }}
+  {{- with .Values.service.annotations }}
   annotations:
     {{- toYaml . | nindent 4 }}
   {{- end }}    
