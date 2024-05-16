@@ -159,6 +159,7 @@ ingress:
 | runtimeClassName | string | `""` | Specify runtime class |
 | securityContext | object | `{}` | Container Security Context |
 | service.nodePort | int | `31434` | Service node port when service type is 'NodePort' |
+| service.annotations | object | `{}` | Annotations to add to the service |
 | service.port | int | `11434` | Service port |
 | service.type | string | `"ClusterIP"` | Service type |
 | serviceAccount.annotations | object | `{}` | Annotations to add to the service account |
