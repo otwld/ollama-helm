@@ -130,20 +130,20 @@ ingress:
 # Configure resource requests and limits
 # ref: http://kubernetes.io/docs/user-guide/compute-resources/
 resources:
-  # Pod requests
+  # -- Pod requests
   requests: {}
-    # -- Memory request
+    # Memory request
     # memory: 4096Mi
 
-    # -- CPU request
+    # CPU request
     # cpu: 2000m
 
-  # Pod limit
+  # -- Pod limit
   limits: {}
-    # -- Memory limit
+    # Memory limit
     # memory: 8192Mi
 
-    # -- CPU limit
+    # CPU limit
     # cpu: 4000m
 
 # Configure extra options for liveness probe
@@ -286,3 +286,11 @@ affinity: {}
 updateStrategy:
   # -- Can be "Recreate" or "RollingUpdate". Default is RollingUpdate
   type: ""
+
+# -- Init containers to add to the pod
+initContainers: []
+# - name: startup-tool
+#   image: alpine:3
+#   command: [sh, -c]
+#   args:
+#     - echo init

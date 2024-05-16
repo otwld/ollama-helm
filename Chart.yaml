@@ -11,8 +11,8 @@ appVersion: "0.1.38"
 annotations:
   artifacthub.io/category: ai-machine-learning
   artifacthub.io/changes: |
-    - kind: changed
-      description: upgrade ollama to 0.1.38
+    - kind: added
+      description: add support for initContainers
 
 
 kubeVersion: "^1.16.0-0"
