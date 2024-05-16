@@ -120,6 +120,7 @@ ingress:
 | ingress.hosts[0].paths[0].path | string | `"/"` |  |
 | ingress.hosts[0].paths[0].pathType | string | `"Prefix"` |  |
 | ingress.tls | list | `[]` | The tls configuration for hostnames to be covered with this ingress record. |
+| initContainers | list | `[]` | Init containers to add to the pod |
 | livenessProbe.enabled | bool | `true` | Enable livenessProbe |
 | livenessProbe.failureThreshold | int | `6` | Failure threshold for livenessProbe |
 | livenessProbe.initialDelaySeconds | int | `60` | Initial delay seconds for livenessProbe |
@@ -136,7 +137,7 @@ ingress:
 | ollama.models | object | `{}` | List of models to pull at container startup The more you add, the longer the container will take to start if models are not present models:  - llama2  - mistral |
 | persistentVolume.accessModes | list | `["ReadWriteOnce"]` | Ollama server data Persistent Volume access modes Must match those of existing PV or dynamic provisioner Ref: http://kubernetes.io/docs/user-guide/persistent-volumes/ |
 | persistentVolume.annotations | object | `{}` | Ollama server data Persistent Volume annotations |
-| persistentVolume.enabled | bool | `true` | Enable persistence using PVC |
+| persistentVolume.enabled | bool | `false` | Enable persistence using PVC |
 | persistentVolume.existingClaim | string | `""` | If you'd like to bring your own PVC for persisting Ollama state, pass the name of the created + ready PVC here. If set, this Chart will not create the default PVC. Requires server.persistentVolume.enabled: true |
 | persistentVolume.size | string | `"30Gi"` | Ollama server data Persistent Volume size |
 | persistentVolume.storageClass | string | `""` | Ollama server data Persistent Volume Storage Class If defined, storageClassName: <storageClass> If set to "-", storageClassName: "", which disables dynamic provisioning If undefined (the default) or set to null, no storageClassName spec is set, choosing the default provisioner.  (gp2 on AWS, standard on GKE, AWS & OpenStack) |
@@ -153,22 +154,21 @@ ingress:
 | readinessProbe.successThreshold | int | `1` | Success threshold for readinessProbe |
 | readinessProbe.timeoutSeconds | int | `3` | Timeout seconds for readinessProbe |
 | replicaCount | int | `1` | Number of replicas |
-| resources.limits.cpu | string | `""` | CPU limit |
-| resources.limits.memory | string | `""` | Memory limit |
-| resources.requests.cpu | string | `""` | CPU request |
-| resources.requests.memory | string | `""` | Memory request |
+| resources.limits | object | `{}` | Pod limit |
+| resources.requests | object | `{}` | Pod requests |
 | runtimeClassName | string | `""` | Specify runtime class |
 | securityContext | object | `{}` | Container Security Context |
+| service.nodePort | int | `31434` | Service node port when service type is 'NodePort' |
 | service.annotations | object | `{}` | Annotations to add to the service |
 | service.port | int | `11434` | Service port |
 | service.type | string | `"ClusterIP"` | Service type |
-| service.nodePort | int | `31434` | Service nodePort when service.type is NodePort |
 | serviceAccount.annotations | object | `{}` | Annotations to add to the service account |
 | serviceAccount.automount | bool | `true` | Automatically mount a ServiceAccount's API credentials? |
 | serviceAccount.create | bool | `true` | Specifies whether a service account should be created |
 | serviceAccount.name | string | `""` | The name of the service account to use. If not set and create is true, a name is generated using the fullname template |
 | tolerations | list | `[]` | Tolerations for pod assignment |
-| updateStrategy.type | string | `""` | How to replace existing pods. Can be `Recreate` or `RollingUpdate` |
+| updateStrategy | object | `{"type":""}` | How to replace existing pods |
+| updateStrategy.type | string | `""` | Can be "Recreate" or "RollingUpdate". Default is RollingUpdate |
 | volumeMounts | list | `[]` | Additional volumeMounts on the output Deployment definition. |
 | volumes | list | `[]` | Additional volumes on the output Deployment definition. |
 ----------------------------------------------
