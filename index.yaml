@@ -4,6 +4,37 @@ entries:
   - annotations:
       artifacthub.io/category: ai-machine-learning
       artifacthub.io/changes: |
+        - kind: added
+          description: add support for initContainers
+        - kind: added
+          description: add annotation to service
+    apiVersion: v2
+    appVersion: 0.1.38
+    created: "2024-05-16T20:19:03.246637+08:00"
+    description: Get up and running with large language models locally.
+    digest: ff9c9d5dbabb084ba301f21b580356169b05b9376c6c751181bce45c5c46bd25
+    home: https://ollama.ai/
+    icon: https://ollama.ai/public/ollama.png
+    keywords:
+    - ai
+    - llm
+    - llama
+    - mistral
+    kubeVersion: ^1.16.0-0
+    maintainers:
+    - email: tech@outworld.fr
+      name: Outworld
+    name: ollama
+    sources:
+    - https://github.com/ollama/ollama
+    - https://github.com/otwld/ollama-helm
+    type: application
+    urls:
+    - https://github.com/otwld/ollama-helm/releases/download/ollama-0.29.1/ollama-0.29.1.tgz
+    version: 0.29.1
+  - annotations:
+      artifacthub.io/category: ai-machine-learning
+      artifacthub.io/changes: |
         - kind: changed
           description: upgrade ollama to 0.1.38
     apiVersion: v2
@@ -1113,4 +1144,4 @@ entries:
     urls:
     - https://github.com/otwld/ollama-helm/releases/download/ollama-0.1.0/ollama-0.1.0.tgz
     version: 0.1.0
-generated: "2024-05-16T14:32:47.51709+08:00"
+generated: "2024-05-16T20:19:03.248062+08:00"
