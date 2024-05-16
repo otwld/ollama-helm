@@ -4,7 +4,7 @@ description: Get up and running with large language models locally.
 
 type: application
 
-version: 0.29.0
+version: 0.29.1
 
 appVersion: "0.1.38"
 
@@ -13,6 +13,8 @@ annotations:
   artifacthub.io/changes: |
     - kind: added
       description: add support for initContainers
+    - kind: added
+      description: add annotation to service
 
 
 kubeVersion: "^1.16.0-0"
