@@ -4,17 +4,15 @@ description: Get up and running with large language models locally.
 
 type: application
 
-version: 0.29.1
+version: 0.30.0
 
-appVersion: "0.1.38"
+appVersion: "0.1.39"
 
 annotations:
   artifacthub.io/category: ai-machine-learning
   artifacthub.io/changes: |
-    - kind: added
-      description: add support for initContainers
-    - kind: added
-      description: add annotation to service
+    - kind: changed
+      description: upgrade ollama to 0.1.39
 
 
 kubeVersion: "^1.16.0-0"
