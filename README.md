@@ -178,6 +178,66 @@ ingress:
 | volumes | list | `[]` | Additional volumes on the output Deployment definition. |
 ----------------------------------------------
 
+## Core team
+
+<table>
+    <tr>
+       <td align="center">
+            <a href="https://github.com/jdetroyes"
+                ><img
+                    src="https://github.com/jdetroyes.png?size=200"
+                    width="100"
+                    style="margin-bottom: -4px; border-radius: 8px;"
+                    alt="Jean Baptiste Detroyes"
+                /><br /><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Jean Baptiste&nbsp;Detroyes&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></a
+            >
+            <div style="margin-top: 4px">
+                <a href="https://github.com/jdetroyes" title="Github"
+                    ><img
+                        width="16"
+                        src="https://raw.githubusercontent.com/MarsiBarsi/readme-icons/main/github.svg"
+                /></a>
+                <a
+                    href="mailto:jdetroyes@otwld.com"
+                    title="Email"
+                    ><img
+                        width="16"
+                        src="https://raw.githubusercontent.com/MarsiBarsi/readme-icons/main/send.svg"
+                /></a>
+            </div>
+        </td>
+       <td align="center">
+            <a href="https://github.com/ntrehout"
+                ><img
+                    src="https://github.com/ntrehout.png?size=200"
+                    width="100"
+                    style="margin-bottom: -4px; border-radius: 8px;"
+                    alt="Jean Baptiste Detroyes"
+                /><br /><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Nathan&nbsp;Tréhout&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></a
+            >
+            <div style="margin-top: 4px">
+                <a href="https://x.com/n_trehout" title="Twitter"
+                    ><img
+                        width="16"
+                        src="https://raw.githubusercontent.com/MarsiBarsi/readme-icons/main/twitter.svg"
+                /></a>
+                <a href="https://github.com/ntrehout" title="Github"
+                    ><img
+                        width="16"
+                        src="https://raw.githubusercontent.com/MarsiBarsi/readme-icons/main/github.svg"
+                /></a>
+                <a
+                    href="mailto:ntrehout@otwld.com"
+                    title="Email"
+                    ><img
+                        width="16"
+                        src="https://raw.githubusercontent.com/MarsiBarsi/readme-icons/main/send.svg"
+                /></a>
+            </div>
+        </td>
+    </tr>
+</table>
+
 ## Support
 
 - For questions, suggestions, and discussion about Ollama please refer to the [Ollama issue page](https://github.com/ollama/ollama/issues)
