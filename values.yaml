@@ -5,6 +5,19 @@
 # -- Number of replicas
 replicaCount: 1
 
+# Knative configuration
+knative:
+  # -- Enable Knative integration
+  enabled: false
+  # -- Knative service container concurrency
+  containerConcurrency: 0
+  # -- Knative service timeout seconds
+  timeoutSeconds: 300
+  # -- Knative service response start timeout seconds
+  responseStartTimeoutSeconds: 300
+  # -- Knative service idle timeout seconds
+  idleTimeoutSeconds: 300
+
 # Docker image
 image:
   # -- Docker image registry

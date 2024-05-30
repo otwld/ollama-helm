@@ -1,3 +1,4 @@
+{{- if not .Values.knative.enabled }}
 apiVersion: v1
 kind: Service
 metadata:
@@ -7,7 +8,7 @@ metadata:
   {{- with .Values.service.annotations }}
   annotations:
     {{- toYaml . | nindent 4 }}
-  {{- end }}    
+  {{- end }}
 spec:
   type: {{ .Values.service.type }}
   ports:
@@ -20,3 +21,4 @@ spec:
       {{- end }}
   selector:
     {{- include "ollama.selectorLabels" . | nindent 4 }}
+{{- end }}
