@@ -121,6 +121,11 @@ ingress:
 | ingress.hosts[0].paths[0].pathType | string | `"Prefix"` |  |
 | ingress.tls | list | `[]` | The tls configuration for hostnames to be covered with this ingress record. |
 | initContainers | list | `[]` | Init containers to add to the pod |
+| knative.containerConcurrency | int | `0` | Knative service container concurrency |
+| knative.enabled | bool | `false` | Enable Knative integration |
+| knative.idleTimeoutSeconds | int | `300` | Knative service idle timeout seconds |
+| knative.responseStartTimeoutSeconds | int | `300` | Knative service response start timeout seconds |
+| knative.timeoutSeconds | int | `300` | Knative service timeout seconds |
 | livenessProbe.enabled | bool | `true` | Enable livenessProbe |
 | livenessProbe.failureThreshold | int | `6` | Failure threshold for livenessProbe |
 | livenessProbe.initialDelaySeconds | int | `60` | Initial delay seconds for livenessProbe |
