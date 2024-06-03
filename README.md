@@ -186,7 +186,7 @@ ingress:
             <a href="https://github.com/jdetroyes"
                 ><img
                     src="https://github.com/jdetroyes.png?size=200"
-                    width="100"
+                    width="50"
                     style="margin-bottom: -4px; border-radius: 8px;"
                     alt="Jean Baptiste Detroyes"
                 /><br /><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Jean Baptiste&nbsp;Detroyes&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></a
@@ -210,7 +210,7 @@ ingress:
             <a href="https://github.com/ntrehout"
                 ><img
                     src="https://github.com/ntrehout.png?size=200"
-                    width="100"
+                    width="50"
                     style="margin-bottom: -4px; border-radius: 8px;"
                     alt="Jean Baptiste Detroyes"
                 /><br /><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Nathan&nbsp;Tréhout&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></a

@@ -6,11 +6,13 @@ type: application
 
 version: 0.32.0
 
-appVersion: "0.1.39"
+appVersion: "0.1.40"
 
 annotations:
   artifacthub.io/category: ai-machine-learning
   artifacthub.io/changes: |
+    - kind: changed
+      description: upgrade ollama to 0.1.40
     - kind: added
       description: basic support of knative 
 
@@ -27,5 +29,5 @@ sources:
   - https://github.com/ollama/ollama
   - https://github.com/otwld/ollama-helm
 maintainers:
-  - name: Outworld
-    email: tech@outworld.fr
+  - name: Otwld
+    email: contact@otwld.com
