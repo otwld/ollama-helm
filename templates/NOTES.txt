@@ -1,5 +1,8 @@
 1. Get the application URL by running these commands:
-{{- if .Values.ingress.enabled }}
+{{- if .Values.knative.enabled }}
+    export KSERVICE_URL=$(kubectl get ksvc --namespace {{ .Release.Namespace }} {{ include "ollama.fullname" . }} -o jsonpath={.status.url})
+    echo "Visit $KSERVICE_URL to use your application"
+{{- else if .Values.ingress.enabled }}
 {{- range $host := .Values.ingress.hosts }}
   {{- range .paths }}
   http{{ if $.Values.ingress.tls }}s{{ end }}://{{ $host.host }}{{ .path }}
