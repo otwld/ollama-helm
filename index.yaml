@@ -3,6 +3,35 @@ entries:
   ollama:
   - annotations:
       artifacthub.io/category: ai-machine-learning
+      artifacthub.io/changes: |
+        - kind: changed
+          description: upgrade ollama to 0.1.41
+    apiVersion: v2
+    appVersion: 0.1.41
+    created: "2024-06-04T12:47:18.572838+08:00"
+    description: Get up and running with large language models locally.
+    digest: fe8acf0469ae671805bb78297e557182b0c0d81e991223af226d92bc295fc77b
+    home: https://ollama.ai/
+    icon: https://ollama.ai/public/ollama.png
+    keywords:
+    - ai
+    - llm
+    - llama
+    - mistral
+    kubeVersion: ^1.16.0-0
+    maintainers:
+    - email: contact@otwld.com
+      name: Otwld
+    name: ollama
+    sources:
+    - https://github.com/ollama/ollama
+    - https://github.com/otwld/ollama-helm
+    type: application
+    urls:
+    - https://github.com/otwld/ollama-helm/releases/download/ollama-0.33.0/ollama-0.33.0.tgz
+    version: 0.33.0
+  - annotations:
+      artifacthub.io/category: ai-machine-learning
       artifacthub.io/changes: "- kind: changed\n  description: upgrade ollama to 0.1.40\n-
         kind: added\n  description: basic support of knative \n"
     apiVersion: v2
@@ -1229,4 +1258,4 @@ entries:
     urls:
     - https://github.com/otwld/ollama-helm/releases/download/ollama-0.1.0/ollama-0.1.0.tgz
     version: 0.1.0
-generated: "2024-06-03T13:26:40.54473+08:00"
+generated: "2024-06-04T12:47:18.573115+08:00"
