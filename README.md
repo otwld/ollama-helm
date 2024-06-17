@@ -139,7 +139,7 @@ ingress:
 | ollama.gpu.number | int | `1` | Specify the number of GPU |
 | ollama.gpu.type | string | `"nvidia"` | GPU type: 'nvidia' or 'amd' If 'ollama.gpu.enabled', default value is nvidia If set to 'amd', this will add 'rocm' suffix to image tag if 'image.tag' is not override This is due cause AMD and CPU/CUDA are different images |
 | ollama.insecure | bool | `false` | Add insecure flag for pulling at container startup |
-| ollama.models | object | `{}` | List of models to pull at container startup The more you add, the longer the container will take to start if models are not present models:  - llama2  - mistral |
+| ollama.models | list | `[]` | List of models to pull at container startup The more you add, the longer the container will take to start if models are not present models:  - llama2  - mistral |
 | persistentVolume.accessModes | list | `["ReadWriteOnce"]` | Ollama server data Persistent Volume access modes Must match those of existing PV or dynamic provisioner Ref: http://kubernetes.io/docs/user-guide/persistent-volumes/ |
 | persistentVolume.annotations | object | `{}` | Ollama server data Persistent Volume annotations |
 | persistentVolume.enabled | bool | `false` | Enable persistence using PVC |
