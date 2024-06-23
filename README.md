@@ -241,4 +241,4 @@ ingress:
 ## Support
 
 - For questions, suggestions, and discussion about Ollama please refer to the [Ollama issue page](https://github.com/ollama/ollama/issues)
-- For questions, suggestions, and discussion about this chart please visite [Ollama-Helm issue page](https://github.com/otwld/ollama-helm/issues)
+- For questions, suggestions, and discussion about this chart please visit [Ollama-Helm issue page](https://github.com/otwld/ollama-helm/issues)
