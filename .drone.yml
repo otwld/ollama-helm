@@ -32,7 +32,6 @@ steps:
       path: /root/.kube
   depends_on:
     - kubernetes
-    - create kind cluster
 
 # Add steps for interacting with your kind cluster
 - name: kubectl example
