@@ -2,50 +2,53 @@ kind: pipeline
 type: docker
 name: helm-lint
 
-services: 
-- name: docker
-  image: docker:dind
-  privileged: true
-  volumes:
-  - name: dockersock
-    path: /var/run
+# Use docker:dind for running kind
+services:
+  - name: kubernetes
+    image: docker:dind
+    privileged: true
+    volumes:
+    - name: dockersock
+      path: /var/run
 
 volumes:
-- name: dockersock
-  temp: {}
+  - name: dockersock
+    temp: {}
+  - name: kubeconfig
+    temp: {}
 
 steps:
-- name: setup-kind
-  image: docker:dind
-  privileged: true
-  volumes:
-  - name: dockersock
-    path: /var/run
-  commands:
-    - sleep 5 # give docker enough time to start
-    - apk add --no-cache curl bash
-    - curl -Lo ./kind https://kind.sigs.k8s.io/dl/v0.11.1/kind-linux-amd64
-    - chmod +x ./kind
-    - mv ./kind /usr/local/bin/kind
-    - kind create cluster
-    - export KUBECONFIG="$(kind get kubeconfig-path --name="kind")"
 
-- name: setup-kubectl
-  image: bitnami/kubectl:1.21
-  user: root
+- name: create kind cluster
+  image: otwld/drone-kind
+  settings:
+    verbose: 1
+    cluster_name: "kind-default"
+    hostname: "kubernetes" # Use same name as service`s name
+  volumes:
+    - name: dockersock
+      path: /var/run
+    - name: kubeconfig
+      path: /root/.kube
+  depends_on:
+    - kubernetes
+    - create kind cluster
+
+# Add steps for interacting with your kind cluster
+- name: kubectl example
+  image: bitnami/kubectl
   commands:
-    - kubectl version --client
     - kubectl cluster-info
+  depends_on:
+    - create kind cluster
+  volumes:
+    - name: kubeconfig
+      path: /root/.kube
 
 - name: setup-helm
   image: alpine/helm:3.5.4
   commands:
     - helm version
-
-- name: wait-for-kind
-  image: bitnami/kubectl:1.21
-  commands:
-    - kubectl wait --for=condition=Ready nodes --all --timeout=60s
 
 - name: helm-lint
   image: alpine/helm:3.5.4
@@ -61,6 +64,18 @@ steps:
   image: bitnami/kubectl:1.21
   commands:
     - kubectl get pods
+
+- name: delete kind cluster
+  image: otwld/drone-kind
+  settings:
+    clean: true
+  volumes:
+    - name: dockersock
+      path: /var/run
+    - name: kubeconfig
+      path: /root/.kube
+  depends_on:
+    - kubernetes
 
 trigger:
   event:
