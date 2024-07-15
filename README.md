@@ -110,6 +110,9 @@ ingress:
 | extraArgs | list | `[]` | Additional arguments on the output Deployment definition. |
 | extraEnv | list | `[]` | Additional environments variables on the output Deployment definition. |
 | fullnameOverride | string | `""` | String to fully override template |
+| hostIPC | bool | `false` | Use the host’s ipc namespace. |
+| hostNetwork | bool | `false` | Use the host's network namespace. |
+| hostPID | bool | `false` | Use the host’s pid namespace |
 | image.pullPolicy | string | `"IfNotPresent"` | Docker pull policy |
 | image.repository | string | `"ollama/ollama"` | Docker image registry |
 | image.tag | string | `""` | Docker image tag, overrides the image tag whose default is the chart appVersion. |
@@ -164,8 +167,8 @@ ingress:
 | resources.requests | object | `{}` | Pod requests |
 | runtimeClassName | string | `""` | Specify runtime class |
 | securityContext | object | `{}` | Container Security Context |
-| service.nodePort | int | `31434` | Service node port when service type is 'NodePort' |
 | service.annotations | object | `{}` | Annotations to add to the service |
+| service.nodePort | int | `31434` | Service node port when service type is 'NodePort' |
 | service.port | int | `11434` | Service port |
 | service.type | string | `"ClusterIP"` | Service type |
 | serviceAccount.annotations | object | `{}` | Annotations to add to the service account |
