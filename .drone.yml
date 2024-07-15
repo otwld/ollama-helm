@@ -30,6 +30,7 @@ steps:
     verbose: 1
     cluster_name: "kind-default"
     hostname: "kubernetes" # Use same name as service`s name
+    config: 'kind-config.yml'
   volumes:
     - name: dockersock
       path: /var/run
@@ -38,34 +39,12 @@ steps:
   depends_on:
     - wait for docker
 
-- name: setup-helm
-  image: alpine/helm
+- name: test chart
+  image: quay.io/helmpack/chart-testing
   commands:
-    - helm version
-
-- name: helm-lint
-  image: alpine/helm
-  commands:
-    - helm lint . -f values.yaml
-
-- name: helm-install
-  image: alpine/helm
-  commands:
-    - helm install test-release . -f values.yaml
+    - ct lint-and-install --chart-dirs . --charts .
   depends_on:
     - create kind cluster
-  volumes:
-    - name: kubeconfig
-      path: /root/.kube
-
-- name: verify-deployment
-  image: bitnami/kubectl
-  user: root
-  privileged: true
-  commands:
-    - kubectl get pods
-  depends_on:
-    - helm-install
   volumes:
     - name: kubeconfig
       path: /root/.kube
@@ -86,6 +65,7 @@ trigger:
   event:
     - push
     - pull_request
+    - promote
   branch:
     - main
 
