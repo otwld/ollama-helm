@@ -58,11 +58,21 @@ steps:
   image: alpine/helm:3.5.4
   commands:
     - helm install test-release . -f values.yaml
+  depends_on:
+    - create kind cluster
+  volumes:
+    - name: kubeconfig
+      path: /root/.kube
 
 - name: verify-deployment
   image: bitnami/kubectl:1.21
   commands:
     - kubectl get pods
+  depends_on:
+    - create kind cluster
+  volumes:
+    - name: kubeconfig
+      path: /root/.kube
 
 - name: delete kind cluster
   image: otwld/drone-kind
