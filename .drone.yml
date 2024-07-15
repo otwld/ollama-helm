@@ -52,7 +52,7 @@ steps:
 - name: delete kind cluster
   image: otwld/drone-kind
   settings:
-    clean: true
+    clean_only: true
   volumes:
     - name: dockersock
       path: /var/run
