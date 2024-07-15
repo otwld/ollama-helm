@@ -33,17 +33,6 @@ steps:
   depends_on:
     - kubernetes
 
-# Add steps for interacting with your kind cluster
-- name: kubectl example
-  image: bitnami/kubectl
-  commands:
-    - kubectl cluster-info
-  depends_on:
-    - create kind cluster
-  volumes:
-    - name: kubeconfig
-      path: /root/.kube
-
 - name: setup-helm
   image: alpine/helm:3.5.4
   commands:
@@ -66,10 +55,11 @@ steps:
 
 - name: verify-deployment
   image: bitnami/kubectl:1.21
+  user: root
   commands:
     - kubectl get pods
   depends_on:
-    - create kind cluster
+    - helm-install
   volumes:
     - name: kubeconfig
       path: /root/.kube
