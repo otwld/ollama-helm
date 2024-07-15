@@ -11,8 +11,8 @@ appVersion: "0.2.2"
 annotations:
   artifacthub.io/category: ai-machine-learning
   artifacthub.io/changes: |
-    - kind: changed
-      description: upgrade ollama to 0.2.2
+    - kind: added
+      description: Add shared host namespace hostIPC, hostPID and hostNetwork
 
 
 kubeVersion: "^1.16.0-0"
