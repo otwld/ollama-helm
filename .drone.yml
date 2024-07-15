@@ -1,16 +1,56 @@
 kind: pipeline
 type: docker
-name: test
+name: helm-lint
+
+steps:
+- name: setup-kind
+  image: docker:stable
+  privileged: true
+  commands:
+    - apk add --no-cache curl bash
+    - curl -Lo ./kind https://kind.sigs.k8s.io/dl/v0.11.1/kind-linux-amd64
+    - chmod +x ./kind
+    - mv ./kind /usr/local/bin/kind
+    - kind create cluster
+    - export KUBECONFIG="$(kind get kubeconfig-path --name="kind")"
+
+- name: setup-kubectl
+  image: bitnami/kubectl:1.21
+  commands:
+    - kubectl version --client
+    - kubectl cluster-info
+
+- name: setup-helm
+  image: alpine/helm:3.5.4
+  commands:
+    - helm version
+
+- name: wait-for-kind
+  image: bitnami/kubectl:1.21
+  commands:
+    - kubectl wait --for=condition=Ready nodes --all --timeout=60s
+
+- name: helm-lint
+  image: alpine/helm:3.5.4
+  commands:
+    - helm lint . -f values.yaml
+
+- name: helm-install
+  image: alpine/helm:3.5.4
+  commands:
+    - helm install test-release . -f values.yaml
+
+- name: verify-deployment
+  image: bitnami/kubectl:1.21
+  commands:
+    - kubectl get pods
 
 trigger:
   event:
-   - pull_request
-
-steps:
-  - name: lint chart
-    image: alpine/helm
-    commands:
-      - helm lint
+    - push
+    - pull_request
+  branch:
+    - main
 
 ---
 kind: pipeline
