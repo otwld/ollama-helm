@@ -39,7 +39,7 @@ steps:
   depends_on:
     - wait for docker
 
-- name: test chart
+- name: lint & install chart
   image: quay.io/helmpack/chart-testing
   commands:
     - ct lint-and-install --chart-dirs . --charts .
@@ -58,8 +58,10 @@ steps:
       path: /var/run
     - name: kubeconfig
       path: /root/.kube
-  depends_on:
-    - kubernetes
+  when:
+    status:
+      - success
+      - failure
 
 trigger:
   event:
