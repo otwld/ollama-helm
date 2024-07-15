@@ -62,6 +62,8 @@ steps:
     status:
       - success
       - failure
+  depends_on:
+    - lint & install chart
 
 trigger:
   event:
