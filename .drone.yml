@@ -34,17 +34,17 @@ steps:
     - kubernetes
 
 - name: setup-helm
-  image: alpine/helm:3.5.4
+  image: alpine/helm
   commands:
     - helm version
 
 - name: helm-lint
-  image: alpine/helm:3.5.4
+  image: alpine/helm
   commands:
     - helm lint . -f values.yaml
 
 - name: helm-install
-  image: alpine/helm:3.5.4
+  image: alpine/helm
   commands:
     - helm install test-release . -f values.yaml
   depends_on:
@@ -54,7 +54,7 @@ steps:
       path: /root/.kube
 
 - name: verify-deployment
-  image: bitnami/kubectl:1.21
+  image: bitnami/kubectl
   user: root
   privileged: true
   commands:
