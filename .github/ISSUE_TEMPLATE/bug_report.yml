@@ -27,7 +27,7 @@ body:
     attributes:
       label: Kubernetes version
       description: Please specify the version of Kubernetes you are using.
-      placeholder: 0.x.x
+      placeholder: 1.x.x
     validations:
       required: true
   - type: input
@@ -54,4 +54,4 @@ body:
     attributes:
       label: Additional context
       description: Add any other context about the problem here.
-      render: text
+      render: markdown
