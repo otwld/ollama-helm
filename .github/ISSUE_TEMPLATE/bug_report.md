@@ -1,59 +1,38 @@
-name: Bug Report
-description: File a bug report.
-title: ""
-labels: ["bug", "triage"]
-body:
-  - type: markdown
-    attributes:
-      value: |
-        **Please fill out the details below to help us understand and resolve the issue effectively.**
-  - type: textarea
-    id: what-happened
-    attributes:
-      label: What happened?
-      description: Please describe the issue or the goal you are trying to achieve with the Ollama Chart.
-      placeholder: Tell us what you see!
-      value: ""
-    validations:
-      required: true
-  - type: input
-    id: chart-version
-    attributes:
-      label: Chart version
-      description: Please provide the version of the Ollama Chart you are using.
-      placeholder: 0.x.x
-    validations:
-      required: true
-  - type: input
-    id: Kubernetes-version
-    attributes:
-      label: Kubernetes version
-      description: Please specify the version of Kubernetes you are using.
-      placeholder: 0.x.x
-    validations:
-      required: true
-  - type: input
-    id: Kubernetes-distribution
-    attributes:
-      label: Kubernetes distribution
-      description: Please mention the Kubernetes engine you are using (e.g., k8s, k3s, minikube, kind, rancher).
-    validations:
-      required: true
-  - type: textarea
-    id: logs
-    attributes:
-      label: Relevant log output
-      description: If relevant, please provide the logs from the pods to help diagnose the issue.
-      render: shell
-  - type: textarea
-    id: values
-    attributes:
-      label: Relevant log output
-      description: Please share the contents of your values.yaml file. If sensitive information is included, consider redacting it.
-      render: yaml
-  - type: textarea
-    id: additional-context
-    attributes:
-      label: Additional context
-      description: Add any other context about the problem here.
-      render: text
+---
+name: Bug report
+about: Create a report to help us improve
+title: ''
+labels: ''
+assignees: ''
+
+---
+
+**Describe the bug**
+A clear and concise description of what the bug is.
+
+**To Reproduce**
+Steps to reproduce the behavior:
+1. Go to '...'
+2. Click on '....'
+3. Scroll down to '....'
+4. See error
+
+**Expected behavior**
+A clear and concise description of what you expected to happen.
+
+**Screenshots**
+If applicable, add screenshots to help explain your problem.
+
+**Desktop (please complete the following information):**
+ - OS: [e.g. iOS]
+ - Browser [e.g. chrome, safari]
+ - Version [e.g. 22]
+
+**Smartphone (please complete the following information):**
+ - Device: [e.g. iPhone6]
+ - OS: [e.g. iOS8.1]
+ - Browser [e.g. stock browser, safari]
+ - Version [e.g. 22]
+
+**Additional context**
+Add any other context about the problem here.
