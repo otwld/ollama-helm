@@ -2,10 +2,25 @@ kind: pipeline
 type: docker
 name: helm-lint
 
+services: 
+- name: docker
+  image: docker:dind
+  privileged: true
+  volumes:
+  - name: dockersock
+    path: /var/run
+
+volumes:
+- name: dockersock
+  temp: {}
+
 steps:
 - name: setup-kind
-  image: docker:stable
+  image: docker:dind
   privileged: true
+  volumes:
+  - name: dockersock
+    path: /var/run
   commands:
     - apk add --no-cache curl bash
     - curl -Lo ./kind https://kind.sigs.k8s.io/dl/v0.11.1/kind-linux-amd64
