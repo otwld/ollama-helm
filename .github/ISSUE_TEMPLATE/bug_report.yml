@@ -12,7 +12,6 @@ body:
       label: What happened?
       description: Please describe the issue or the goal you are trying to achieve with the Ollama Chart.
       placeholder: Tell us what you see!
-      value: ""
     validations:
       required: true
   - type: input
