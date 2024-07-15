@@ -32,6 +32,7 @@ steps:
 
 - name: setup-kubectl
   image: bitnami/kubectl:1.21
+  user: root
   commands:
     - kubectl version --client
     - kubectl cluster-info
