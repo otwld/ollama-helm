@@ -56,6 +56,7 @@ steps:
 - name: verify-deployment
   image: bitnami/kubectl:1.21
   user: root
+  privileged: true
   commands:
     - kubectl get pods
   depends_on:
