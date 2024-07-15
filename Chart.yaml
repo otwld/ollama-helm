@@ -4,13 +4,15 @@ description: Get up and running with large language models locally.
 
 type: application
 
-version: 0.43.0
+version: 0.44.0
 
-appVersion: "0.2.2"
+appVersion: "0.2.5"
 
 annotations:
   artifacthub.io/category: ai-machine-learning
   artifacthub.io/changes: |
+    - kind: changed
+      description: upgrade ollama to 0.2.5
     - kind: added
       description: Add shared host namespace hostIPC, hostPID and hostNetwork
     - kind: added
