@@ -19,6 +19,11 @@ volumes:
 
 steps:
 
+- name: wait for docker
+  image: alpine
+  commands:
+    - sleep 5
+
 - name: create kind cluster
   image: otwld/drone-kind
   settings:
@@ -31,7 +36,7 @@ steps:
     - name: kubeconfig
       path: /root/.kube
   depends_on:
-    - kubernetes
+    - wait for docker
 
 - name: setup-helm
   image: alpine/helm
