@@ -5,6 +5,39 @@ entries:
       artifacthub.io/category: ai-machine-learning
       artifacthub.io/changes: |
         - kind: changed
+          description: upgrade ollama to 0.2.5
+        - kind: added
+          description: Add shared host namespace hostIPC, hostPID and hostNetwork
+        - kind: added
+          description: add ollama.mountPath to override default ollama mountPath
+    apiVersion: v2
+    appVersion: 0.2.5
+    created: "2024-07-16T13:12:23.238803+08:00"
+    description: Get up and running with large language models locally.
+    digest: ad11669620aad339316db19b576ee4ea996029ae0e0d39a4cdb465eb6d379aa5
+    home: https://ollama.ai/
+    icon: https://ollama.ai/public/ollama.png
+    keywords:
+    - ai
+    - llm
+    - llama
+    - mistral
+    kubeVersion: ^1.16.0-0
+    maintainers:
+    - email: contact@otwld.com
+      name: Otwld
+    name: ollama
+    sources:
+    - https://github.com/ollama/ollama
+    - https://github.com/otwld/ollama-helm
+    type: application
+    urls:
+    - https://github.com/otwld/ollama-helm/releases/download/ollama-0.44.0/ollama-0.44.0.tgz
+    version: 0.44.0
+  - annotations:
+      artifacthub.io/category: ai-machine-learning
+      artifacthub.io/changes: |
+        - kind: changed
           description: upgrade ollama to 0.2.2
     apiVersion: v2
     appVersion: 0.2.2
@@ -1577,4 +1610,4 @@ entries:
     urls:
     - https://github.com/otwld/ollama-helm/releases/download/ollama-0.1.0/ollama-0.1.0.tgz
     version: 0.1.0
-generated: "2024-07-13T13:20:41.392307+08:00"
+generated: "2024-07-16T13:12:23.238931+08:00"
