@@ -63,6 +63,9 @@ ollama:
   # -- Add insecure flag for pulling at container startup
   insecure: false
 
+  # -- Override ollama-data volume mount path, default: "/root/.ollama"
+  mountPath: ""
+
 # Service account
 # ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/
 serviceAccount:

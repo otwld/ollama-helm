@@ -13,7 +13,8 @@ annotations:
   artifacthub.io/changes: |
     - kind: added
       description: Add shared host namespace hostIPC, hostPID and hostNetwork
-
+    - kind: added
+      description: add ollama.mountPath to override default ollama mountPath
 
 kubeVersion: "^1.16.0-0"
 home: https://ollama.ai/
