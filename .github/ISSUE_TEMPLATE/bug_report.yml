@@ -46,7 +46,7 @@ body:
   - type: textarea
     id: values
     attributes:
-      label: Relevant log output
+      label: Your values.yaml
       description: Please share the contents of your values.yaml file. If sensitive information is included, consider redacting it.
       render: yaml
   - type: textarea
