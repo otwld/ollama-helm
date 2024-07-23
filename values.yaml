@@ -53,6 +53,10 @@ ollama:
     # -- Specify the number of GPU
     number: 1
 
+    # -- only for nvidia cards; change to (example) 'nvidia.com/mig-1g.10gb' to use MIG slice
+    nvidiaResource: "nvidia.com/gpu"
+    # nvidiaResource: "nvidia.com/mig-1g.10gb" # example
+
   # -- List of models to pull at container startup
   # The more you add, the longer the container will take to start if models are not present
   # models:
