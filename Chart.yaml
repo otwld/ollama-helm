@@ -13,6 +13,8 @@ annotations:
   artifacthub.io/changes: |
     - kind: changed
       description: add basic support for nvidia MIG
+    - kind: fixed
+      description: missing ollama.mountPath to knative service
 
 kubeVersion: "^1.16.0-0"
 home: https://ollama.ai/
