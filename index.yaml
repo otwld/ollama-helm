@@ -4,6 +4,39 @@ entries:
   - annotations:
       artifacthub.io/category: ai-machine-learning
       artifacthub.io/changes: |
+        - kind: added
+          description: add basic support for nvidia MIG
+        - kind: fixed
+          description: missing ollama.mountPath to knative service
+        - kind: changed
+          description: upgrade ollama to 0.2.8
+    apiVersion: v2
+    appVersion: 0.2.8
+    created: "2024-07-23T23:45:11.436993+08:00"
+    description: Get up and running with large language models locally.
+    digest: 06e7447181b67a1fed433ae0d80f9950370bb22b7d07b98b73a17576c4f64531
+    home: https://ollama.ai/
+    icon: https://ollama.ai/public/ollama.png
+    keywords:
+    - ai
+    - llm
+    - llama
+    - mistral
+    kubeVersion: ^1.16.0-0
+    maintainers:
+    - email: contact@otwld.com
+      name: Otwld
+    name: ollama
+    sources:
+    - https://github.com/ollama/ollama
+    - https://github.com/otwld/ollama-helm
+    type: application
+    urls:
+    - https://github.com/otwld/ollama-helm/releases/download/ollama-0.46.0/ollama-0.46.0.tgz
+    version: 0.46.0
+  - annotations:
+      artifacthub.io/category: ai-machine-learning
+      artifacthub.io/changes: |
         - kind: changed
           description: upgrade ollama to 0.2.7
     apiVersion: v2
@@ -1639,4 +1672,4 @@ entries:
     urls:
     - https://github.com/otwld/ollama-helm/releases/download/ollama-0.1.0/ollama-0.1.0.tgz
     version: 0.1.0
-generated: "2024-07-19T17:53:20.017757+08:00"
+generated: "2024-07-23T23:45:11.437104+08:00"
