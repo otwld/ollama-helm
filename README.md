@@ -1,6 +1,7 @@
 ![otwld ollama helm chart banner](./banner.png)
 
 [![Artifact Hub](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/ollama-helm)](https://artifacthub.io/packages/search?repo=ollama-helm)
+[![Build Status](https://drone.outworld.fr/api/badges/otwld/ollama-helm/status.svg)](https://drone.outworld.fr/otwld/ollama-helm)
 [![Discord](https://img.shields.io/badge/Discord-OTWLD-blue?logo=discord&logoColor=white)](https://discord.gg/U24mpqTynB)
 
 
