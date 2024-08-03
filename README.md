@@ -61,7 +61,7 @@ Substitute your values if they differ from the examples. See `helm delete --help
 ## Examples
 - **It's highly recommended to run an updated version of Kubernetes for deploying ollama with GPU**
 
-### Basic values.yaml example with GPU and two models pull at startup
+### Basic values.yaml example with GPU and two models pulled at startup
 ```
 ollama:
   gpu:
