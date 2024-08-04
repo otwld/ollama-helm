@@ -310,6 +310,9 @@ updateStrategy:
   # -- Can be "Recreate" or "RollingUpdate". Default is RollingUpdate
   type: ""
 
+# -- Topology Spread Constraints for pod assignment
+topologySpreadConstraints: {}
+
 # -- Init containers to add to the pod
 initContainers: []
 # - name: startup-tool

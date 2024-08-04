@@ -142,8 +142,8 @@ ingress:
 | nodeSelector | object | `{}` | Node labels for pod assignment. |
 | ollama.gpu.enabled | bool | `false` | Enable GPU integration |
 | ollama.gpu.number | int | `1` | Specify the number of GPU |
+| ollama.gpu.nvidiaResource | string | `"nvidia.com/gpu"` | only for nvidia cards; change to (example) 'nvidia.com/mig-1g.10gb' to use MIG slice |
 | ollama.gpu.type | string | `"nvidia"` | GPU type: 'nvidia' or 'amd' If 'ollama.gpu.enabled', default value is nvidia If set to 'amd', this will add 'rocm' suffix to image tag if 'image.tag' is not override This is due cause AMD and CPU/CUDA are different images |
-| ollama.gpu.nvidiaResource | string | `"nvidia.com/gpu"` | Resource to use for nvidia cards; change to (example) 'nvidia.com/mig-1g.10gb' to use MIG slice. MIG setup is not done by this chart and best done through nvidia's gpu-operator separately. |
 | ollama.insecure | bool | `false` | Add insecure flag for pulling at container startup |
 | ollama.models | list | `[]` | List of models to pull at container startup The more you add, the longer the container will take to start if models are not present models:  - llama2  - mistral |
 | ollama.mountPath | string | `""` | Override ollama-data volume mount path, default: "/root/.ollama" |
@@ -179,6 +179,7 @@ ingress:
 | serviceAccount.create | bool | `true` | Specifies whether a service account should be created |
 | serviceAccount.name | string | `""` | The name of the service account to use. If not set and create is true, a name is generated using the fullname template |
 | tolerations | list | `[]` | Tolerations for pod assignment |
+| topologySpreadConstraints | object | `{}` | Topology Spread Constraints for pod assignment |
 | updateStrategy | object | `{"type":""}` | How to replace existing pods |
 | updateStrategy.type | string | `""` | Can be "Recreate" or "RollingUpdate". Default is RollingUpdate |
 | volumeMounts | list | `[]` | Additional volumeMounts on the output Deployment definition. |
