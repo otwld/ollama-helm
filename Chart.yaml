@@ -4,15 +4,15 @@ description: Get up and running with large language models locally.
 
 type: application
 
-version: 0.51.0
+version: 0.52.0
 
-appVersion: "0.3.3"
+appVersion: "0.3.4"
 
 annotations:
   artifacthub.io/category: ai-machine-learning
   artifacthub.io/changes: |
-    - kind: added
-      description: add topologySpreadConstraints
+    - kind: changed
+      description: upgrade ollama to 0.3.4
 
 kubeVersion: "^1.16.0-0"
 home: https://ollama.ai/
