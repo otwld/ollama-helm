@@ -39,13 +39,19 @@ ollama:
 
     # -- Specify the number of GPU
     number: 1
-
+    mig: 
+      # Specify the mig devices and the corresponding number
+      # If enabled you will have to specify the mig devices
+      enabled: false
+      devices:
+        1g.10gb: 1
+ 
   # -- List of models to pull at container startup
   # The more you add, the longer the container will take to start if models are not present
   # models:
   #  - llama2
   #  - mistral
-  models: {}
+  models: []
 
   # -- Add insecure flag for pulling at container startup
   insecure: false
