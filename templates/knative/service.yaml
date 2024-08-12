@@ -1,48 +1,22 @@
-{{- if not .Values.knative.enabled }}
-apiVersion: apps/v1
-kind: Deployment
+{{- if .Values.knative.enabled }}
+apiVersion: serving.knative.dev/v1
+kind: Service
 metadata:
   name: {{ include "ollama.fullname" . }}
   labels:
     {{- include "ollama.labels" . | nindent 4 }}
 spec:
-  {{- if not .Values.autoscaling.enabled }}
-  replicas: {{ .Values.replicaCount }}
-  {{- end }}
-  {{- if or .Values.updateStrategy.type .Values.updateStrategy.rollingUpdate }}
-  strategy: {{ .Values.updateStrategy | toYaml | nindent 4 }}
-  {{- end }}
-  selector:
-    matchLabels:
-      {{- include "ollama.selectorLabels" . | nindent 6 }}
   template:
-    metadata:
-      {{- with .Values.podAnnotations }}
-      annotations:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      labels:
-        {{- include "ollama.labels" . | nindent 8 }}
-        {{- with .Values.podLabels }}
-        {{- toYaml . | nindent 8 }}
-        {{- end }}
     spec:
-      {{- if .Values.hostIPC }}
-      hostIPC: {{ .Values.hostIPC }}
-      {{- end }}
-      {{- if .Values.hostPID }}
-      hostPID: {{ .Values.hostPID }}
-      {{- end }}
-      {{- if .Values.hostNetwork }}
-      hostNetwork: {{ .Values.hostNetwork }}
-      {{- end }}
+      containerConcurrency: {{ .Values.knative.containerConcurrency }}
+      timeoutSeconds: {{ .Values.knative.timeoutSeconds }}
+      responseStartTimeoutSeconds: {{ .Values.knative.responseStartTimeoutSeconds }}
+      idleTimeoutSeconds: {{ .Values.knative.idleTimeoutSeconds }}
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       serviceAccountName: {{ include "ollama.serviceAccountName" . }}
-      securityContext:
-        {{- toYaml .Values.podSecurityContext | nindent 8 }}
       {{- if .Values.runtimeClassName }}
       runtimeClassName: {{ .Values.runtimeClassName | quote }}
       {{- end }}
@@ -51,15 +25,12 @@ spec:
         {{- tpl (toYaml . ) $ | nindent 8 }}
       {{- end }}
       containers:
-        - name: {{ .Chart.Name }}
+        - image: "{{ .Values.image.repository }}:{{ .Values.image.tag |  default (ternary (printf "%s-rocm" .Chart.AppVersion) (.Chart.AppVersion) (and (.Values.ollama.gpu.enabled) (eq .Values.ollama.gpu.type "amd"))) }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag |  default (ternary (printf "%s-rocm" .Chart.AppVersion) (.Chart.AppVersion) (and (.Values.ollama.gpu.enabled) (eq .Values.ollama.gpu.type "amd"))) }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
-            - name: http
-              containerPort: {{ .Values.service.port }}
-              protocol: TCP
+            - containerPort: {{ .Values.service.port }}
           env:
             {{- if and .Values.ollama.gpu.enabled (or (eq .Values.ollama.gpu.type "nvidia") (not .Values.ollama.gpu.type))}}
             - name: PATH
@@ -82,25 +53,9 @@ spec:
           resources:
             {{- $limits := default dict .Values.resources.limits }}
             {{- if .Values.ollama.gpu.enabled }}
-            # If gpu is enabled, it can either be a NVIDIA card or a AMD card
               {{- if or (eq .Values.ollama.gpu.type "nvidia") (not .Values.ollama.gpu.type) }}
-              # NVIDIA is assumed by default if no value is set and GPU is enabled
-              # NVIDIA cards can have mig enabled (i.e., the card is sliced into parts
-              # Therefore, the first case is no migs enabled
-                {{- if or (not .Values.ollama.gpu.mig) (not .Values.ollama.gpu.mig.enabled ) }}
-                  {{- $gpuLimit := dict (.Values.ollama.gpu.nvidiaResource | default "nvidia.com/gpu") (.Values.ollama.gpu.number | default 1) }}
-                  {{- $limits = merge $limits $gpuLimit }}
-              # Second case is mig is enabled
-                {{- else if or (.Values.ollama.gpu.mig.enabled) }}
-                  # Initialize empty dictionary
-                  {{- $migDevices := dict -}}
-                  # Loop over the entries in the mig devices
-                  {{- range $key, $value := .Values.ollama.gpu.mig.devices }}
-                    {{- $migKey := printf "nvidia.com/mig-%s" $key -}}
-                    {{- $migDevices = merge $migDevices (dict $migKey $value) -}}
-                  {{- end }}
-                  {{- $limits = merge $limits $migDevices}}
-                {{- end }}
+                {{- $gpuLimit := dict (.Values.ollama.gpu.nvidiaResource | default "nvidia.com/gpu") (.Values.ollama.gpu.number | default 1) }}
+                {{- $limits = merge $limits $gpuLimit }}
               {{- end }}
               {{- if eq .Values.ollama.gpu.type "amd" }}
                 {{- $gpuLimit := dict "amd.com/gpu" (.Values.ollama.gpu.number | default 1) }}
@@ -169,25 +124,13 @@ spec:
       {{- end }}
       {{- if or .Values.ollama.gpu.enabled .Values.tolerations }}
       tolerations:
-      {{- if and .Values.ollama.gpu.enabled (and 
-              ( or (eq .Values.ollama.gpu.type "nvidia") (not .Values.ollama.gpu.type)) 
-              ( or (not .Values.ollama.gpu.mig) (not .Values.ollama.gpu.mig.enabled))
-            ) }}
+        {{- if and .Values.ollama.gpu.enabled (or (eq .Values.ollama.gpu.type "nvidia") (not .Values.ollama.gpu.type)) }}
         - key: "{{(.Values.ollama.gpu.nvidiaResource | default "nvidia.com/gpu")}}"
           operator: Exists
           effect: NoSchedule
-          {{- else if and .Values.ollama.gpu.enabled (and 
-              ( or (eq .Values.ollama.gpu.type "nvidia") (not .Values.ollama.gpu.type)) 
-              (( .Values.ollama.gpu.mig.enabled))
-            ) }}
-            {{- range $key, $value := .Values.ollama.gpu.mig.devices }}
-        - key: nvidia.com/mig-{{ $key }}
-          operator: Exists
-          effect: NoSchedule
-            {{- end }}
-          {{- end }}
         {{- end }}
         {{- with .Values.tolerations }}
           {{- toYaml . | nindent 8 }}
         {{- end }}
       {{- end }}
+{{- end }}
