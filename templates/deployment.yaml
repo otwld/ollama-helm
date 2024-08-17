@@ -169,7 +169,7 @@ spec:
       {{- end }}
       {{- if or .Values.ollama.gpu.enabled .Values.tolerations }}
       tolerations:
-      {{- if and .Values.ollama.gpu.enabled (and 
+        {{- if and .Values.ollama.gpu.enabled (and 
               ( or (eq .Values.ollama.gpu.type "nvidia") (not .Values.ollama.gpu.type)) 
               ( or (not .Values.ollama.gpu.mig) (not .Values.ollama.gpu.mig.enabled))
             ) }}
@@ -185,9 +185,9 @@ spec:
           operator: Exists
           effect: NoSchedule
             {{- end }}
-          {{- end }}
         {{- end }}
         {{- with .Values.tolerations }}
           {{- toYaml . | nindent 8 }}
         {{- end }}
       {{- end }}
+{{- end }}
