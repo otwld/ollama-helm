@@ -4,14 +4,14 @@ description: Get up and running with large language models locally.
 
 type: application
 
-version: 0.53.0
+version: 0.54.0
 
 appVersion: "0.3.6"
 
 annotations:
   artifacthub.io/category: ai-machine-learning
   artifacthub.io/changes: |
-    - kind: changed
+    - kind: added
       description: add .Values.persistentVolume.volumeName
 
 kubeVersion: "^1.16.0-0"
