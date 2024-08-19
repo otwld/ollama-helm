@@ -41,7 +41,7 @@ body:
     id: logs
     attributes:
       label: Relevant log output
-      description: If relevant, please provide the logs from the pods to help diagnose the issue.
+      description: If relevant, please provide the logs from the pods to help diagnose the issue. (Enable OLLAMA_DEBUG for more details)
       render: shell
   - type: textarea
     id: values
