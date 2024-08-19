@@ -12,7 +12,7 @@ annotations:
   artifacthub.io/category: ai-machine-learning
   artifacthub.io/changes: |
     - kind: changed
-      description: upgrade ollama to 0.3.6
+      description: add .Values.persistentVolume.volumeName
 
 kubeVersion: "^1.16.0-0"
 home: https://ollama.ai/
