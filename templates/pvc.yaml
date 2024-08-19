@@ -23,6 +23,9 @@ spec:
 {{- if .Values.persistentVolume.volumeMode }}
   volumeMode: "{{ .Values.persistentVolume.volumeMode }}"
 {{- end }}
+{{- if .Values.persistentVolume.volumeName }}
+  volumeName: "{{ .Values.persistentVolume.volumeName }}"
+{{- end }}
   resources:
     requests:
       storage: "{{ .Values.persistentVolume.size }}"

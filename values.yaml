@@ -296,6 +296,11 @@ persistentVolume:
   # Useful if the volume's root directory is not empty
   subPath: ""
 
+  # -- Pre-existing PV to attach this claim to
+  # Useful if a CSI auto-provisions a PV for you and you want to always
+  # reference the PV moving forward
+  volumeName: ""
+
 # -- Node labels for pod assignment.
 nodeSelector: {}
 

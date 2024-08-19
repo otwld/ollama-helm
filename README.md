@@ -155,6 +155,7 @@ ingress:
 | persistentVolume.storageClass | string | `""` | Ollama server data Persistent Volume Storage Class If defined, storageClassName: <storageClass> If set to "-", storageClassName: "", which disables dynamic provisioning If undefined (the default) or set to null, no storageClassName spec is set, choosing the default provisioner.  (gp2 on AWS, standard on GKE, AWS & OpenStack) |
 | persistentVolume.subPath | string | `""` | Subdirectory of Ollama server data Persistent Volume to mount Useful if the volume's root directory is not empty |
 | persistentVolume.volumeMode | string | `""` | Ollama server data Persistent Volume Binding Mode If defined, volumeMode: <volumeMode> If empty (the default) or set to null, no volumeBindingMode spec is set, choosing the default mode. |
+| persistentVolume.volumeName | string | `""` | Ollama server Persistent Volume name; can be used to force-attach the created PVC to a specific PV. |
 | podAnnotations | object | `{}` | Map of annotations to add to the pods |
 | podLabels | object | `{}` | Map of labels to add to the pods |
 | podSecurityContext | object | `{}` | Pod Security Context |
