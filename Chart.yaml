@@ -13,6 +13,8 @@ annotations:
   artifacthub.io/changes: |
     - kind: changed
       description: upgrade ollama to 0.3.8
+    - kind: added
+      description: multiple MIG support
 
 kubeVersion: "^1.16.0-0"
 home: https://ollama.ai/
