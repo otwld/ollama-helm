@@ -60,10 +60,12 @@ ollama:
     # If you want to use more than one NVIDIA MIG you can use the following syntax (then nvidiaResource is ignored and only the configuration in the following MIG section is used)
 
     mig:
+      # -- Enable multiple mig devices
       # If enabled you will have to specify the mig devices
       # If enabled is set to false this section is ignored
       enabled: false
-      # Specify the mig devices and the corresponding number
+
+      # -- Specify the mig devices and the corresponding number
       devices: {}
           #        1g.10gb: 1
           #        3g.40gb: 1

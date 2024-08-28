@@ -141,7 +141,9 @@ ingress:
 | nameOverride | string | `""` | String to partially override template  (will maintain the release name) |
 | nodeSelector | object | `{}` | Node labels for pod assignment. |
 | ollama.gpu.enabled | bool | `false` | Enable GPU integration |
-| ollama.gpu.number | int | `1` | Specify the number of GPU |
+| ollama.gpu.mig.devices | object | `{}` | Specify the mig devices and the corresponding number |
+| ollama.gpu.mig.enabled | bool | `false` | Enable multiple mig devices If enabled you will have to specify the mig devices If enabled is set to false this section is ignored |
+| ollama.gpu.number | int | `1` | Specify the number of GPU If you use MIG section below then this parameter is ignored |
 | ollama.gpu.nvidiaResource | string | `"nvidia.com/gpu"` | only for nvidia cards; change to (example) 'nvidia.com/mig-1g.10gb' to use MIG slice |
 | ollama.gpu.type | string | `"nvidia"` | GPU type: 'nvidia' or 'amd' If 'ollama.gpu.enabled', default value is nvidia If set to 'amd', this will add 'rocm' suffix to image tag if 'image.tag' is not override This is due cause AMD and CPU/CUDA are different images |
 | ollama.insecure | bool | `false` | Add insecure flag for pulling at container startup |
@@ -155,7 +157,7 @@ ingress:
 | persistentVolume.storageClass | string | `""` | Ollama server data Persistent Volume Storage Class If defined, storageClassName: <storageClass> If set to "-", storageClassName: "", which disables dynamic provisioning If undefined (the default) or set to null, no storageClassName spec is set, choosing the default provisioner.  (gp2 on AWS, standard on GKE, AWS & OpenStack) |
 | persistentVolume.subPath | string | `""` | Subdirectory of Ollama server data Persistent Volume to mount Useful if the volume's root directory is not empty |
 | persistentVolume.volumeMode | string | `""` | Ollama server data Persistent Volume Binding Mode If defined, volumeMode: <volumeMode> If empty (the default) or set to null, no volumeBindingMode spec is set, choosing the default mode. |
-| persistentVolume.volumeName | string | `""` | Ollama server Persistent Volume name; can be used to force-attach the created PVC to a specific PV. |
+| persistentVolume.volumeName | string | `""` | Pre-existing PV to attach this claim to Useful if a CSI auto-provisions a PV for you and you want to always reference the PV moving forward |
 | podAnnotations | object | `{}` | Map of annotations to add to the pods |
 | podLabels | object | `{}` | Map of labels to add to the pods |
 | podSecurityContext | object | `{}` | Pod Security Context |
