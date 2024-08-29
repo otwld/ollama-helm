@@ -131,6 +131,7 @@ ingress:
 | knative.idleTimeoutSeconds | int | `300` | Knative service idle timeout seconds |
 | knative.responseStartTimeoutSeconds | int | `300` | Knative service response start timeout seconds |
 | knative.timeoutSeconds | int | `300` | Knative service timeout seconds |
+| lifecycle | object | `{}` | Lifecycle for pod assignment (override ollama.models startup pulling) |
 | livenessProbe.enabled | bool | `true` | Enable livenessProbe |
 | livenessProbe.failureThreshold | int | `6` | Failure threshold for livenessProbe |
 | livenessProbe.initialDelaySeconds | int | `60` | Initial delay seconds for livenessProbe |
