@@ -323,6 +323,9 @@ tolerations: []
 # -- Affinity for pod assignment
 affinity: {}
 
+# -- Lifecycle for pod assignment (override ollama.models startup pulling)
+lifecycle: {}
+
 # -- How to replace existing pods
 updateStrategy:
   # -- Can be "Recreate" or "RollingUpdate". Default is RollingUpdate
