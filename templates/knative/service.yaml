@@ -93,11 +93,16 @@ spec:
             successThreshold: {{ .Values.readinessProbe.successThreshold }}
             failureThreshold: {{ .Values.readinessProbe.failureThreshold }}
           {{- end }}
+          {{- with .Values.lifecycle}}
+          lifecycle:
+            {{- toYaml . | nindent 12 }}
+          {{- else }}
           {{- if or .Values.ollama.models .Values.ollama.defaultModel }}
           lifecycle:
             postStart:
               exec:
                 command: [ "/bin/sh", "-c", "{{- printf "echo %s | xargs -n1 /bin/ollama pull %s" (include "ollama.modelList" .) (ternary "--insecure" "" .Values.ollama.insecure)}}" ]
+          {{- end }}
           {{- end }}
       volumes:
         - name: ollama-data
