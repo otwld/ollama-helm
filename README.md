@@ -7,7 +7,7 @@
 
 [Ollama](https://ollama.ai/), get up and running with large language models, locally.
 
-This Community Chart is for deploying [Ollama](https://github.com/ollama/ollama). 
+This Community Chart is for deploying [Ollama](https://github.com/ollama/ollama).
 
 ## Requirements
 
@@ -53,7 +53,7 @@ Substitute your values if they differ from the examples. See `helm delete --help
 ## Interact with Ollama
 
 - **Ollama documentation can be found [HERE](https://github.com/ollama/ollama/tree/main/docs)**
-- Interact with RESTful API: [Ollama API](https://github.com/ollama/ollama/blob/main/docs/api.md) 
+- Interact with RESTful API: [Ollama API](https://github.com/ollama/ollama/blob/main/docs/api.md)
 - Interact with official clients libraries: [ollama-js](https://github.com/ollama/ollama-js#custom-client) and [ollama-python](https://github.com/ollama/ollama-python#custom-client)
 - Interact with langchain: [langchain-js](https://github.com/ollama/ollama/blob/main/docs/tutorials/langchainjs.md) and [langchain-python](https://github.com/ollama/ollama/blob/main/docs/tutorials/langchainpy.md)
 
@@ -67,15 +67,15 @@ ollama:
   gpu:
     # -- Enable GPU integration
     enabled: true
-    
+
     # -- GPU type: 'nvidia' or 'amd'
     type: 'nvidia'
-    
+
     # -- Specify the number of GPU to 1
     number: 1
-   
+
   # -- List of models to pull at container startup
-  models: 
+  models:
     - mistral
     - llama2
 ```
@@ -85,10 +85,10 @@ ollama:
 ollama:
   models:
     - llama2
-  
+
 ingress:
   enabled: true
-    hosts:
+  hosts:
     - host: ollama.domain.lan
       paths:
         - path: /
