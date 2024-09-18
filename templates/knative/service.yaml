@@ -35,12 +35,6 @@ spec:
             {{- if and .Values.ollama.gpu.enabled (or (eq .Values.ollama.gpu.type "nvidia") (not .Values.ollama.gpu.type))}}
             - name: PATH
               value: /usr/local/nvidia/bin:/usr/local/cuda/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
-            - name: LD_LIBRARY_PATH
-              value: /usr/local/nvidia/lib:/usr/local/nvidia/lib64
-            - name: NVIDIA_DRIVER_CAPABILITIES
-              value: compute,utility
-            - name: NVIDIA_VISIBLE_DEVICES
-              value: all
             {{- end}}
             {{- with .Values.extraEnv }}
               {{- toYaml . | nindent 12 }}
