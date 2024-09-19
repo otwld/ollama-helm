@@ -11,8 +11,8 @@ appVersion: "0.3.10"
 annotations:
   artifacthub.io/category: ai-machine-learning
   artifacthub.io/changes: |
-    - kind: changed
-      description: upgrade app version to 0.3.10
+    - kind: removed
+      description: remove duplicated environment variables already defined in Dockerfile
 
 kubeVersion: "^1.16.0-0"
 home: https://ollama.ai/
