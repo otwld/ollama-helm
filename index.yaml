@@ -5,6 +5,39 @@ entries:
       artifacthub.io/category: ai-machine-learning
       artifacthub.io/changes: |
         - kind: changed
+          description: upgrade app version to 0.3.11
+        - kind: fixed
+          description: lifecycle postStart hook wait ollama service before pulling models
+        - kind: removed
+          description: remove duplicated environment variables already defined in Dockerfile
+    apiVersion: v2
+    appVersion: 0.3.11
+    created: "2024-09-19T13:49:56.834431+08:00"
+    description: Get up and running with large language models locally.
+    digest: 6389e17ed5da81af54ddb3a6c86ee6b4186917388a46a8015c85f4119679ee85
+    home: https://ollama.ai/
+    icon: https://ollama.ai/public/ollama.png
+    keywords:
+    - ai
+    - llm
+    - llama
+    - mistral
+    kubeVersion: ^1.16.0-0
+    maintainers:
+    - email: contact@otwld.com
+      name: OTWLD
+    name: ollama
+    sources:
+    - https://github.com/ollama/ollama
+    - https://github.com/otwld/ollama-helm
+    type: application
+    urls:
+    - https://github.com/otwld/ollama-helm/releases/download/ollama-0.59.0/ollama-0.59.0.tgz
+    version: 0.59.0
+  - annotations:
+      artifacthub.io/category: ai-machine-learning
+      artifacthub.io/changes: |
+        - kind: changed
           description: upgrade app version to 0.3.10
     apiVersion: v2
     appVersion: 0.3.10
@@ -2022,4 +2055,4 @@ entries:
     urls:
     - https://github.com/otwld/ollama-helm/releases/download/ollama-0.1.0/ollama-0.1.0.tgz
     version: 0.1.0
-generated: "2024-09-10T13:22:43.044005+08:00"
+generated: "2024-09-19T13:49:56.834563+08:00"
