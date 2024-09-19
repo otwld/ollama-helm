@@ -140,7 +140,14 @@ spec:
           lifecycle:
             postStart:
               exec:
-                command: [ "/bin/sh", "-c", "{{- printf "echo %s | xargs -n1 /bin/ollama pull %s" (include "ollama.modelList" .) (ternary "--insecure" "" .Values.ollama.insecure)}}" ]
+                command:
+                  - /bin/sh
+                  - -c
+                  - |
+                    while ! /bin/ollama ps > /dev/null 2>&1; do
+                      sleep 5
+                    done
+                    echo "{{ include "ollama.modelList" . }}" | xargs -n1 /bin/ollama pull {{ternary "--insecure" "" .Values.ollama.insecure | toString }}
           {{- end }}
           {{- end }}
       volumes:
