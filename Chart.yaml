@@ -11,6 +11,8 @@ appVersion: "0.3.10"
 annotations:
   artifacthub.io/category: ai-machine-learning
   artifacthub.io/changes: |
+    - kind: fixed
+      description: lifecycle postStart hook wait ollama service before pulling models
     - kind: removed
       description: remove duplicated environment variables already defined in Dockerfile
 
