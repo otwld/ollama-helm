@@ -178,6 +178,7 @@ ingress:
 | service.nodePort | int | `31434` | Service node port when service type is 'NodePort' |
 | service.port | int | `11434` | Service port |
 | service.type | string | `"ClusterIP"` | Service type |
+| service.loadBalancerIP | string | `""` | Loadbalancer IP address |
 | serviceAccount.annotations | object | `{}` | Annotations to add to the service account |
 | serviceAccount.automount | bool | `true` | Automatically mount a ServiceAccount's API credentials? |
 | serviceAccount.create | bool | `true` | Specifies whether a service account should be created |
