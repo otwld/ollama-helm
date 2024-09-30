@@ -19,6 +19,9 @@ spec:
       {{- if contains "NodePort" .Values.service.type }}
       nodePort: {{ .Values.service.nodePort }}
       {{- end }}
+{{- if .Values.service.loadBalancerIP }}
+  loadBalancerIP: {{ .Values.service.loadBalancerIP | quote }}
+{{- end }}
   selector:
     {{- include "ollama.selectorLabels" . | nindent 4 }}
 {{- end }}

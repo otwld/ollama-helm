@@ -133,6 +133,9 @@ service:
   # -- Service node port when service type is 'NodePort'
   nodePort: 31434
 
+  # -- Load Balancer IP address
+  loadBalancerIP:
+
   # -- Annotations to add to the service
   annotations: {}
 
