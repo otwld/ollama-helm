@@ -88,11 +88,11 @@ ollama:
   
 ingress:
   enabled: true
-    hosts:
-    - host: ollama.domain.lan
-      paths:
-        - path: /
-          pathType: Prefix
+  hosts:
+  - host: ollama.domain.lan
+    paths:
+      - path: /
+        pathType: Prefix
 ```
 
 - *API is now reachable at `ollama.domain.lan`*
@@ -185,8 +185,7 @@ ingress:
 | serviceAccount.name | string | `""` | The name of the service account to use. If not set and create is true, a name is generated using the fullname template |
 | tolerations | list | `[]` | Tolerations for pod assignment |
 | topologySpreadConstraints | object | `{}` | Topology Spread Constraints for pod assignment |
-| updateStrategy | object | `{"type":""}` | How to replace existing pods |
-| updateStrategy.type | string | `""` | Can be "Recreate" or "RollingUpdate". Default is RollingUpdate |
+| updateStrategy.type | string | `"Recreate"` | Can be "Recreate" or "RollingUpdate". Default is RollingUpdate |
 | volumeMounts | list | `[]` | Additional volumeMounts on the output Deployment definition. |
 | volumes | list | `[]` | Additional volumes on the output Deployment definition. |
 ----------------------------------------------
