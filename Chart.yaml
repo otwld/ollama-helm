@@ -4,7 +4,7 @@ description: Get up and running with large language models locally.
 
 type: application
 
-version: 0.60.0
+version: 0.61.0
 
 appVersion: "0.3.12"
 
@@ -13,6 +13,8 @@ annotations:
   artifacthub.io/changes: |
     - kind: fixed
       description: set default updateStrategy to Recreate
+    - kind: added
+      description: add service.loadBalancerIP
 
 kubeVersion: "^1.16.0-0"
 home: https://ollama.ai/
