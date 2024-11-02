@@ -107,6 +107,9 @@ spec:
           volumeMounts:
             - name: ollama-data
               mountPath: {{ .Values.ollama.mountPath | default "/root/.ollama" }}
+              {{- if .Values.persistentVolume.subPath }}
+              subPath: {{ .Values.persistentVolume.subPath }}
+              {{- end }}
           {{- with .Values.volumeMounts }}
             {{- toYaml . | nindent 12 }}
           {{- end }}
