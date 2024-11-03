@@ -4,6 +4,38 @@ entries:
   - annotations:
       artifacthub.io/category: ai-machine-learning
       artifacthub.io/changes: |
+        - kind: fixed
+          description: Minor bug
+          links:
+            - name: GitHub Issue "subPath specified but not used"
+              url: https://github.com/otwld/ollama-helm/issues/110
+    apiVersion: v2
+    appVersion: 0.3.14
+    created: "2024-11-04T07:58:29.447527+08:00"
+    description: Get up and running with large language models locally.
+    digest: 26aa41d5cbc0b577b39612de73cc2612e8a8b305717097f65dc7f6e0d93a3e79
+    home: https://ollama.ai/
+    icon: https://ollama.ai/public/ollama.png
+    keywords:
+    - ai
+    - llm
+    - llama
+    - mistral
+    kubeVersion: ^1.16.0-0
+    maintainers:
+    - email: contact@otwld.com
+      name: OTWLD
+    name: ollama
+    sources:
+    - https://github.com/ollama/ollama
+    - https://github.com/otwld/ollama-helm
+    type: application
+    urls:
+    - https://github.com/otwld/ollama-helm/releases/download/ollama-0.63.1/ollama-0.63.1.tgz
+    version: 0.63.1
+  - annotations:
+      artifacthub.io/category: ai-machine-learning
+      artifacthub.io/changes: |
         - kind: changed
           description: upgrade app version to 0.3.14
     apiVersion: v2
@@ -2173,4 +2205,4 @@ entries:
     urls:
     - https://github.com/otwld/ollama-helm/releases/download/ollama-0.1.0/ollama-0.1.0.tgz
     version: 0.1.0
-generated: "2024-10-21T13:29:54.02908+08:00"
+generated: "2024-11-04T07:58:29.447642+08:00"
