@@ -4,15 +4,18 @@ description: Get up and running with large language models locally.
 
 type: application
 
-version: 0.63.0
+version: 0.63.1
 
 appVersion: "0.3.14"
 
 annotations:
   artifacthub.io/category: ai-machine-learning
   artifacthub.io/changes: |
-    - kind: changed
-      description: upgrade app version to 0.3.14
+    - kind: fixed
+      description: Minor bug
+      links:
+        - name: GitHub Issue "subPath specified but not used"
+          url: https://github.com/otwld/ollama-helm/issues/110
 
 kubeVersion: "^1.16.0-0"
 home: https://ollama.ai/
