@@ -270,6 +270,10 @@ extraEnv: []
 #  - name: OLLAMA_DEBUG
 #    value: "1"
 
+# -- Additionl environment variables from external sources (like ConfigMap)
+extraEnvFrom: []
+#  - configMapRef:
+#      name: my-env-configmap
 
 # Enable persistence using Persistent Volume Claims
 # ref: https://kubernetes.io/docs/concepts/storage/persistent-volumes/
