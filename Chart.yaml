@@ -16,6 +16,11 @@ annotations:
       links:
         - name: Ollama release v0.4.1
           url: https://github.com/ollama/ollama/releases/tag/v0.4.1
+    - kind: added
+      description: add support for extraEnvFrom
+      links:
+        - name: Support envFrom in container spec
+          url: https://github.com/otwld/ollama-helm/pull/113
 
 kubeVersion: "^1.16.0-0"
 home: https://ollama.ai/
