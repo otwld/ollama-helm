@@ -4,18 +4,18 @@ description: Get up and running with large language models locally.
 
 type: application
 
-version: 0.66.0
+version: 0.66.1
 
 appVersion: "0.4.2"
 
 annotations:
   artifacthub.io/category: ai-machine-learning
   artifacthub.io/changes: |
-    - kind: changed
-      description: upgrade app version to 0.4.2
+    - kind: added
+      description: add support for deploying as a StatefulSet
       links:
-        - name: Ollama release v0.4.2
-          url: https://github.com/ollama/ollama/releases/tag/v0.4.2
+        - name: add support for deploying as a StatefulSet
+          url: https://github.com/otwld/ollama-helm/pull/116
 
 kubeVersion: "^1.16.0-0"
 home: https://ollama.ai/
