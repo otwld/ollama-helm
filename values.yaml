@@ -275,6 +275,38 @@ extraEnvFrom: []
 #  - configMapRef:
 #      name: my-env-configmap
 
+# Enable persistence using StatefulSets
+# ref: https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/
+persistence:
+  # -- Enable persistence using a StatefulSet
+  # This disables the Deployment in favor of a StatefulSet
+  enabled: false
+
+  # -- Ollama server data Persistent Volume Claim Template size used
+  size: 30Gi
+
+  # -- Ollama server data Persistent Volume Storage Class
+  # If defined, storageClassName: <storageClass>
+  # If set to "-", storageClassName: "", which disables dynamic provisioning
+  # If undefined (the default) or set to null, no storageClassName spec is
+  # set, choosing the default provisioner.  (gp2 on AWS, standard on
+  # GKE, AWS & OpenStack)
+  storageClass: ""
+
+  # -- Subdirectory of Ollama server data Persistent Volume to mount
+  # Useful if the volume's root directory is not empty
+  subPath: ""
+
+  # -- Additional volumeClaimTemplates
+  volumeClaimTemplates: []
+
+  # -- Deploy pods in parallel or sequentially. Parallel or OrderedReady
+  podManagementPolicy: "Parallel"
+
+  # -- Specify updateStrategy for the StatefulSet
+  # ref:  https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#update-strategies
+  updateStrategy: {}
+
 # Enable persistence using Persistent Volume Claims
 # ref: https://kubernetes.io/docs/concepts/storage/persistent-volumes/
 persistentVolume:
