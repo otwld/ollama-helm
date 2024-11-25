@@ -154,7 +154,8 @@ spec:
                     while ! /bin/ollama ps > /dev/null 2>&1; do
                       sleep 5
                     done
-                    echo "{{ include "ollama.modelList" . }}" | xargs -n1 /bin/ollama pull {{ternary "--insecure" "" .Values.ollama.insecure | toString }}
+                    echo "{{ include "ollama.modelPullList" . }}" | xargs -n1 /bin/ollama pull {{ternary "--insecure" "" .Values.ollama.insecure | toString }}
+                    echo "{{ include "ollama.modelRunList" . }}" | xargs -n1 /bin/ollama run
           {{- end }}
           {{- end }}
       volumes:
