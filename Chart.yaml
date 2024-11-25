@@ -12,7 +12,7 @@ annotations:
   artifacthub.io/category: ai-machine-learning
   artifacthub.io/changes: |
     - kind: added
-      description: add load model in memory at startup 
+      description: add load model in memory at startup
     - kind: changed
       description: Change ollama.models list to ollama.models.pull list
 
