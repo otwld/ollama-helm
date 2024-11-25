@@ -69,10 +69,7 @@ Create the pulling model list
 {{- if .Values.ollama.models.pull }}
 {{- $modelPullList = concat $modelPullList .Values.ollama.models.pull }}
 {{- end}}
-{{- if .Values.ollama.defaultModel}}
-{{- $modelPullList = append $modelPullList .Values.ollama.defaultModel }}
-{{- end}}
-{{- $modelPullList = $modelPullList | uniq}}
+{{- $modelPullList = $modelPullList | uniq }}
 {{- default (join " " $modelPullList) -}}
 {{- end -}}
 

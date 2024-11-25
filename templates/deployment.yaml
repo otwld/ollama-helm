@@ -143,7 +143,7 @@ spec:
           lifecycle:
             {{- toYaml . | nindent 12 }}
           {{- else }}
-          {{- if or .Values.ollama.models .Values.ollama.defaultModel }}
+          {{- if or .Values.ollama.models.pull .Values.ollama.models.run }}
           lifecycle:
             postStart:
               exec:
@@ -154,8 +154,12 @@ spec:
                     while ! /bin/ollama ps > /dev/null 2>&1; do
                       sleep 5
                     done
+                    {{- if .Values.ollama.models.pull }}
                     echo "{{ include "ollama.modelPullList" . }}" | xargs -n1 /bin/ollama pull {{ternary "--insecure" "" .Values.ollama.insecure | toString }}
+                    {{- end }}
+                    {{- if .Values.ollama.models.run }}
                     echo "{{ include "ollama.modelRunList" . }}" | xargs -n1 /bin/ollama run
+                    {{- end }}
           {{- end }}
           {{- end }}
       volumes:
