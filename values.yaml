@@ -338,7 +338,7 @@ tolerations: []
 # -- Affinity for pod assignment
 affinity: {}
 
-# -- Lifecycle for pod assignment (override ollama.models startup pulling)
+# -- Lifecycle for pod assignment (override ollama.models startup pull/run)
 lifecycle: {}
 
 # How to replace existing pods
