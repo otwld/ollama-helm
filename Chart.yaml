@@ -11,11 +11,10 @@ appVersion: "0.4.3"
 annotations:
   artifacthub.io/category: ai-machine-learning
   artifacthub.io/changes: |
+    - kind: added
+      description: add load model in memory at startup
     - kind: changed
-      description: upgrade app version to 0.4.3
-      links:
-        - name: Ollama release v0.4.3
-          url: https://github.com/ollama/ollama/releases/tag/v0.4.3
+      description: Change ollama.models list to ollama.models.pull list
 
 kubeVersion: "^1.16.0-0"
 home: https://ollama.ai/

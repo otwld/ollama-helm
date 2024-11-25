@@ -62,16 +62,28 @@ Create the name of the service account to use
 {{- end }}
 
 {{/*
-Create the model list
+Create the pulling model list
 */}}
-{{- define "ollama.modelList" -}}
-{{- $modelList := default list}}
-{{- if .Values.ollama.models}}
-{{- $modelList = concat $modelList .Values.ollama.models }}
+{{- define "ollama.modelPullList" -}}
+{{- $modelPullList := default list}}
+{{- if .Values.ollama.models.pull }}
+{{- $modelPullList = concat $modelPullList .Values.ollama.models.pull }}
 {{- end}}
 {{- if .Values.ollama.defaultModel}}
-{{- $modelList = append $modelList .Values.ollama.defaultModel }}
+{{- $modelPullList = append $modelPullList .Values.ollama.defaultModel }}
 {{- end}}
-{{- $modelList = $modelList | uniq}}
-{{- default (join " " $modelList) -}}
+{{- $modelPullList = $modelPullList | uniq}}
+{{- default (join " " $modelPullList) -}}
+{{- end -}}
+
+{{/*
+Create the run model list
+*/}}
+{{- define "ollama.modelRunList" -}}
+{{- $modelRunList := default list}}
+{{- if .Values.ollama.models.run }}
+{{- $modelRunList = concat $modelRunList .Values.ollama.models.run }}
+{{- end}}
+{{- $modelRunList = $modelRunList | uniq}}
+{{- default (join " " $modelRunList) -}}
 {{- end -}}

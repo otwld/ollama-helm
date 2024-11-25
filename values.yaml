@@ -70,12 +70,19 @@ ollama:
           #        1g.10gb: 1
           #        3g.40gb: 1
 
-  # -- List of models to pull at container startup
-  # The more you add, the longer the container will take to start if models are not present
-  # models:
-  #  - llama2
-  #  - mistral
-  models: []
+  models:
+    # -- List of models to pull at container startup
+    # The more you add, the longer the container will take to start if models are not present
+    # pull:
+    #  - llama2
+    #  - mistral
+    pull: []
+
+    # -- List of models to load in memory at container startup
+    # run:
+    #  - llama2
+    #  - mistral
+    run: []
 
   # -- Add insecure flag for pulling at container startup
   insecure: false
@@ -266,6 +273,7 @@ volumeMounts: []
 extraArgs: []
 
 # -- Additional environments variables on the output Deployment definition.
+# For extra OLLAMA env, please refer to https://github.com/ollama/ollama/blob/main/envconfig/config.go
 extraEnv: []
 #  - name: OLLAMA_DEBUG
 #    value: "1"

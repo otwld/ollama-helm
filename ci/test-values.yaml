@@ -1,3 +1,6 @@
 ollama:
   models:
-    - moondream
+    pull:
+      - moondream
+    run:
+      - moondream
