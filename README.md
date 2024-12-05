@@ -92,7 +92,8 @@ ollama:
 ```
 ollama:
   models:
-    - llama2
+    pull:
+      - llama2
   
 ingress:
   enabled: true
@@ -104,6 +105,29 @@ ingress:
 ```
 
 - *API is now reachable at `ollama.domain.lan`*
+
+## Upgrading from 0.X.X to 1.X.X
+
+The version 1.X.X introduces the ability to load models in memory at startup, the values have been changed.
+
+Please change `ollama.models` to `ollama.models.pull` to avoid errors before upgrading:
+
+```yaml
+ollama:
+  models:
+    - mistral
+    - llama2
+```
+
+To:
+
+```yaml
+ollama:
+  models:
+    pull:
+      - mistral
+      - llama2
+```
 
 ## Helm Values
 
