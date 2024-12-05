@@ -6,7 +6,7 @@ type: application
 
 version: 1.0.0
 
-appVersion: "0.4.4"
+appVersion: "0.4.7"
 
 annotations:
   artifacthub.io/category: ai-machine-learning
@@ -17,10 +17,10 @@ annotations:
         - name: Pull request #120
           url: https://github.com/otwld/ollama-helm/pull/120
     - kind: changed
-      description: upgrade app version to 0.4.4
+      description: upgrade app version to 0.4.7
       links:
-        - name: Ollama release v0.4.4
-          url: https://github.com/ollama/ollama/releases/tag/v0.4.4
+        - name: Ollama release v0.4.7
+          url: https://github.com/ollama/ollama/releases/tag/v0.4.7
     - kind: changed
       description: Change ollama.models list to ollama.models.pull list
     - kind: removed
