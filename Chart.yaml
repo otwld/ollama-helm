@@ -14,6 +14,9 @@ annotations:
   artifacthub.io/changes: |
     - kind: fixed
       description: add namespace explicitly
+      links:
+        - name: Pull request #124
+          url: https://github.com/otwld/ollama-helm/pull/124
     - kind: added
       description: add load model in memory at startup
       links:
