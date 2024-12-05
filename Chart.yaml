@@ -12,6 +12,8 @@ annotations:
   artifacthub.io/prerelease: "true"
   artifacthub.io/category: ai-machine-learning
   artifacthub.io/changes: |
+    - kind: fixed
+      description: add namespace explicitly
     - kind: added
       description: add load model in memory at startup
       links:
