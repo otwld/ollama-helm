@@ -9,6 +9,7 @@ version: 1.0.0
 appVersion: "0.4.7"
 
 annotations:
+  artifacthub.io/prerelease: true
   artifacthub.io/category: ai-machine-learning
   artifacthub.io/changes: |
     - kind: added
