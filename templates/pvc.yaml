@@ -1,3 +1,4 @@
+---
 {{- if .Values.persistentVolume.enabled -}}
 {{- if not .Values.persistentVolume.existingClaim -}}
 apiVersion: v1
@@ -10,6 +11,7 @@ metadata:
   labels:
     {{- include "ollama.labels" . | nindent 4 }}
   name: {{ template "ollama.fullname" . }}
+  namespace: {{ include "ollama.namespace" . }}
 spec:
   accessModes:
 {{ toYaml .Values.persistentVolume.accessModes | indent 4 }}
