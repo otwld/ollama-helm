@@ -1,8 +1,10 @@
+---
 {{- if not .Values.knative.enabled }}
 apiVersion: v1
 kind: Service
 metadata:
   name: {{ include "ollama.fullname" . }}
+  namespace: {{ include "ollama.namespace" . }}
   labels:
     {{- include "ollama.labels" . | nindent 4 }}
   {{- with .Values.service.annotations }}
