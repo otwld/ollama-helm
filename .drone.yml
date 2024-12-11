@@ -69,7 +69,7 @@ trigger:
   event:
     - push
     - pull_request
-    - promote
+    - custom
   branch:
     - main
 
@@ -80,8 +80,10 @@ name: publish
 
 
 trigger:
+  event:
+    - promote
   branch:
-    - custom
+    - main
 
 steps:
   - name: publish helm chart to github pages
