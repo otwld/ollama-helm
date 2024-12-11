@@ -4,6 +4,43 @@ entries:
   - annotations:
       artifacthub.io/category: ai-machine-learning
       artifacthub.io/changes: |
+        - kind: fixed
+          description: add namespace explicitly
+          links:
+            - name: Pull request #124
+              url: https://github.com/otwld/ollama-helm/pull/124
+        - kind: changed
+          description: upgrade app version to 0.4.7
+          links:
+            - name: Ollama release v0.5.1
+              url: https://github.com/ollama/ollama/releases/tag/v0.5.1
+    apiVersion: v2
+    appVersion: 0.5.1
+    created: "2024-12-11T17:14:00.065401+01:00"
+    description: Get up and running with large language models locally.
+    digest: 469bbe388b4fb520de843e2d262235bfee9d87fba131e9008cf720bdba5402e2
+    home: https://ollama.ai/
+    icon: https://ollama.ai/public/ollama.png
+    keywords:
+    - ai
+    - llm
+    - llama
+    - mistral
+    kubeVersion: ^1.16.0-0
+    maintainers:
+    - email: contact@otwld.com
+      name: OTWLD
+    name: ollama
+    sources:
+    - https://github.com/ollama/ollama
+    - https://github.com/otwld/ollama-helm
+    type: application
+    urls:
+    - https://github.com/otwld/ollama-helm/releases/download/ollama-1.1.0/ollama-1.1.0.tgz
+    version: 1.1.0
+  - annotations:
+      artifacthub.io/category: ai-machine-learning
+      artifacthub.io/changes: |
         - kind: added
           description: add load model in memory at startup
           links:
@@ -2444,4 +2481,4 @@ entries:
     urls:
     - https://github.com/otwld/ollama-helm/releases/download/ollama-0.1.0/ollama-0.1.0.tgz
     version: 0.1.0
-generated: "2024-12-05T10:18:58.293026+08:00"
+generated: "2024-12-11T17:14:00.065614+01:00"
