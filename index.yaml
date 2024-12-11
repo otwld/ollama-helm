@@ -10,7 +10,7 @@ entries:
             - name: Pull request #124
               url: https://github.com/otwld/ollama-helm/pull/124
         - kind: changed
-          description: upgrade app version to 0.4.7
+          description: upgrade app version to 0.5.1
           links:
             - name: Ollama release v0.5.1
               url: https://github.com/ollama/ollama/releases/tag/v0.5.1
