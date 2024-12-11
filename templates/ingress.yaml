@@ -1,3 +1,4 @@
+---
 {{- if .Values.ingress.enabled -}}
 {{- $fullName := include "ollama.fullname" . -}}
 {{- $svcPort := .Values.service.port -}}
@@ -16,6 +17,7 @@ apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   name: {{ $fullName }}
+  namespace: {{ include "ollama.namespace" . }}
   labels:
     {{- include "ollama.labels" . | nindent 4 }}
   {{- with .Values.ingress.annotations }}

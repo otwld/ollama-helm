@@ -1,7 +1,9 @@
+---
 apiVersion: v1
 kind: Pod
 metadata:
   name: "{{ include "ollama.fullname" . }}-test-connection"
+  namespace: {{ include "ollama.namespace" . }}
   labels:
     {{- include "ollama.labels" . | nindent 4 }}
   annotations:

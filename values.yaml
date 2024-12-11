@@ -38,6 +38,9 @@ nameOverride: ""
 # -- String to fully override template
 fullnameOverride: ""
 
+# -- String to fully override namespace
+namespaceOverride: ""
+
 # Ollama parameters
 ollama:
   gpu:
