@@ -12,7 +12,7 @@ annotations:
   artifacthub.io/category: ai-machine-learning
   artifacthub.io/changes: |
     - kind: changed
-      description: upgrade app version to 0.4.7
+      description: upgrade app version to 0.5.3
       links:
         - name: Ollama release v0.5.3
           url: https://github.com/ollama/ollama/releases/tag/v0.5.3
