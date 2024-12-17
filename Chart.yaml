@@ -4,23 +4,18 @@ description: Get up and running with large language models locally.
 
 type: application
 
-version: 1.1.0
+version: 1.1.1
 
-appVersion: "0.5.1"
+appVersion: "0.5.3"
 
 annotations:
   artifacthub.io/category: ai-machine-learning
   artifacthub.io/changes: |
-    - kind: fixed
-      description: add namespace explicitly
-      links:
-        - name: Pull request #124
-          url: https://github.com/otwld/ollama-helm/pull/124
     - kind: changed
       description: upgrade app version to 0.4.7
       links:
-        - name: Ollama release v0.5.1
-          url: https://github.com/ollama/ollama/releases/tag/v0.5.1
+        - name: Ollama release v0.5.3
+          url: https://github.com/ollama/ollama/releases/tag/v0.5.3
 
 kubeVersion: "^1.16.0-0"
 home: https://ollama.ai/
