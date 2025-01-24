@@ -16,6 +16,8 @@ annotations:
       links:
         - name: Ollama release v0.5.7
           url: https://github.com/ollama/ollama/releases/tag/v0.5.7
+    - kind: fixed
+      description: broken helm linting with enabled pvcs
 
 kubeVersion: "^1.16.0-0"
 home: https://ollama.ai/
