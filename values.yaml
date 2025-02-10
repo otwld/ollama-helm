@@ -368,3 +368,19 @@ hostPID: false
 
 # -- Use the host's network namespace.
 hostNetwork: false
+
+# -- Extra K8s manifests to deploy
+extraObjects: []
+#  - apiVersion: v1
+#    kind: PersistentVolume
+#    metadata:
+#      name: aws-efs
+#    data:
+#      key: "value"
+#  - apiVersion: scheduling.k8s.io/v1
+#    kind: PriorityClass
+#    metadata:
+#      name: high-priority
+#    value: 1000000
+#    globalDefault: false
+#    description: "This priority class should be used for XYZ service pods only."
