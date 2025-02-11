@@ -47,7 +47,7 @@ ollama:
     # -- Enable GPU integration
     enabled: false
 
-    # -- GPU type: 'nvidia' or 'amd'
+    # -- GPU type: 'nvidia', 'amd' or 'intel'
     # If 'ollama.gpu.enabled', default value is nvidia
     # If set to 'amd', this will add 'rocm' suffix to image tag if 'image.tag' is not override
     # This is due cause AMD and CPU/CUDA are different images
@@ -56,6 +56,10 @@ ollama:
     # -- Specify the number of GPU
     # If you use MIG section below then this parameter is ignored
     number: 1
+
+    # -- only for intekl cards; change to (example) 'gpu.intel.com/xe' for new KMD devices
+    # Refer to documentation: https://github.com/intel/intel-device-plugins-for-kubernetes
+    intelResource: "gpu.intel.com/i915"
 
     # -- only for nvidia cards; change to (example) 'nvidia.com/mig-1g.10gb' to use MIG slice
     nvidiaResource: "nvidia.com/gpu"
