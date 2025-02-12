@@ -16,6 +16,11 @@ annotations:
       links:
         - name: PR#137
           url: https://github.com/otwld/ollama-helm/pull/137
+    - kind: added
+      description: Add ollama.model.create in values.yaml
+      links:
+        - name: PR#139
+          url: https://github.com/otwld/ollama-helm/pull/139
 
 kubeVersion: "^1.16.0-0"
 home: https://ollama.ai/
