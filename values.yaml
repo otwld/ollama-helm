@@ -87,6 +87,19 @@ ollama:
     #  - mistral
     run: []
 
+    # -- List of models to create at container startup, there are two options
+    # 1. Create a raw model
+    # 2. Load a model from configMaps, configMaps must be created before and are loaded as volume in "/models" directory.
+    # create:
+    #  - name: llama3.1-ctx32768
+    #    configMapRef: my-configmap
+    #    configMapKeyRef: configmap-key
+    #  - name: llama3.1-ctx32768
+    #    template: |
+    #      FROM llama3.1
+    #      PARAMETER num_ctx 32768
+    create: []
+
   # -- Add insecure flag for pulling at container startup
   insecure: false
 

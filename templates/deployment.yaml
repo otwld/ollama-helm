@@ -116,6 +116,12 @@ spec:
               {{- if .Values.persistentVolume.subPath }}
               subPath: {{ .Values.persistentVolume.subPath }}
               {{- end }}
+          {{- range .Values.ollama.models.create }}
+            {{- if .configMapRef }}
+            - name: {{ .name }}-config-model-volume
+              mountPath: /models
+            {{- end }}
+          {{- end }}
           {{- with .Values.volumeMounts }}
             {{- toYaml . | nindent 12 }}
           {{- end }}
@@ -145,7 +151,7 @@ spec:
           lifecycle:
             {{- toYaml . | nindent 12 }}
           {{- else }}
-          {{- if or .Values.ollama.models.pull .Values.ollama.models.run }}
+          {{- if or .Values.ollama.models.pull .Values.ollama.models.run .Values.ollama.models.create }}
           lifecycle:
             postStart:
               exec:
@@ -158,6 +164,21 @@ spec:
                     done
                     {{- if .Values.ollama.models.pull }}
                     echo "{{ include "ollama.modelPullList" . }}" | xargs -n1 /bin/ollama pull {{ternary "--insecure" "" .Values.ollama.insecure | toString }}
+                    {{- end }}
+                    {{- if .Values.ollama.models.create }}
+                    {{- range $.Values.ollama.models.create }}
+                    {{- if .template }}
+                    cat <<EOF > {{ include "ollama.modelsMountPath" $ }}/{{ .name }}
+                    {{- .template | nindent 20 }}
+                    EOF
+                    {{- end}}
+                    {{- end }}
+                    {{- if (include "ollama.modelCreateTemplateList" .)}}
+                    echo "{{ include "ollama.modelCreateTemplateList" . }}" | xargs -n1 -I {} /bin/ollama create {} -f {{ include "ollama.modelsMountPath" . }}/{}
+                    {{- end }}
+                    {{- if (include "ollama.modelCreateConfigMapList" .)}}
+                    echo "{{ include "ollama.modelCreateConfigMapList" . }}" | xargs -n1 -I {} /bin/ollama create {} -f /models/{}
+                    {{- end }}
                     {{- end }}
                     {{- if .Values.ollama.models.run }}
                     echo "{{ include "ollama.modelRunList" . }}" | xargs -n1 /bin/ollama run
@@ -172,6 +193,16 @@ spec:
           {{- else }}
           emptyDir: { }
           {{- end }}
+        {{- range .Values.ollama.models.create }}
+          {{- if .configMapRef }}
+        - name: {{ .name }}-config-model-volume
+          configMap:
+            name: {{ .configMapRef }}
+            items:
+              - key: {{ .configMapKeyRef }}
+                path: {{ .name }}
+          {{- end }}
+        {{- end }}
         {{- with .Values.volumes }}
           {{- toYaml . | nindent 8 }}
         {{- end }}
