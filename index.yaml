@@ -4,6 +4,48 @@ entries:
   - annotations:
       artifacthub.io/category: ai-machine-learning
       artifacthub.io/changes: |
+        - kind: changed
+          description: upgrade app version to 0.5.9
+          links:
+            - name: Ollama release v0.5.9
+              url: https://github.com/ollama/ollama/releases/tag/v0.5.9
+        - kind: added
+          description: Add extraObjects in values.yaml
+          links:
+            - name: PR#137
+              url: https://github.com/otwld/ollama-helm/pull/137
+        - kind: added
+          description: Add ollama.model.create in values.yaml
+          links:
+            - name: PR#139
+              url: https://github.com/otwld/ollama-helm/pull/139
+    apiVersion: v2
+    appVersion: 0.5.9
+    created: "2025-02-14T10:28:29.783767+08:00"
+    description: Get up and running with large language models locally.
+    digest: e5dab59744f60b9e8c1ebb85464ad03c17eea19a971051530fcb613c1bb7d4f2
+    home: https://ollama.ai/
+    icon: https://ollama.ai/public/ollama.png
+    keywords:
+    - ai
+    - llm
+    - llama
+    - mistral
+    kubeVersion: ^1.16.0-0
+    maintainers:
+    - email: contact@otwld.com
+      name: OTWLD
+    name: ollama
+    sources:
+    - https://github.com/ollama/ollama
+    - https://github.com/otwld/ollama-helm
+    type: application
+    urls:
+    - https://github.com/otwld/ollama-helm/releases/download/ollama-1.5.0/ollama-1.5.0.tgz
+    version: 1.5.0
+  - annotations:
+      artifacthub.io/category: ai-machine-learning
+      artifacthub.io/changes: |
         - kind: fixed
           description: broken helm linting with enabled pvcs
           links:
@@ -2673,4 +2715,4 @@ entries:
     urls:
     - https://github.com/otwld/ollama-helm/releases/download/ollama-0.1.0/ollama-0.1.0.tgz
     version: 0.1.0
-generated: "2025-02-05T13:09:26.254223+01:00"
+generated: "2025-02-14T10:28:29.783932+08:00"
