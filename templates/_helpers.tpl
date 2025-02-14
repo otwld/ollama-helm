@@ -89,3 +89,38 @@ Create the run model list
 {{- . | uniq | join " " -}}
 {{- end -}}
 {{- end -}}
+
+{{/*
+Create the create template model list
+*/}}
+{{- define "ollama.modelCreateTemplateList" -}}
+{{- $createModels := .Values.ollama.models.create | default dict -}}
+{{- $modelNames := list -}}
+{{- range $createModels -}}
+{{- if .template -}}
+  {{- $modelNames = append $modelNames .name -}}
+{{- end -}}
+{{- end -}}
+{{- $modelNames | uniq | join " " -}}
+{{- end -}}
+
+{{/*
+Create the create configMap model list
+*/}}
+{{- define "ollama.modelCreateConfigMapList" -}}
+{{- $createModels := .Values.ollama.models.create | default dict -}}
+{{- $modelNames := list -}}
+{{- range $createModels -}}
+{{- if .configMapRef -}}
+  {{- $modelNames = append $modelNames .name -}}
+{{- end -}}
+{{- end -}}
+{{- $modelNames | uniq | join " " -}}
+{{- end -}}
+
+{{/*
+Models mount path
+*/}}
+{{- define "ollama.modelsMountPath" -}}
+{{- printf "%s/models" ( default "/root/.ollama") }}
+{{- end -}}
