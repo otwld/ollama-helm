@@ -13,9 +13,9 @@ This Community Chart is for deploying [Ollama](https://github.com/ollama/ollama)
 
 - Kubernetes: `>= 1.16.0-0` for **CPU only**
 
-- Kubernetes: `>= 1.26.0-0` for **GPU** stable support (NVIDIA and AMD)
+- Kubernetes: `>= 1.26.0-0` for **GPU** support (NVIDIA, AMD and Intel)
 
-*Not all GPUs are currently supported with ollama (especially with AMD)*
+*Not all GPUs are currently supported with ollama (especially with Intel)*
 
 ## Deploying Ollama chart
 

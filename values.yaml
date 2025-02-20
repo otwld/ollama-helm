@@ -57,7 +57,7 @@ ollama:
     # If you use MIG section below then this parameter is ignored
     number: 1
 
-    # -- only for intekl cards; change to (example) 'gpu.intel.com/xe' for new KMD devices
+    # -- only for intel cards; change to 'gpu.intel.com/xe' for new KMD devices
     # Refer to documentation: https://github.com/intel/intel-device-plugins-for-kubernetes
     intelResource: "gpu.intel.com/i915"
 
