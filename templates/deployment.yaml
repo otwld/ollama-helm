@@ -87,7 +87,6 @@ spec:
                   {{- $gpuLimit := dict (.Values.ollama.gpu.nvidiaResource | default "nvidia.com/gpu") (.Values.ollama.gpu.number | default 1) }}
                   {{- $limits = merge $limits $gpuLimit }}
                 {{- else if or (.Values.ollama.gpu.mig.enabled) }}
-
                   {{- $migDevices := dict -}}
                   {{- range $key, $value := .Values.ollama.gpu.mig.devices }}
                     {{- $migKey := printf "nvidia.com/mig-%s" $key -}}
