@@ -82,19 +82,12 @@ spec:
           resources:
             {{- $limits := default dict .Values.resources.limits }}
             {{- if .Values.ollama.gpu.enabled }}
-          # If gpu is enabled, it can either be a NVIDIA card or a AMD card
               {{- if or (eq .Values.ollama.gpu.type "nvidia") (not .Values.ollama.gpu.type) }}
-          # NVIDIA is assumed by default if no value is set and GPU is enabled
-          # NVIDIA cards can have mig enabled (i.e., the card is sliced into parts
-          # Therefore, the first case is no migs enabled
                 {{- if or (not .Values.ollama.gpu.mig) (not .Values.ollama.gpu.mig.enabled ) }}
                   {{- $gpuLimit := dict (.Values.ollama.gpu.nvidiaResource | default "nvidia.com/gpu") (.Values.ollama.gpu.number | default 1) }}
                   {{- $limits = merge $limits $gpuLimit }}
-          # Second case is mig is enabled
                 {{- else if or (.Values.ollama.gpu.mig.enabled) }}
-          # Initialize empty dictionary
                   {{- $migDevices := dict -}}
-          # Loop over the entries in the mig devices
                   {{- range $key, $value := .Values.ollama.gpu.mig.devices }}
                     {{- $migKey := printf "nvidia.com/mig-%s" $key -}}
                     {{- $migDevices = merge $migDevices (dict $migKey $value) -}}
@@ -104,6 +97,10 @@ spec:
               {{- end }}
               {{- if eq .Values.ollama.gpu.type "amd" }}
                 {{- $gpuLimit := dict "amd.com/gpu" (.Values.ollama.gpu.number | default 1) }}
+                {{- $limits = merge $limits $gpuLimit }}
+              {{- end }}
+              {{- if eq .Values.ollama.gpu.type "intel" }}
+                {{- $gpuLimit := dict (.Values.ollama.gpu.intelResource | default "gpu.intel.com/i915") (.Values.ollama.gpu.number | default 1) }}
                 {{- $limits = merge $limits $gpuLimit }}
               {{- end }}
             {{- end }}
