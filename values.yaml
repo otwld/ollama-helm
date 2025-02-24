@@ -162,6 +162,9 @@ service:
   # -- Annotations to add to the service
   annotations: {}
 
+  # -- Labels to add to the service
+  labels: { }
+
 # Configure the ingress resource that allows you to access the
 ingress:
   # -- Enable ingress controller resource
