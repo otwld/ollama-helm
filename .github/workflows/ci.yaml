@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-      - feat/introducing-github-action-as-replacement-as-drone-ci
     paths-ignore:
       - .github/ISSUE_TEMPLATE/**
   pull_request:
