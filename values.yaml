@@ -163,7 +163,7 @@ service:
   annotations: {}
 
   # -- Labels to add to the service
-  labels: { }
+  labels: {}
 
 # Configure the ingress resource that allows you to access the
 ingress:
