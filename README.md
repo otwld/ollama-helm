@@ -2,7 +2,7 @@
 
 ![GitHub License](https://img.shields.io/github/license/otwld/ollama-helm)
 [![Artifact Hub](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/ollama-helm)](https://artifacthub.io/packages/helm/ollama-helm/ollama)
-[![Build Status](https://drone.otwld.com/api/badges/otwld/ollama-helm/status.svg)](https://drone.otwld.com/otwld/ollama-helm)
+[![Helm Lint and Test](https://github.com/otwld/ollama-helm/actions/workflows/ci.yaml/badge.svg?branch=main)](https://github.com/otwld/ollama-helm/actions/workflows/ci.yaml)
 [![Discord](https://img.shields.io/badge/Discord-OTWLD-blue?logo=discord&logoColor=white)](https://discord.gg/U24mpqTynB)
 
 [Ollama](https://ollama.ai/), get up and running with large language models, locally.
