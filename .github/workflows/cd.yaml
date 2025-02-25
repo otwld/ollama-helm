@@ -24,13 +24,22 @@ jobs:
         env:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
 
-      - name: Run chart-releaser
-        uses: helm/chart-releaser-action@v1.6.0
-        with:
-          charts_dir: .
+      - name: Clean
+        run: |
+          rm -rf .cr-release-packages
+          mkdir -p .cr-release-packages
+          rm -rf .cr-index
+          mkdir -p .cr-index
+
+      - name: Package chart
+        run: cr package .
+
+      - name: Upload chart
+        run: cr upload --owner otwld --git-repo ollama-helm --generate-release-note
         env:
-          CR_OWNER: otwld
-          CR_GIT_REPO: ollama-helm
-          CR_PACKAGE_PATH: .
-          CR_GENERATE_RELEASE_NOTES: true
+          CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+
+      - name: Upload chart index
+        run: cr index --owner otwld --git-repo ollama-helm --push
+        env:
           CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"

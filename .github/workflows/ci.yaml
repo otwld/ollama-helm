@@ -6,6 +6,7 @@ on:
       - main
     paths-ignore:
       - .github/ISSUE_TEMPLATE/**
+      - .github/workflows/cd.yaml
   pull_request:
     types:
       - opened
@@ -13,6 +14,7 @@ on:
       - reopened
     paths-ignore:
       - .github/ISSUE_TEMPLATE/**
+      - .github/workflows/cd.yaml
   workflow_dispatch:
 
 jobs:
