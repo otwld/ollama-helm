@@ -40,7 +40,7 @@ jobs:
         run: cr package .
 
       - name: Upload chart
-        run: cr upload --owner otwld --git-repo ollama-helm --generate-release-note
+        run: cr upload --owner otwld --git-repo ollama-helm --generate-release-notes
         env:
           CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
 
