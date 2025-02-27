@@ -162,26 +162,31 @@ spec:
                     while ! /bin/ollama ps > /dev/null 2>&1; do
                       sleep 5
                     done
+
                     {{- if .Values.ollama.models.pull }}
-                    echo "{{ include "ollama.modelPullList" . }}" | xargs -n1 /bin/ollama pull {{ternary "--insecure" "" .Values.ollama.insecure | toString }}
+                    {{- range .Values.ollama.models.pull }}
+                    /bin/ollama pull {{ternary "--insecure" "" $.Values.ollama.insecure | toString }} {{ . }}
                     {{- end }}
+                    {{- end }}
+
                     {{- if .Values.ollama.models.create }}
-                    {{- range $.Values.ollama.models.create }}
+                    {{- range .Values.ollama.models.create }}
                     {{- if .template }}
                     cat <<EOF > {{ include "ollama.modelsMountPath" $ }}/{{ .name }}
                     {{- .template | nindent 20 }}
                     EOF
-                    {{- end}}
+                    /bin/ollama create {{ .name }} -f {{ include "ollama.modelsMountPath" . }}/{{ .name }}
                     {{- end }}
-                    {{- if (include "ollama.modelCreateTemplateList" .)}}
-                    echo "{{ include "ollama.modelCreateTemplateList" . }}" | xargs -n1 -I {} /bin/ollama create {} -f {{ include "ollama.modelsMountPath" . }}/{}
-                    {{- end }}
-                    {{- if (include "ollama.modelCreateConfigMapList" .)}}
-                    echo "{{ include "ollama.modelCreateConfigMapList" . }}" | xargs -n1 -I {} /bin/ollama create {} -f /models/{}
+                    {{- if .configMapRef }}
+                    /bin/ollama create {{ .name }} -f /models/{{ .name }}
                     {{- end }}
                     {{- end }}
+                    {{- end }}
+
                     {{- if .Values.ollama.models.run }}
-                    echo "{{ include "ollama.modelRunList" . }}" | xargs -n1 /bin/ollama run
+                    {{- range .Values.ollama.models.run }}
+                    /bin/ollama run {{ . }}
+                    {{- end }}
                     {{- end }}
           {{- end }}
           {{- end }}
