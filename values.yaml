@@ -165,6 +165,12 @@ service:
   # -- Labels to add to the service
   labels: {}
 
+# Configure Deployment
+deployment:
+
+  # -- Labels to add to the deployment
+  labels: {}
+
 # Configure the ingress resource that allows you to access the
 ingress:
   # -- Enable ingress controller resource
