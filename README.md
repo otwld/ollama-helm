@@ -24,7 +24,7 @@ To install the `ollama` chart in the `ollama` namespace:
 ```console
 helm repo add ollama-helm https://otwld.github.io/ollama-helm/
 helm repo update
-helm install ollama ollama-helm/ollama --namespace ollama
+helm install ollama ollama-helm/ollama --namespace ollama --create-namespace
 ```
 
 ## Upgrading Ollama chart
