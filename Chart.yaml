@@ -4,13 +4,23 @@ description: Get up and running with large language models locally.
 
 type: application
 
-version: 1.7.1
+version: 1.8.0
 
-appVersion: "0.5.12"
+appVersion: "0.5.13"
 
 annotations:
   artifacthub.io/category: ai-machine-learning
   artifacthub.io/changes: |
+    - kind: changed
+      description: upgrade app version to 0.5.13
+      links:
+        - name: Ollama release v0.5.13
+          url: https://github.com/ollama/ollama/releases/tag/v0.5.13
+    - kind: added
+      description: add deployment.labels
+      links:
+        - name: PR#148
+          url: https://github.com/otwld/ollama-helm/pull/148
     - kind: fixed
       description: remove xargs from postStart script
       links:
