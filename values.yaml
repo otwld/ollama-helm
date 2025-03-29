@@ -43,6 +43,9 @@ namespaceOverride: ""
 
 # Ollama parameters
 ollama:
+  # Port Ollama is listining on
+  port: 11434
+
   gpu:
     # -- Enable GPU integration
     enabled: false
