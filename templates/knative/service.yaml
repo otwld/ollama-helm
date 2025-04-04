@@ -7,6 +7,10 @@ metadata:
   namespace: {{ include "ollama.namespace" . }}
   labels:
     {{- include "ollama.labels" . | nindent 4 }}
+  {{- with .Values.knative.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
 spec:
   template:
     spec:
