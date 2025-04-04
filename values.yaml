@@ -17,6 +17,8 @@ knative:
   responseStartTimeoutSeconds: 300
   # -- Knative service idle timeout seconds
   idleTimeoutSeconds: 300
+  # -- Knative service annotations
+  annotations: {}
 
 # Docker image
 image:
