@@ -4,23 +4,18 @@ description: Get up and running with large language models locally.
 
 type: application
 
-version: 1.13.0
+version: 1.14.0
 
-appVersion: "0.6.4"
+appVersion: "0.6.5"
 
 annotations:
   artifacthub.io/category: ai-machine-learning
   artifacthub.io/changes: |
     - kind: changed
-      description: upgrade app version to 0.6.4
+      description: upgrade app version to 0.6.5
       links:
-        - name: Ollama release v0.6.4
-          url: https://github.com/ollama/ollama/releases/tag/v0.6.4
-    - kind: added
-      description: Add Knative service annotations
-      links:
-        - name: PR#161
-          url: https://github.com/otwld/ollama-helm/pull/161
+        - name: Ollama release v0.6.5
+          url: https://github.com/ollama/ollama/releases/tag/v0.6.5
 
 kubeVersion: "^1.16.0-0"
 home: https://ollama.ai/
