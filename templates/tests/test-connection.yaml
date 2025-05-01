@@ -1,4 +1,5 @@
 ---
+{{- if .Values.tests.enabled -}}
 apiVersion: v1
 kind: Pod
 metadata:
@@ -15,3 +16,4 @@ spec:
       command: ['wget']
       args: ['{{ include "ollama.fullname" . }}:{{ .Values.service.port }}']
   restartPolicy: Never
+{{ end }}
