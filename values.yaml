@@ -415,3 +415,5 @@ extraObjects: []
 # -- Test connection pods
 tests:
   enabled: true
+  # -- Labels to add to the tests
+  labels: {}
