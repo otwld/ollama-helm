@@ -411,3 +411,9 @@ extraObjects: []
 #    value: 1000000
 #    globalDefault: false
 #    description: "This priority class should be used for XYZ service pods only."
+
+# -- Test connection pods
+tests:
+  enabled: true
+  # -- Labels to add to the tests
+  labels: {}
