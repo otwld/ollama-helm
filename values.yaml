@@ -45,7 +45,7 @@ namespaceOverride: ""
 
 # Ollama parameters
 ollama:
-  # Port Ollama is listining on
+  # Port Ollama is listening on
   port: 11434
 
   gpu:
