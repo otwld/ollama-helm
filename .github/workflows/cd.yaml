@@ -35,6 +35,17 @@ jobs:
           mkdir -p .cr-release-packages
           rm -rf .cr-index
           mkdir -p .cr-index
+          rm -rf .ollama-helm
+          mkdir -p .ollama-helm
+
+      - name: Copy Ollama chart
+        run: |
+          cp -r templates .ollama-helm/
+          cp Chart.yaml .ollama-helm/
+          cp LICENSE .ollama-helm/
+          cp values.yaml .ollama-helm/
+          cp .helmignore .ollama-helm/
+          cp README.md .ollama-helm/
 
       - name: Package chart
         run: cr package .
@@ -48,3 +59,16 @@ jobs:
         run: cr index --owner otwld --git-repo ollama-helm --push
         env:
           CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+
+      # Migration to OTWLD helm charts repository
+      - name: Push to central helm-charts repo
+        uses: cpina/github-action-push-to-another-repository@v1.7.2
+        env:
+          API_TOKEN_GITHUB: ${{ secrets.HELM_CHARTS_REPO_TOKEN }}
+        with:
+          source-directory: ".ollama-helm/"
+          target-directory: "charts/ollama"
+          destination-github-username: ${{ github.repository_owner }}
+          destination-repository-name: "helm-charts"
+          user-email: "$GITHUB_ACTOR@users.noreply.github.com"
+          target-branch: main
