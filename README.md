@@ -22,8 +22,8 @@ This Community Chart is for deploying [Ollama](https://github.com/ollama/ollama)
 To install the `ollama` chart in the `ollama` namespace:
 
 > [!IMPORTANT]  
-> We migrate the repository from https://otwld.github.io/ollama-helm/ url to OTWLD central repository https://helm.otwld.com/
-> Please update your Helm repository accordingly.
+> We are migrating the registry from https://otwld.github.io/ollama-helm/ url to OTWLD Helm central registry https://helm.otwld.com/
+> Please update your Helm registry accordingly.
 
 ```console
 helm repo add otwld https://helm.otwld.com/
