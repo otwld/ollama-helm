@@ -137,6 +137,9 @@ podLabels: {}
 podSecurityContext: {}
   # fsGroup: 2000
 
+# -- Priority Class Name
+priorityClassName: ""
+
 # -- Container Security Context
 securityContext: {}
   # capabilities:
