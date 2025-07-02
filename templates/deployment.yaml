@@ -183,7 +183,7 @@ spec:
                     cat <<EOF > {{ include "ollama.modelsMountPath" $ }}/{{ .name }}
                     {{- .template | nindent 20 }}
                     EOF
-                    /bin/ollama create {{ .name }} -f {{ include "ollama.modelsMountPath" . }}/{{ .name }}
+                    /bin/ollama create {{ .name }} -f {{ include "ollama.modelsMountPath" $ }}/{{ .name }}
                     {{- end }}
                     {{- if .configMapRef }}
                     /bin/ollama create {{ .name }} -f /models/{{ .name }}
