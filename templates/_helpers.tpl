@@ -76,5 +76,5 @@ Create the name of the service account to use
 Models mount path
 */}}
 {{- define "ollama.modelsMountPath" -}}
-{{- printf "%s/models" ( default "/root/.ollama") }}
+{{- printf "%s/models" (((.Values).ollama).mountPath | default "/root/.ollama") }}
 {{- end -}}
