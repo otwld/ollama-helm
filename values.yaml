@@ -382,6 +382,9 @@ updateStrategy:
 # -- Topology Spread Constraints for pod assignment
 topologySpreadConstraints: {}
 
+# -- Wait for a grace period
+terminationGracePeriodSeconds: 120
+
 # -- Init containers to add to the pod
 initContainers: []
 # - name: startup-tool
@@ -415,7 +418,7 @@ extraObjects: []
 #    globalDefault: false
 #    description: "This priority class should be used for XYZ service pods only."
 
-# -- Test connection pods
+# Test connection pods
 tests:
   enabled: true
   # -- Labels to add to the tests
