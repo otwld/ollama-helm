@@ -13,6 +13,14 @@ annotations:
   artifacthub.io/changes: |
     - kind: fixed
       description: fix post start hooks when using ollama.create modelfiles and custom directory paths
+      links:
+        - name: PR#181
+          url: https://github.com/otwld/ollama-helm/pull/181
+    - kind: added
+      description: add terminationGracePeriodSeconds
+      links:
+        - name: PR#184
+          url: https://github.com/otwld/ollama-helm/pull/184
 
 kubeVersion: "^1.16.0-0"
 home: https://ollama.ai/
