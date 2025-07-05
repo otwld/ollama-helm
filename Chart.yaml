@@ -6,7 +6,7 @@ type: application
 
 version: 1.23.0
 
-appVersion: "0.9.3"
+appVersion: "0.9.5"
 
 annotations:
   artifacthub.io/category: ai-machine-learning
@@ -21,6 +21,11 @@ annotations:
       links:
         - name: PR#184
           url: https://github.com/otwld/ollama-helm/pull/184
+    - kind: changed
+      description: upgrade app version to 0.9.5
+      links:
+        - name: Ollama release v0.9.5
+          url: https://github.com/ollama/ollama/releases/tag/v0.9.5
 
 kubeVersion: "^1.16.0-0"
 home: https://ollama.ai/
