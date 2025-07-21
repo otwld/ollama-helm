@@ -11,11 +11,8 @@ appVersion: "0.9.6"
 annotations:
   artifacthub.io/category: ai-machine-learning
   artifacthub.io/changes: |
-    - kind: changed
-      description: upgrade app version to 0.9.6
-      links:
-        - name: Ollama release v0.9.6
-          url: https://github.com/ollama/ollama/releases/tag/v0.9.6
+    - kind: added
+      description: ollama.models.clean option to delete unused models
 
 kubeVersion: "^1.16.0-0"
 home: https://ollama.ai/
