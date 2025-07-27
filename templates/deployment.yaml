@@ -93,6 +93,10 @@ spec:
           resources:
             {{- $limits := default dict .Values.resources.limits }}
             {{- if .Values.ollama.gpu.enabled }}
+            {{- if .Values.ollama.gpu.draEnabled}}
+            claims:
+              - name: gpu
+            {{- else }}
           # If gpu is enabled, it can either be a NVIDIA card or a AMD card
               {{- if or (eq .Values.ollama.gpu.type "nvidia") (not .Values.ollama.gpu.type) }}
           # NVIDIA is assumed by default if no value is set and GPU is enabled
@@ -117,6 +121,7 @@ spec:
                 {{- $gpuLimit := dict "amd.com/gpu" (.Values.ollama.gpu.number | default 1) }}
                 {{- $limits = merge $limits $gpuLimit }}
               {{- end }}
+            {{- end }}
             {{- end }}
             {{- $ressources := deepCopy (dict "limits" $limits) | mergeOverwrite .Values.resources }}
             {{- toYaml $ressources | nindent 12 }}
@@ -201,6 +206,11 @@ spec:
                     {{- end }}
           {{- end }}
           {{- end }}
+      {{- if and .Values.ollama.gpu.enabled .Values.ollama.gpu.draEnabled }}
+      resourceClaims:
+        - name: gpu
+          resourceClaimTemplateName: {{ .Values.ollama.gpu.draExistingClaimTemplate |  default (printf "%s" (include "ollama.fullname" .)) }}
+      {{- end }}
       volumes:
         - name: ollama-data
           {{- if .Values.persistentVolume.enabled }}
