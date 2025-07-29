@@ -115,6 +115,9 @@ ollama:
     #      PARAMETER num_ctx 32768
     create: []
 
+    # -- Automatically remove models present on the disk but not specified in the values file
+    clean: false
+
   # -- Add insecure flag for pulling at container startup
   insecure: false
 

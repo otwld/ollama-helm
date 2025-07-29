@@ -179,14 +179,24 @@ spec:
                       sleep 5
                     done
 
+                    {{- $allModels := list -}}
+
                     {{- if .Values.ollama.models.pull }}
                     {{- range .Values.ollama.models.pull }}
+
+                    {{- if contains ":" . }}
+                      {{- $allModels = append $allModels . }}
+                    {{- else }}
+                      {{- $allModels = append $allModels (printf "%s:latest" .) }}
+                    {{- end }}
+
                     /bin/ollama pull {{ternary "--insecure" "" $.Values.ollama.insecure | toString }} {{ . }}
                     {{- end }}
                     {{- end }}
 
                     {{- if .Values.ollama.models.create }}
                     {{- range .Values.ollama.models.create }}
+                    {{- $allModels = append $allModels .name }}
                     {{- if .template }}
                     cat <<EOF > {{ include "ollama.modelsMountPath" $ }}/{{ .name }}
                     {{- .template | nindent 20 }}
@@ -201,8 +211,21 @@ spec:
 
                     {{- if .Values.ollama.models.run }}
                     {{- range .Values.ollama.models.run }}
+
+                    {{- if contains ":" . }}
+                      {{- $allModels = append $allModels . }}
+                    {{- else }}
+                      {{- $allModels = append $allModels (printf "%s:latest" .) }}
+                    {{- end }}
+
                     /bin/ollama run {{ . }}
                     {{- end }}
+                    {{- end }}
+
+                    {{- if .Values.ollama.models.clean }}
+                    /bin/ollama list | awk 'NR>1 {print $1}' | while read model; do
+                      echo "{{ $allModels | join " " }}" | tr ' ' '\n' | grep -Fqx "$model" || /bin/ollama rm "$model"
+                    done
                     {{- end }}
           {{- end }}
           {{- end }}
