@@ -4,6 +4,43 @@ entries:
   - annotations:
       artifacthub.io/category: ai-machine-learning
       artifacthub.io/changes: |
+        - kind: added
+          description: DRA GPU beta support
+          links:
+            - name: PR#189
+              url: https://github.com/otwld/ollama-helm/pull/189
+        - kind: added
+          description: add clean models option
+          links:
+            - name: PR#187
+              url: https://github.com/otwld/ollama-helm/pull/187
+    apiVersion: v2
+    appVersion: 0.9.6
+    created: "2025-07-29T14:31:49.555482778Z"
+    description: Get up and running with large language models locally.
+    digest: dce28e8d474235a408395fb984c5728f02d4236865a36927131f2fed6f622dbf
+    home: https://ollama.ai/
+    icon: https://ollama.ai/public/ollama.png
+    keywords:
+    - ai
+    - llm
+    - llama
+    - mistral
+    kubeVersion: ^1.16.0-0
+    maintainers:
+    - email: contact@otwld.com
+      name: OTWLD
+    name: ollama
+    sources:
+    - https://github.com/ollama/ollama
+    - https://github.com/otwld/ollama-helm
+    type: application
+    urls:
+    - https://github.com/otwld/ollama-helm/releases/download/ollama-1.25.0/ollama-1.25.0.tgz
+    version: 1.25.0
+  - annotations:
+      artifacthub.io/category: ai-machine-learning
+      artifacthub.io/changes: |
         - kind: changed
           description: upgrade app version to 0.9.6
           links:
@@ -3360,4 +3397,4 @@ entries:
     urls:
     - https://github.com/otwld/ollama-helm/releases/download/ollama-0.1.0/ollama-0.1.0.tgz
     version: 0.1.0
-generated: "2025-07-12T09:02:39.793339327Z"
+generated: "2025-07-29T14:31:49.555841254Z"
