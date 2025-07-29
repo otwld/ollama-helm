@@ -1,0 +1,15 @@
+{{- if and .Values.ollama.gpu.enabled .Values.ollama.gpu.draEnabled (not .Values.ollama.gpu.draExistingClaimTemplate) -}}
+---
+apiVersion: resource.k8s.io/v1beta1
+kind: ResourceClaimTemplate
+metadata:
+  name: {{ template "ollama.fullname" . }}
+  namespace: {{ include "ollama.namespace" . }}
+spec:
+  spec:
+    devices:
+      requests:
+        - name: gpu
+          deviceClassName: {{ .Values.ollama.gpu.draDriverClass }}
+          count: {{(.Values.ollama.gpu.number | default 1)}}
+{{- end -}}

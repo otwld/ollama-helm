@@ -52,6 +52,16 @@ ollama:
     # -- Enable GPU integration
     enabled: false
 
+    # -- Enable DRA GPU integration
+    # If enabled, it will use DRA instead of Device Driver Plugin and create a ResourceClaim and GpuClaimParameters
+    draEnabled: false
+
+    # -- DRA GPU DriverClass
+    draDriverClass: "gpu.nvidia.com"
+
+    # -- Existing DRA GPU ResourceClaim Template
+    draExistingClaimTemplate: ""
+
     # -- GPU type: 'nvidia' or 'amd'
     # If 'ollama.gpu.enabled', default value is nvidia
     # If set to 'amd', this will add 'rocm' suffix to image tag if 'image.tag' is not override
