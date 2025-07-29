@@ -4,7 +4,7 @@ description: Get up and running with large language models locally.
 
 type: application
 
-version: 1.24.0
+version: 1.25.0
 
 appVersion: "0.9.6"
 
@@ -12,7 +12,15 @@ annotations:
   artifacthub.io/category: ai-machine-learning
   artifacthub.io/changes: |
     - kind: added
-      description: ollama.models.clean option to delete unused models
+      description: DRA GPU beta support
+      links:
+        - name: PR#189
+          url: https://github.com/otwld/ollama-helm/pull/189
+    - kind: added
+      description: add clean models option
+      links:
+        - name: PR#187
+          url: https://github.com/otwld/ollama-helm/pull/187
 
 kubeVersion: "^1.16.0-0"
 home: https://ollama.ai/
