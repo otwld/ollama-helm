@@ -1,6 +1,10 @@
 {{- if and .Values.ollama.gpu.enabled .Values.ollama.gpu.draEnabled (not .Values.ollama.gpu.draExistingClaimTemplate) -}}
 ---
+{{- if semverCompare ">=1.34-0" .Capabilities.KubeVersion.GitVersion }}
+apiVersion: resource.k8s.io/v1
+{{- else }}
 apiVersion: resource.k8s.io/v1beta1
+{{- end }}
 kind: ResourceClaimTemplate
 metadata:
   name: {{ template "ollama.fullname" . }}
