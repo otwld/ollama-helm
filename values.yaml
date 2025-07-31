@@ -436,3 +436,5 @@ tests:
   enabled: true
   # -- Labels to add to the tests
   labels: {}
+  # -- Annotations to add to the tests
+  annotations: {}

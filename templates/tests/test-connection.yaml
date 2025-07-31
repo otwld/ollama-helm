@@ -12,6 +12,9 @@ metadata:
     {{- end }}
   annotations:
     "helm.sh/hook": test
+    {{- with .Values.tests.annotations }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
 spec:
   containers:
     - name: wget
