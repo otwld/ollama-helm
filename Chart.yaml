@@ -4,23 +4,28 @@ description: Get up and running with large language models locally.
 
 type: application
 
-version: 1.25.0
+version: 1.26.0
 
-appVersion: "0.9.6"
+appVersion: "0.11.2"
 
 annotations:
   artifacthub.io/category: ai-machine-learning
   artifacthub.io/changes: |
     - kind: added
-      description: DRA GPU beta support
+      description: DRA GPU API v1 support
       links:
-        - name: PR#189
-          url: https://github.com/otwld/ollama-helm/pull/189
+        - name: PR#191
+          url: https://github.com/otwld/ollama-helm/pull/191
     - kind: added
-      description: add clean models option
+      description: add test annotations
       links:
-        - name: PR#187
-          url: https://github.com/otwld/ollama-helm/pull/187
+        - name: PR#190
+          url: https://github.com/otwld/ollama-helm/pull/190
+    - kind: changed
+      description: upgrade app version to 0.11.2
+      links:
+        - name: Ollama release v0.11.2
+          url: https://github.com/ollama/ollama/releases/tag/v0.11.2
 
 kubeVersion: "^1.16.0-0"
 home: https://ollama.ai/
