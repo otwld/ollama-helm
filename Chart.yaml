@@ -16,6 +16,8 @@ annotations:
       links:
         - name: Ollama release v0.13.0
           url: https://github.com/ollama/ollama/releases/tag/v0.13.0
+    - kind: added
+      description: add ipFamilies and ipFamilyPolicy to the service
 
 kubeVersion: "^1.16.0-0"
 home: https://ollama.ai/
