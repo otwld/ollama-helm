@@ -186,6 +186,17 @@ service:
   # -- Labels to add to the service
   labels: {}
 
+  # -- IP Families for the service
+  ipFamilies: []
+  # - IPv4
+  # - IPv6
+
+  # -- IP Family Policy for the service
+  ipFamilyPolicy: ""
+  # SingleStack
+  # PreferDualStack
+  # RequireDualStack
+
 # Configure Deployment
 deployment:
 

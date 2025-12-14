@@ -30,3 +30,11 @@ spec:
   selector:
     {{- include "ollama.selectorLabels" . | nindent 4 }}
 {{- end }}
+{{- with .Values.service.ipFamilies }}
+  ipFamilies:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+{{- with .Values.service.ipFamilyPolicy }}
+  ipFamilyPolicy: {{ . }}
+{{- end }}
+
