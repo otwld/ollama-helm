@@ -5,6 +5,38 @@ entries:
       artifacthub.io/category: ai-machine-learning
       artifacthub.io/changes: |
         - kind: changed
+          description: upgrade app version to 0.13.5
+          links:
+            - name: Ollama release v0.13.5
+              url: https://github.com/ollama/ollama/releases/tag/v0.13.5
+    apiVersion: v2
+    appVersion: 0.13.5
+    created: "2026-01-08T10:50:53.749774786Z"
+    description: Get up and running with large language models locally.
+    digest: e3461d6d6ade004a8878071dc17bfb0140992f8bc0bcc3b96e24e33e4d49b30e
+    home: https://ollama.ai/
+    icon: https://ollama.ai/public/ollama.png
+    keywords:
+    - ai
+    - llm
+    - llama
+    - mistral
+    kubeVersion: ^1.16.0-0
+    maintainers:
+    - email: contact@otwld.com
+      name: OTWLD
+    name: ollama
+    sources:
+    - https://github.com/ollama/ollama
+    - https://github.com/otwld/ollama-helm
+    type: application
+    urls:
+    - https://github.com/otwld/ollama-helm/releases/download/ollama-1.37.0/ollama-1.37.0.tgz
+    version: 1.37.0
+  - annotations:
+      artifacthub.io/category: ai-machine-learning
+      artifacthub.io/changes: |
+        - kind: changed
           description: upgrade app version to 0.13.3
           links:
             - name: Ollama release v0.13.3
@@ -3764,4 +3796,4 @@ entries:
     urls:
     - https://github.com/otwld/ollama-helm/releases/download/ollama-0.1.0/ollama-0.1.0.tgz
     version: 0.1.0
-generated: "2025-12-14T09:58:49.017399129Z"
+generated: "2026-01-08T10:50:53.750190191Z"
