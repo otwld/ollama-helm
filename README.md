@@ -87,7 +87,7 @@ ollama:
   models:
     pull:
       - mistral
-      - llama2
+      - llama4
 ```
 
 ---
@@ -98,7 +98,7 @@ ollama:
 ollama:
   models:
     pull:
-      - llama2
+      - llama4
   
 ingress:
   enabled: true
@@ -137,7 +137,7 @@ Please change `ollama.models` to `ollama.models.pull` to avoid errors before upg
 ollama:
   models:
     - mistral
-    - llama2
+    - llama4
 ```
 
 To:
@@ -147,7 +147,7 @@ ollama:
   models:
     pull:
       - mistral
-      - llama2
+      - llama4
 ```
 
 ## Helm Values
