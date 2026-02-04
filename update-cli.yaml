@@ -18,11 +18,6 @@ conditions:
     spec:
       file: "Chart.yaml"
       key: "$.appVersion"
-    transformers:
-      - kind: regex
-        spec:
-          pattern: "^v?(.*)$"
-          replacement: "$1"
     sourceid: latestOllamaVersion
 
 targets:
