@@ -15,6 +15,7 @@ conditions:
   appVersionExists:
     name: "Check if appVersion key exists"
     kind: yaml
+    disablesourceinput: true
     spec:
       file: "Chart.yaml"
       key: "$.appVersion"
