@@ -31,7 +31,7 @@ targets:
     name: "Bump Chart Version"
     kind: helmchart
     spec:
-      name: 'ollama'
+      name: '.'
       file: "Chart.yaml"
       key: "$.version"
       versionincrement: "minor"
