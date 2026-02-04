@@ -10,6 +10,10 @@ sources:
       latest: true
       versionfilter:
         kind: semver
+      transformers:
+        - kind: trimprefix
+          spec:
+            prefix: "v"
 
 targets:
   appVersion:
@@ -20,10 +24,6 @@ targets:
     spec:
       file: "Chart.yaml"
       key: "$.appVersion"
-    transformers:
-      - kind: trimprefix
-        spec:
-          prefix: "v"
 
   chartVersion:
     name: "Bump Chart version"
