@@ -45,7 +45,7 @@ targets:
       - appVersion
     spec:
       file: "Chart.yaml"
-      key: "$.'annotations.\"artifacthub'.io/changes\""
+      key: '$.annotations."artifacthub.io/changes"'
       value: |
         - kind: changed
           description: Upgrade app version to {{ source "latestOllamaVersion" }}
