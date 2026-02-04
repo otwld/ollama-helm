@@ -45,8 +45,15 @@ targets:
       - appVersion
     spec:
       file: "Chart.yaml"
-      matchpattern: '(artifacthub\.io/changes:\s*\|(?:\n[ \t].*)*?)(v?\d+\.\d+\.\d+)'
-      replacepattern: '${1}{{ source "latestOllamaVersion" }}'
+      matchpattern: "artifacthub\\.io/changes:\\s*\\|"
+    transformers:
+      - replacers:
+          - from: '(description:\s+upgrade app version to\s+)v?\d+\.\d+\.\d+'
+            to: '\1{{ source "latestOllamaVersion" }}'
+          - from: '(name:\s+Ollama release\s+)v?\d+\.\d+\.\d+'
+            to: '\1v{{ source "latestOllamaVersion" }}'
+          - from: '(/releases/tag/)v?\d+\.\d+\.\d+'
+            to: '\1v{{ source "latestOllamaVersion" }}'
 
 scms:
   default:
