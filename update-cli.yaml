@@ -11,20 +11,12 @@ sources:
       versionfilter:
         kind: semver
 
-conditions:
-  appVersionExists:
-    name: "Check if appVersion key exists"
-    kind: yaml
-    disablesourceinput: true
-    spec:
-      file: "Chart.yaml"
-      key: "$.appVersion"
-
 targets:
   appVersion:
     name: "Update appVersion in Chart.yaml"
     kind: yaml
     sourceid: latestOllamaVersion
+    scmid: default
     spec:
       file: "Chart.yaml"
       key: "$.appVersion"
@@ -33,11 +25,14 @@ targets:
         spec:
           pattern: "^v?(.*)$"
           replacement: "$1"
-    scmid: default
 
   chartVersion:
     name: "Bump Chart version"
     kind: yaml
+    scmid: default
+    # Ce target ne s'active QUE si appVersion est réellement modifié
+    dependson:
+      - appVersion
     spec:
       file: "Chart.yaml"
       key: "$.version"
@@ -45,9 +40,6 @@ targets:
       - kind: semver
         spec:
           release: "minor"
-    scmid: default
-    depends_on:
-      - appVersion
 
 scms:
   default:
