@@ -8,12 +8,11 @@ sources:
       repository: "ollama"
       token: "{{ .github.token }}"
       latest: true
-      # On passe en regex pour libérer la modification du texte
       versionfilter:
         kind: regex
         pattern: '^v?(\d+\.\d+\.\d+)$'
     transformers:
-      - trimsuffix: "v"
+      - trimprefix: "v"
 
 targets:
   appVersion:
@@ -53,7 +52,6 @@ actions:
   githubPR:
     kind: github/pullrequest
     scmid: default
-    # Utilisation de la source nettoyée pour le titre
     title: 'feat: upgrade app version to {{ source "latestOllamaVersion" }}'
     spec:
       labels:
