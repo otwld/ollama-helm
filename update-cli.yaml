@@ -12,18 +12,18 @@ sources:
         kind: semver
 
 conditions:
-  appVersionChanged:
-    name: "Check if appVersion changed"
+  appVersionExists:
+    name: "Check if appVersion key exists"
     kind: yaml
     spec:
       file: "Chart.yaml"
       key: "$.appVersion"
-    sourceid: latestOllamaVersion
 
 targets:
   appVersion:
     name: "Update appVersion in Chart.yaml"
     kind: yaml
+    sourceid: latestOllamaVersion
     spec:
       file: "Chart.yaml"
       key: "$.appVersion"
@@ -32,22 +32,21 @@ targets:
         spec:
           pattern: "^v?(.*)$"
           replacement: "$1"
-    sourceid: latestOllamaVersion
-    actions:
-      githubPR:
+    scmid: default
 
   chartVersion:
     name: "Bump Chart version"
-    kind: helmchart
+    kind: yaml
     spec:
-      name: "."
       file: "Chart.yaml"
       key: "$.version"
-      versionincrement: "minor"
-    conditions:
-      - appVersionChanged
-    actions:
-      githubPR:
+    transformers:
+      - kind: semver
+        spec:
+          release: "minor"
+    scmid: default
+    depends_on:
+      - appVersion
 
 scms:
   default:
@@ -65,7 +64,7 @@ actions:
   githubPR:
     kind: github/pullrequest
     scmid: default
-    title: "feat: upgrade app version to { { source \"latestOllamaVersion\" } }"
+    title: "feat: upgrade app version to {{ source \"latestOllamaVersion\" }}"
     spec:
       automerge: true
       labels:
