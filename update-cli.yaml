@@ -8,6 +8,8 @@ sources:
       repository: "ollama"
       token: "{ { .github.token } }"
       latest: true
+      versionfilter:
+        kind: semver
 
 targets:
   appVersion:
