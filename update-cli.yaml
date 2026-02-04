@@ -10,6 +10,11 @@ sources:
       latest: true
       versionfilter:
         kind: semver
+    transformers:
+      - kind: regex
+        spec:
+          pattern: "^v?(.*)"
+          replacement: "$1"
 
 targets:
   appVersion:
@@ -17,17 +22,22 @@ targets:
     kind: yaml
     spec:
       file: "Chart.yaml"
-      key: "appVersion"
+      key: "$.appVersion"
     sourceid: latestOllamaVersion
+    actions:
+      githubPR:
 
   chartVersion:
     name: "Bump Chart Version"
     kind: helmchart
     spec:
+      name: 'ollama'
       file: "Chart.yaml"
-      key: "version"
+      key: "$.version"
       versionincrement: "minor"
     sourceid: latestOllamaVersion
+    actions:
+      githubPR:
 
 scms:
   default:
