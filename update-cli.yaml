@@ -6,26 +6,47 @@ sources:
     spec:
       owner: "ollama"
       repository: "ollama"
-      token: "{ { .github.token } }"
+      token: "{{ .github.token }}"
       latest: true
+      versionfilter:
+        kind: regex
+        pattern: '^v?(\d+\.\d+\.\d+)$'
+    transformers:
+      - trimprefix: "v"
 
 targets:
   appVersion:
     name: "Update appVersion in Chart.yaml"
     kind: yaml
+    sourceid: latestOllamaVersion
+    scmid: default
     spec:
       file: "Chart.yaml"
-      key: "appVersion"
-    sourceid: latestOllamaVersion
+      key: "$.appVersion"
 
   chartVersion:
-    name: "Bump Chart Version"
+    name: "Bump Chart version"
     kind: helmchart
+    scmid: default
+    dependson:
+      - appVersion
+    spec:
+      name: "."
+      file: "Chart.yaml"
+      key: '$.version'
+      versionincrement: minor
+
+  artifactHubChanges:
+    name: "Update Artifact Hub Annotations"
+    kind: file
+    sourceid: latestOllamaVersion
+    scmid: default
+    dependson:
+      - appVersion
     spec:
       file: "Chart.yaml"
-      key: "version"
-      versionincrement: "minor"
-    sourceid: latestOllamaVersion
+      matchpattern: '(\s{4,}.*?)(v?\d+\.\d+\.\d+)'
+      replacepattern: '${1}v{{ source "latestOllamaVersion" }}'
 
 scms:
   default:
@@ -35,7 +56,7 @@ scms:
       email: "tech@otwld.com"
       owner: "otwld"
       repository: "ollama-helm"
-      token: "{ { .github.token } }"
+      token: "{{ .github.token }}"
       username: "github-actions"
       branch: "main"
 
@@ -43,9 +64,8 @@ actions:
   githubPR:
     kind: github/pullrequest
     scmid: default
-    title: "feat: upgrade app version to { { source \"latestOllamaVersion\" } }"
+    title: 'feat: upgrade app version to {{ source "latestOllamaVersion" }}'
     spec:
-      automerge: true
       labels:
         - "dependencies"
         - "automated-upgrade"
