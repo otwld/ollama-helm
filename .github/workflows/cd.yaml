@@ -1,6 +1,10 @@
 name: Deploy to registry and Release
 
 on:
+  workflow_run:
+    workflows: [ "Updatecli" ]
+    types:
+      - completed
   workflow_dispatch:
 
 jobs:

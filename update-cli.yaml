@@ -1,0 +1,51 @@
+name: "Bump Ollama version"
+
+sources:
+  latestOllamaVersion:
+    kind: githubrelease
+    spec:
+      owner: "ollama"
+      repository: "ollama"
+      token: "{ { .github.token } }"
+      latest: true
+
+targets:
+  appVersion:
+    name: "Update appVersion in Chart.yaml"
+    kind: yaml
+    spec:
+      file: "Chart.yaml"
+      key: "appVersion"
+    sourceid: latestOllamaVersion
+
+  chartVersion:
+    name: "Bump Chart Version"
+    kind: helmchart
+    spec:
+      file: "Chart.yaml"
+      key: "version"
+      versionincrement: "minor"
+    sourceid: latestOllamaVersion
+
+scms:
+  default:
+    kind: github
+    spec:
+      user: "GitHub Actions Bot"
+      email: "tech@otwld.com"
+      owner: "otwld"
+      repository: "ollama-helm"
+      token: "{ { .github.token } }"
+      username: "github-actions"
+      branch: "main"
+
+actions:
+  githubPR:
+    kind: github/pullrequest
+    scmid: default
+    title: "feat: upgrade app version to { { source \"latestOllamaVersion\" } }"
+    spec:
+      automerge: true
+      labels:
+        - "dependencies"
+        - "automated-upgrade"
