@@ -21,10 +21,9 @@ targets:
       file: "Chart.yaml"
       key: "$.appVersion"
     transformers:
-      - kind: regex
+      - kind: trimprefix
         spec:
-          pattern: "^v?(.*)$"
-          replacement: "$1"
+          prefix: "v"
 
   chartVersion:
     name: "Bump Chart version"
@@ -35,6 +34,7 @@ targets:
     spec:
       name: "."
       file: "Chart.yaml"
+      key: 'version'
       versionincrement: minor
 
 scms:
