@@ -46,7 +46,7 @@ targets:
     spec:
       file: "Chart.yaml"
       matchpattern: '(\s{4,}.*?)(v?\d+\.\d+\.\d+)'
-      replacepattern: '${1}{{ source "latestOllamaVersion" }}'
+      replacepattern: '${1}v{{ source "latestOllamaVersion" }}'
 
 scms:
   default:
