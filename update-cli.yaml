@@ -10,12 +10,6 @@ sources:
       latest: true
       versionfilter:
         kind: semver
-  # Nouvelle source pour lire la version actuelle du Chart
-  currentChartVersion:
-    kind: yaml
-    spec:
-      file: "Chart.yaml"
-      key: "$.version"
 
 targets:
   appVersion:
@@ -29,25 +23,19 @@ targets:
     transformers:
       - kind: regex
         spec:
-          # On s'assure que le "v" saute ici
-          pattern: "v?(.*)"
+          pattern: "^v?(.*)$"
           replacement: "$1"
 
   chartVersion:
     name: "Bump Chart version"
-    kind: yaml
-    # On utilise la version actuelle du chart comme base
-    sourceid: currentChartVersion
+    kind: helmchart
     scmid: default
     dependson:
       - appVersion
     spec:
+      name: "."
       file: "Chart.yaml"
-      key: "$.version"
-    transformers:
-      - kind: semver
-        spec:
-          release: "minor"
+      versionincrement: minor
 
 scms:
   default:
