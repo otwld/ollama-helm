@@ -6,15 +6,24 @@ sources:
     spec:
       owner: "ollama"
       repository: "ollama"
-      token: "{ { .github.token } }"
+      token: "{{ .github.token }}"
       latest: true
       versionfilter:
         kind: semver
     transformers:
       - kind: regex
         spec:
-          pattern: "^v?(.*)"
+          pattern: "^v(.*)$"
           replacement: "$1"
+
+conditions:
+  appVersionChanged:
+    name: "Check if appVersion changed"
+    kind: yaml
+    spec:
+      file: "Chart.yaml"
+      key: "$.appVersion"
+    sourceid: latestOllamaVersion
 
 targets:
   appVersion:
@@ -28,14 +37,15 @@ targets:
       githubPR:
 
   chartVersion:
-    name: "Bump Chart Version"
+    name: "Bump Chart version"
     kind: helmchart
     spec:
-      name: '.'
+      name: "."
       file: "Chart.yaml"
       key: "$.version"
       versionincrement: "minor"
-    sourceid: latestOllamaVersion
+    conditions:
+      - appVersionChanged
     actions:
       githubPR:
 
