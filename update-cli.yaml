@@ -38,22 +38,21 @@ targets:
 
   artifactHubChanges:
     name: "Update Artifact Hub Annotations"
-    kind: file
+    kind: yaml
+    engine: "yamlpath"
     sourceid: latestOllamaVersion
     scmid: default
     dependson:
       - appVersion
     spec:
       file: "Chart.yaml"
-      matchpattern: "artifacthub\\.io/changes:\\s*\\|"
-    transformers:
-      - replacers:
-          - from: '(description:\s+upgrade app version to\s+)v?\d+\.\d+\.\d+'
-            to: '\1{{ source "latestOllamaVersion" }}'
-          - from: '(name:\s+Ollama release\s+)v?\d+\.\d+\.\d+'
-            to: '\1v{{ source "latestOllamaVersion" }}'
-          - from: '(/releases/tag/)v?\d+\.\d+\.\d+'
-            to: '\1v{{ source "latestOllamaVersion" }}'
+      key: "$.annotations.'artifacthub.io/changes'"
+      value: |
+        - kind: changed
+          description: Upgrade app version to {{ source "latestOllamaVersion" }}
+          links:
+            - name: Ollama release v{{ source "latestOllamaVersion" }}
+              url: https://github.com/ollama/ollama/releases/tag/v{{ source "latestOllamaVersion" }}
 
 scms:
   default:
