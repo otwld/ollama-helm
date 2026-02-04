@@ -36,6 +36,21 @@ targets:
       key: 'version'
       versionincrement: minor
 
+  artifactHubChanges:
+    name: "Update Artifact Hub Annotations"
+    kind: yaml
+    sourceid: latestOllamaVersion
+    scmid: default
+    spec:
+      file: "Chart.yaml"
+      key: '$.annotations."artifacthub.io/changes"'
+      value: |
+        - kind: changed
+          description: Upgrade app version to {{ source "latestOllamaVersion" }}
+          links:
+            - name: Ollama release v{{ source "latestOllamaVersion" }}
+              url: https://github.com/ollama/ollama/releases/tag/v{{ source "latestOllamaVersion" }}
+
 scms:
   default:
     kind: github
