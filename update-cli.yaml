@@ -33,7 +33,7 @@ targets:
     spec:
       name: "."
       file: "Chart.yaml"
-      key: 'version'
+      key: '$.version'
       versionincrement: minor
 
   artifactHubChanges:
@@ -41,9 +41,11 @@ targets:
     kind: yaml
     sourceid: latestOllamaVersion
     scmid: default
+    dependson:
+      - appVersion
     spec:
       file: "Chart.yaml"
-      key: '$.annotations."artifacthub.io/changes"'
+      key: 'annotations\."artifacthub.io/changes"'
       value: |
         - kind: changed
           description: Upgrade app version to {{ source "latestOllamaVersion" }}
