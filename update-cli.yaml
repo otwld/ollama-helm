@@ -13,9 +13,7 @@ sources:
         kind: regex
         pattern: '^v?(\d+\.\d+\.\d+)$'
     transformers:
-      - kind: trimprefix
-        spec:
-          prefix: "v"
+      - trimsuffix: "v"
 
 targets:
   appVersion:
