@@ -14,6 +14,7 @@ metadata:
 spec:
   template:
     spec:
+      {{- $hasModelBootstrap := or .Values.ollama.models.pull .Values.ollama.models.run .Values.ollama.models.create }}
       containerConcurrency: {{ .Values.knative.containerConcurrency }}
       timeoutSeconds: {{ .Values.knative.timeoutSeconds }}
       responseStartTimeoutSeconds: {{ .Values.knative.responseStartTimeoutSeconds }}
@@ -26,12 +27,83 @@ spec:
       {{- if .Values.runtimeClassName }}
       runtimeClassName: {{ .Values.runtimeClassName | quote }}
       {{- end }}
-      {{- if .Values.terminationGracePeriodSeconds }}
-      terminationGracePeriodSeconds: {{ .Values.terminationGracePeriodSeconds }}
-      {{- end }}
-      {{- with .Values.initContainers }}
+      {{- if or .Values.initContainers $hasModelBootstrap }}
       initContainers:
+        {{- with .Values.initContainers }}
         {{- tpl (toYaml . ) $ | nindent 8 }}
+        {{- end }}
+        {{- if $hasModelBootstrap }}
+        - name: {{ .Chart.Name }}-model-loader
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag |  default (ternary (printf "%s-rocm" .Chart.AppVersion) (.Chart.AppVersion) (and (.Values.ollama.gpu.enabled) (eq .Values.ollama.gpu.type "amd"))) }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          env:
+            - name: OLLAMA_HOST
+              value: "127.0.0.1:{{ .Values.ollama.port }}"
+            {{- if and .Values.ollama.gpu.enabled (or (eq .Values.ollama.gpu.type "nvidia") (not .Values.ollama.gpu.type))}}
+            - name: PATH
+              value: /usr/local/nvidia/bin:/usr/local/cuda/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+            {{- end}}
+            {{- with .Values.extraEnv }}
+              {{- toYaml . | nindent 12 }}
+            {{- end }}
+          envFrom:
+            {{- with .Values.extraEnvFrom }}
+              {{- toYaml . | nindent 12 }}
+            {{- end }}
+          volumeMounts:
+            - name: ollama-data
+              mountPath: {{ .Values.ollama.mountPath | default "/root/.ollama" }}
+              {{- if .Values.persistentVolume.subPath }}
+              subPath: {{ .Values.persistentVolume.subPath }}
+              {{- end }}
+          {{- range .Values.ollama.models.create }}
+            {{- if .configMapRef }}
+            - name: {{ .name }}-config-model-volume
+              mountPath: /models
+            {{- end }}
+          {{- end }}
+          {{- with .Values.volumeMounts }}
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          command:
+            - /bin/sh
+            - -c
+            - |
+                /bin/ollama serve >/tmp/ollama-init.log 2>&1 &
+                ollama_pid=$!
+                trap 'kill $ollama_pid' EXIT
+
+                while ! /bin/ollama ps > /dev/null 2>&1; do
+                  sleep 5
+                done
+                {{- if .Values.ollama.models.pull }}
+                {{- range .Values.ollama.models.pull }}
+                /bin/ollama pull {{ternary "--insecure" "" $.Values.ollama.insecure | toString }} {{ . }}
+                {{- end }}
+                {{- end }}
+
+                {{- if .Values.ollama.models.create }}
+                {{- range .Values.ollama.models.create }}
+                {{- if .template }}
+                cat <<EOF > {{ include "ollama.modelsMountPath" $ }}/{{ .name }}
+                {{- .template | nindent 16 }}
+                EOF
+                /bin/ollama create {{ .name }} -f {{ include "ollama.modelsMountPath" . }}/{{ .name }}
+                {{- end }}
+                {{- if .configMapRef }}
+                /bin/ollama create {{ .name }} -f /models/{{ .name }}
+                {{- end }}
+                {{- end }}
+                {{- end }}
+
+                {{- if .Values.ollama.models.run }}
+                {{- range .Values.ollama.models.run }}
+                /bin/ollama run {{ . }}
+                {{- end }}
+                {{- end }}
+        {{- end }}
       {{- end }}
       containers:
         - image: "{{ .Values.image.repository }}:{{ .Values.image.tag |  default (ternary (printf "%s-rocm" .Chart.AppVersion) (.Chart.AppVersion) (and (.Values.ollama.gpu.enabled) (eq .Values.ollama.gpu.type "amd"))) }}"
@@ -110,48 +182,6 @@ spec:
             timeoutSeconds: {{ .Values.readinessProbe.timeoutSeconds }}
             successThreshold: {{ .Values.readinessProbe.successThreshold }}
             failureThreshold: {{ .Values.readinessProbe.failureThreshold }}
-          {{- end }}
-          {{- with .Values.lifecycle}}
-          lifecycle:
-            {{- toYaml . | nindent 12 }}
-          {{- else }}
-          {{- if or .Values.ollama.models.pull .Values.ollama.models.run .Values.ollama.models.create }}
-          lifecycle:
-            postStart:
-              exec:
-                command:
-                  - /bin/sh
-                  - -c
-                  - |
-                    while ! /bin/ollama ps > /dev/null 2>&1; do
-                      sleep 5
-                    done
-                    {{- if .Values.ollama.models.pull }}
-                    {{- range .Values.ollama.models.pull }}
-                    /bin/ollama pull {{ternary "--insecure" "" $.Values.ollama.insecure | toString }} {{ . }}
-                    {{- end }}
-                    {{- end }}
-
-                    {{- if .Values.ollama.models.create }}
-                    {{- range .Values.ollama.models.create }}
-                    {{- if .template }}
-                    cat <<EOF > {{ include "ollama.modelsMountPath" $ }}/{{ .name }}
-                    {{- .template | nindent 20 }}
-                    EOF
-                    /bin/ollama create {{ .name }} -f {{ include "ollama.modelsMountPath" . }}/{{ .name }}
-                    {{- end }}
-                    {{- if .configMapRef }}
-                    /bin/ollama create {{ .name }} -f /models/{{ .name }}
-                    {{- end }}
-                    {{- end }}
-                    {{- end }}
-
-                    {{- if .Values.ollama.models.run }}
-                    {{- range .Values.ollama.models.run }}
-                    /bin/ollama run {{ . }}
-                    {{- end }}
-                    {{- end }}
-          {{- end }}
           {{- end }}
       volumes:
         - name: ollama-data
