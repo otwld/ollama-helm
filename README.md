@@ -155,7 +155,7 @@ ollama:
 When `knative.enabled=true` and model bootstrap is configured with `ollama.models.pull`, `ollama.models.run`, or `ollama.models.create`, the chart renders a separate bootstrap `Job`.
 
 - The Job is non-blocking: `helm install` and `helm upgrade` do not wait for model preload to finish.
-- The Job name includes a hash of the bootstrap-relevant inputs, so changing the model bootstrap configuration on upgrade creates a new Job and reruns bootstrap.
+- The Job name includes a hash of the Knative model bootstrap settings, so changing `ollama.models.pull`, `ollama.models.run`, `ollama.models.create`, or `ollama.models.clean` on upgrade creates a new Job and reruns bootstrap.
 - Completed bootstrap Jobs are cleaned up according to `knative.modelBootstrap.ttlSecondsAfterFinished`.
 
 ## Helm Values
