@@ -94,11 +94,43 @@ jobs:
         run: |
           set -euo pipefail
 
+          rendered_manifest="$(mktemp)"
+          prereq_manifest="$(mktemp)"
           warnings_file="$(mktemp)"
-          trap 'rm -f "$warnings_file"' EXIT
+          cleanup() {
+            kubectl delete -f "$prereq_manifest" --ignore-not-found=true >/dev/null 2>&1 || true
+            rm -f "$rendered_manifest" "$prereq_manifest" "$warnings_file"
+          }
+          trap cleanup EXIT
 
-          if ! helm template knative-ci . -f ci/test-knative-values.yaml \
-            | kubectl apply --dry-run=server -f - 2>"$warnings_file"; then
+          helm template knative-ci . -f ci/test-knative-values.yaml > "$rendered_manifest"
+
+          awk '
+            function flush() {
+              if (keep && buffer != "") {
+                printf "---\n%s", buffer
+              }
+              buffer = ""
+              keep = 0
+            }
+            /^---$/ {
+              flush()
+              next
+            }
+            {
+              buffer = buffer $0 ORS
+              if ($0 ~ /^kind: (ServiceAccount|PersistentVolumeClaim)$/) {
+                keep = 1
+              }
+            }
+            END {
+              flush()
+            }
+          ' "$rendered_manifest" > "$prereq_manifest"
+
+          kubectl apply -f "$prereq_manifest"
+
+          if ! kubectl apply --dry-run=server -f "$rendered_manifest" 2>"$warnings_file"; then
             cat "$warnings_file" >&2
             exit 1
           fi
