@@ -20,6 +20,3 @@ ollama:
       - moondream
     run:
       - moondream
-
-tests:
-  enabled: false
