@@ -42,3 +42,48 @@ jobs:
 
       - name: Run chart-testing
         run: ct lint-and-install --chart-dirs . --charts .
+
+  knative-check:
+    runs-on: ubuntu-latest
+    env:
+      KNATIVE_SERVING_VERSION: knative-v1.21.2
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Helm
+        uses: azure/setup-helm@v4
+        with:
+          version: v3.17.0
+
+      - name: Create kind cluster
+        uses: helm/kind-action@v1
+
+      - name: Install Knative Serving CRDs
+        run: kubectl apply -f https://github.com/knative/serving/releases/download/${KNATIVE_SERVING_VERSION}/serving-crds.yaml
+
+      - name: Install Knative Serving core
+        run: kubectl apply -f https://github.com/knative/serving/releases/download/${KNATIVE_SERVING_VERSION}/serving-core.yaml
+
+      - name: Wait for Knative admission components
+        run: |
+          kubectl wait --for=condition=Available --timeout=5m deployment --all -n knative-serving
+          kubectl wait --for=condition=Established --timeout=5m crd/services.serving.knative.dev
+
+      - name: Create validation namespace
+        run: kubectl create namespace knative-check
+
+      - name: Validate Helm render against Knative APIs
+        run: |
+          helm lint . --values ci/knative-values.yaml
+          helm template knative-check . \
+            --namespace knative-check \
+            --values ci/knative-values.yaml | \
+            kubectl apply --dry-run=server --validate=true -f -
+
+      - name: Dump Knative state on failure
+        if: failure()
+        run: |
+          kubectl get all -A
+          kubectl get crd | grep serving.knative.dev || true
+          kubectl get validatingwebhookconfigurations,mutatingwebhookconfigurations | grep knative || true
