@@ -19,7 +19,9 @@ spec:
   containers:
     - name: wget
       image: busybox
-      command: ['wget']
-      args: ['{{ include "ollama.fullname" . }}:{{ .Values.service.port }}']
+      command: ['sh', '-ec']
+      args:
+        - >
+          wget -qO- "{{- if .Values.knative.enabled -}}http://{{ include "ollama.fullname" . }}.{{ include "ollama.namespace" . }}.svc.cluster.local{{- else -}}http://{{ include "ollama.fullname" . }}:{{ .Values.service.port }}{{- end -}}" >/dev/null
   restartPolicy: Never
 {{ end }}

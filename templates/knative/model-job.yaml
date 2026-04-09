@@ -1,43 +1,55 @@
 ---
 {{- if .Values.knative.enabled }}
-apiVersion: serving.knative.dev/v1
-kind: Service
+{{- $hasModelBootstrap := or .Values.ollama.models.pull .Values.ollama.models.run .Values.ollama.models.create }}
+{{- if $hasModelBootstrap }}
+{{- if not .Values.persistentVolume.enabled }}
+{{- fail "Knative model bootstrap requires persistentVolume.enabled=true so the bootstrap Job and Knative Service can share model data." }}
+{{- end }}
+{{- $bootstrapConfig := dict
+  "modelClean" .Values.ollama.models.clean
+  "modelCreate" .Values.ollama.models.create
+  "modelPull" .Values.ollama.models.pull
+  "modelRun" .Values.ollama.models.run
+}}
+{{- $bootstrapHash := toJson $bootstrapConfig | sha256sum | trunc 8 }}
+{{- $bootstrapJobName := printf "%s-model-bootstrap-%s" ((include "ollama.fullname" .) | trunc 38 | trimSuffix "-") $bootstrapHash }}
+apiVersion: batch/v1
+kind: Job
 metadata:
-  name: {{ include "ollama.fullname" . }}
+  name: {{ $bootstrapJobName }}
   namespace: {{ include "ollama.namespace" . }}
   labels:
     {{- include "ollama.labels" . | nindent 4 }}
-  {{- with .Values.knative.annotations }}
-  annotations:
-    {{- toYaml . | nindent 4 }}
-  {{- end }}
 spec:
+  backoffLimit: 0
+  {{- if ne .Values.knative.modelBootstrap.ttlSecondsAfterFinished nil }}
+  ttlSecondsAfterFinished: {{ .Values.knative.modelBootstrap.ttlSecondsAfterFinished }}
+  {{- end }}
   template:
+    metadata:
+      labels:
+        {{- include "ollama.labels" . | nindent 8 }}
     spec:
-      containerConcurrency: {{ .Values.knative.containerConcurrency }}
-      timeoutSeconds: {{ .Values.knative.timeoutSeconds }}
-      responseStartTimeoutSeconds: {{ .Values.knative.responseStartTimeoutSeconds }}
-      idleTimeoutSeconds: {{ .Values.knative.idleTimeoutSeconds }}
+      restartPolicy: Never
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       serviceAccountName: {{ include "ollama.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
       {{- if .Values.runtimeClassName }}
       runtimeClassName: {{ .Values.runtimeClassName | quote }}
       {{- end }}
       containers:
-        - name: {{ .Chart.Name }}
+        - name: {{ .Chart.Name }}-model-bootstrap
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag |  default (ternary (printf "%s-rocm" .Chart.AppVersion) (.Chart.AppVersion) (and (.Values.ollama.gpu.enabled) (eq .Values.ollama.gpu.type "amd"))) }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
-          ports:
-            - name: http1
-              containerPort: {{ .Values.ollama.port }}
           env:
             - name: OLLAMA_HOST
-              value: "0.0.0.0:{{ .Values.ollama.port }}"
+              value: "127.0.0.1:{{ .Values.ollama.port }}"
             {{- if and .Values.ollama.gpu.enabled (or (eq .Values.ollama.gpu.type "nvidia") (not .Values.ollama.gpu.type))}}
             - name: PATH
               value: /usr/local/nvidia/bin:/usr/local/cuda/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
@@ -49,10 +61,6 @@ spec:
             {{- with .Values.extraEnvFrom }}
               {{- toYaml . | nindent 12 }}
             {{- end }}
-          args:
-          {{- with .Values.extraArgs }}
-             {{- toYaml . | nindent 12 }}
-          {{- end }}
           {{- if .Values.resources }}
           resources:
             {{- $limits := default dict .Values.resources.limits }}
@@ -84,36 +92,70 @@ spec:
           {{- with .Values.volumeMounts }}
             {{- toYaml . | nindent 12 }}
           {{- end }}
-          {{- if .Values.livenessProbe.enabled }}
-          livenessProbe:
-            httpGet:
-              path: {{ .Values.livenessProbe.path }}
-              port: http1
-            initialDelaySeconds: {{ .Values.livenessProbe.initialDelaySeconds }}
-            periodSeconds: {{ .Values.livenessProbe.periodSeconds }}
-            timeoutSeconds: {{ .Values.livenessProbe.timeoutSeconds }}
-            successThreshold: {{ .Values.livenessProbe.successThreshold }}
-            failureThreshold: {{ .Values.livenessProbe.failureThreshold }}
-          {{- end }}
-          {{- if .Values.readinessProbe.enabled }}
-          readinessProbe:
-            httpGet:
-              path: {{ .Values.readinessProbe.path }}
-              port: http1
-            initialDelaySeconds: {{ .Values.readinessProbe.initialDelaySeconds }}
-            periodSeconds: {{ .Values.readinessProbe.periodSeconds }}
-            timeoutSeconds: {{ .Values.readinessProbe.timeoutSeconds }}
-            successThreshold: {{ .Values.readinessProbe.successThreshold }}
-            failureThreshold: {{ .Values.readinessProbe.failureThreshold }}
-          {{- end }}
+          command:
+            - /bin/sh
+            - -c
+            - |
+                /bin/ollama serve >/tmp/ollama-bootstrap.log 2>&1 &
+                ollama_pid=$!
+                trap 'kill $ollama_pid' EXIT
+
+                while ! /bin/ollama ps > /dev/null 2>&1; do
+                  sleep 5
+                done
+
+                {{- $allModels := list -}}
+
+                {{- if .Values.ollama.models.pull }}
+                {{- range .Values.ollama.models.pull }}
+
+                {{- if contains ":" . }}
+                  {{- $allModels = append $allModels . }}
+                {{- else }}
+                  {{- $allModels = append $allModels (printf "%s:latest" .) }}
+                {{- end }}
+
+                /bin/ollama pull {{ternary "--insecure" "" $.Values.ollama.insecure | toString }} {{ . }}
+                {{- end }}
+                {{- end }}
+
+                {{- if .Values.ollama.models.create }}
+                {{- range .Values.ollama.models.create }}
+                {{- $allModels = append $allModels .name }}
+                {{- if .template }}
+                cat <<EOF > {{ include "ollama.modelsMountPath" $ }}/{{ .name }}
+                {{- .template | nindent 16 }}
+                EOF
+                /bin/ollama create {{ .name }} -f {{ include "ollama.modelsMountPath" $ }}/{{ .name }}
+                {{- end }}
+                {{- if .configMapRef }}
+                /bin/ollama create {{ .name }} -f /models/{{ .name }}
+                {{- end }}
+                {{- end }}
+                {{- end }}
+
+                {{- if .Values.ollama.models.run }}
+                {{- range .Values.ollama.models.run }}
+
+                {{- if contains ":" . }}
+                  {{- $allModels = append $allModels . }}
+                {{- else }}
+                  {{- $allModels = append $allModels (printf "%s:latest" .) }}
+                {{- end }}
+
+                /bin/ollama run {{ . }}
+                {{- end }}
+                {{- end }}
+
+                {{- if .Values.ollama.models.clean }}
+                /bin/ollama list | awk 'NR>1 {print $1}' | while read model; do
+                  echo "{{ $allModels | join " " }}" | tr ' ' '\n' | grep -Fqx "$model" || /bin/ollama rm "$model"
+                done
+                {{- end }}
       volumes:
         - name: ollama-data
-          {{- if .Values.persistentVolume.enabled }}
           persistentVolumeClaim:
-            claimName: {{ .Values.persistentVolume.existingClaim |  default (printf "%s" (include "ollama.fullname" .)) }}
-          {{- else }}
-          emptyDir: { }
-          {{- end }}
+            claimName: {{ .Values.persistentVolume.existingClaim | default (printf "%s" (include "ollama.fullname" .)) }}
         {{- range .Values.ollama.models.create }}
           {{- if .configMapRef }}
         - name: {{ .name }}-config-model-volume
@@ -150,4 +192,5 @@ spec:
           {{- toYaml . | nindent 8 }}
         {{- end }}
       {{- end }}
+{{- end }}
 {{- end }}

@@ -1,0 +1,22 @@
+knative:
+  enabled: true
+
+persistentVolume:
+  enabled: true
+  size: 10Gi
+
+securityContext:
+  allowPrivilegeEscalation: false
+  capabilities:
+    drop:
+      - ALL
+  runAsNonRoot: false
+  seccompProfile:
+    type: RuntimeDefault
+
+ollama:
+  models:
+    pull:
+      - moondream
+    run:
+      - moondream

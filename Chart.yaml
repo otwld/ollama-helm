@@ -4,7 +4,7 @@ description: Get up and running with large language models locally.
 
 type: application
 
-version: 1.54.0
+version: 1.54.1-beta.1
 
 appVersion: 0.19.0
 
@@ -12,10 +12,13 @@ annotations:
   artifacthub.io/category: ai-machine-learning
   artifacthub.io/changes: |
     - kind: changed
-      description: upgrade app version to v0.19.0
-      links:
-        - name: Ollama release v0.19.0
-          url: https://github.com/ollama/ollama/releases/tag/v0.19.0
+      description: add matrix CI coverage for standard Kubernetes and Knative installs
+    - kind: changed
+      description: make the chart compatible with Knative Serving and enable Helm tests in Knative mode
+    - kind: changed
+      description: move Knative model bootstrap to a non-blocking Job that reruns when Knative model settings change
+    - kind: changed
+      description: add configurable cleanup TTL for completed Knative bootstrap Jobs
 
 kubeVersion: "^1.16.0-0"
 home: https://ollama.ai/
