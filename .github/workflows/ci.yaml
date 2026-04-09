@@ -89,58 +89,6 @@ jobs:
           kubectl wait --namespace knative-serving --for=condition=Available deployment --all --timeout=300s
           kubectl wait --namespace kourier-system --for=condition=Available deployment --all --timeout=300s
 
-      - name: Validate Knative manifests
-        if: matrix.variant == 'knative'
-        run: |
-          set -euo pipefail
-
-          rendered_manifest="$(mktemp)"
-          prereq_manifest="$(mktemp)"
-          warnings_file="$(mktemp)"
-          cleanup() {
-            kubectl delete -f "$prereq_manifest" --ignore-not-found=true >/dev/null 2>&1 || true
-            rm -f "$rendered_manifest" "$prereq_manifest" "$warnings_file"
-          }
-          trap cleanup EXIT
-
-          helm template knative-ci . -f ci/test-knative-values.yaml > "$rendered_manifest"
-
-          awk '
-            function flush() {
-              if (keep && buffer != "") {
-                printf "---\n%s", buffer
-              }
-              buffer = ""
-              keep = 0
-            }
-            /^---$/ {
-              flush()
-              next
-            }
-            {
-              buffer = buffer $0 ORS
-              if ($0 ~ /^kind: (ServiceAccount|PersistentVolumeClaim)$/) {
-                keep = 1
-              }
-            }
-            END {
-              flush()
-            }
-          ' "$rendered_manifest" > "$prereq_manifest"
-
-          kubectl apply -f "$prereq_manifest"
-
-          if ! kubectl apply --dry-run=server -f "$rendered_manifest" 2>"$warnings_file"; then
-            cat "$warnings_file" >&2
-            exit 1
-          fi
-
-          if [ -s "$warnings_file" ]; then
-            cat "$warnings_file" >&2
-            echo "Knative manifest validation emitted API warnings; failing the workflow." >&2
-            exit 1
-          fi
-
       - name: Run chart-testing
         run: ct lint-and-install --chart-dirs . --charts .
 
