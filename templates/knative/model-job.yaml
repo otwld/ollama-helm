@@ -12,11 +12,9 @@ metadata:
   namespace: {{ include "ollama.namespace" . }}
   labels:
     {{- include "ollama.labels" . | nindent 4 }}
-  annotations:
-    "helm.sh/hook": post-install,post-upgrade
-    "helm.sh/hook-delete-policy": before-hook-creation,hook-succeeded
 spec:
   backoffLimit: 0
+  ttlSecondsAfterFinished: 300
   template:
     metadata:
       labels:
