@@ -26,9 +26,6 @@ spec:
       {{- if .Values.runtimeClassName }}
       runtimeClassName: {{ .Values.runtimeClassName | quote }}
       {{- end }}
-      {{- if .Values.terminationGracePeriodSeconds }}
-      terminationGracePeriodSeconds: {{ .Values.terminationGracePeriodSeconds }}
-      {{- end }}
       {{- with .Values.initContainers }}
       initContainers:
         {{- tpl (toYaml . ) $ | nindent 8 }}
@@ -39,7 +36,8 @@ spec:
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
           ports:
-            - containerPort: {{ .Values.ollama.port }}
+            - name: http
+              containerPort: {{ .Values.ollama.port }}
           env:
             - name: OLLAMA_HOST
               value: "0.0.0.0:{{ .Values.ollama.port }}"
@@ -50,13 +48,13 @@ spec:
             {{- with .Values.extraEnv }}
               {{- toYaml . | nindent 12 }}
             {{- end }}
+          {{- with .Values.extraEnvFrom }}
           envFrom:
-            {{- with .Values.extraEnvFrom }}
-              {{- toYaml . | nindent 12 }}
-            {{- end }}
-          args:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
           {{- with .Values.extraArgs }}
-             {{- toYaml . | nindent 12 }}
+          args:
+            {{- toYaml . | nindent 12 }}
           {{- end }}
           {{- if .Values.resources }}
           resources:
@@ -93,7 +91,7 @@ spec:
           livenessProbe:
             httpGet:
               path: {{ .Values.livenessProbe.path }}
-              port: http
+              port: {{ .Values.ollama.port }}
             initialDelaySeconds: {{ .Values.livenessProbe.initialDelaySeconds }}
             periodSeconds: {{ .Values.livenessProbe.periodSeconds }}
             timeoutSeconds: {{ .Values.livenessProbe.timeoutSeconds }}
@@ -104,7 +102,7 @@ spec:
           readinessProbe:
             httpGet:
               path: {{ .Values.readinessProbe.path }}
-              port: http
+              port: {{ .Values.ollama.port }}
             initialDelaySeconds: {{ .Values.readinessProbe.initialDelaySeconds }}
             periodSeconds: {{ .Values.readinessProbe.periodSeconds }}
             timeoutSeconds: {{ .Values.readinessProbe.timeoutSeconds }}
