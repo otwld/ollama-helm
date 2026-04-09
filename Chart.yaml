@@ -4,13 +4,15 @@ description: Get up and running with large language models locally.
 
 type: application
 
-version: 1.54.0
+version: 1.54.1
 
 appVersion: 0.19.0
 
 annotations:
   artifacthub.io/category: ai-machine-learning
   artifacthub.io/changes: |
+    - kind: fixed
+      description: align knative service template with serving API validation
     - kind: changed
       description: upgrade app version to v0.19.0
       links:
