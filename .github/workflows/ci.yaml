@@ -20,6 +20,9 @@ on:
 jobs:
   helm-lint:
     runs-on: ubuntu-latest
+    env:
+      KNATIVE_SERVING_VERSION: knative-v1.21.1
+      KNATIVE_KOURIER_VERSION: knative-v1.21.0
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -40,5 +43,38 @@ jobs:
       - name: Create kind cluster
         uses: helm/kind-action@v1
 
+      - name: Install Knative Serving
+        run: |
+          set -euxo pipefail
+
+          kubectl apply -f "https://github.com/knative/serving/releases/download/${KNATIVE_SERVING_VERSION}/serving-crds.yaml"
+          kubectl apply -f "https://github.com/knative/serving/releases/download/${KNATIVE_SERVING_VERSION}/serving-core.yaml"
+
+          kubectl wait --for=condition=Established --timeout=180s crd/services.serving.knative.dev
+          kubectl wait --for=condition=Established --timeout=180s crd/configurations.serving.knative.dev
+          kubectl wait --for=condition=Established --timeout=180s crd/revisions.serving.knative.dev
+          kubectl wait --for=condition=Established --timeout=180s crd/routes.serving.knative.dev
+
+          kubectl apply -f "https://github.com/knative-extensions/net-kourier/releases/download/${KNATIVE_KOURIER_VERSION}/kourier.yaml"
+          kubectl patch configmap/config-network \
+            --namespace knative-serving \
+            --type merge \
+            --patch '{"data":{"ingress-class":"kourier.ingress.networking.knative.dev"}}'
+
+          kubectl wait --namespace knative-serving --for=condition=Available deployment --all --timeout=300s
+          kubectl wait --namespace kourier-system --for=condition=Available deployment --all --timeout=300s
+
       - name: Run chart-testing
         run: ct lint-and-install --chart-dirs . --charts .
+
+      - name: Collect Knative diagnostics
+        if: failure()
+        run: |
+          set +e
+
+          kubectl get pods --all-namespaces
+          kubectl get ksvc,configuration,revision,route --all-namespaces
+          kubectl logs deployment/controller --namespace knative-serving
+          kubectl logs deployment/webhook --namespace knative-serving
+          kubectl logs deployment/net-kourier-controller --namespace knative-serving
+          kubectl logs deployment/3scale-kourier-gateway --namespace kourier-system

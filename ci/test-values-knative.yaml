@@ -1,0 +1,12 @@
+knative:
+  enabled: true
+
+ollama:
+  models:
+    pull:
+      - moondream
+    run:
+      - moondream
+
+tests:
+  enabled: false
