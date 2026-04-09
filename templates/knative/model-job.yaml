@@ -5,16 +5,51 @@
 {{- if not .Values.persistentVolume.enabled }}
 {{- fail "Knative model bootstrap requires persistentVolume.enabled=true so the bootstrap Job and Knative Service can share model data." }}
 {{- end }}
+{{- $bootstrapConfig := dict
+  "chartAppVersion" .Chart.AppVersion
+  "chartVersion" .Chart.Version
+  "extraEnv" .Values.extraEnv
+  "extraEnvFrom" .Values.extraEnvFrom
+  "imagePullPolicy" .Values.image.pullPolicy
+  "imagePullSecrets" .Values.imagePullSecrets
+  "imageRepository" .Values.image.repository
+  "imageTag" (.Values.image.tag | default (ternary (printf "%s-rocm" .Chart.AppVersion) .Chart.AppVersion (and .Values.ollama.gpu.enabled (eq .Values.ollama.gpu.type "amd"))))
+  "modelClean" .Values.ollama.models.clean
+  "modelCreate" .Values.ollama.models.create
+  "modelPull" .Values.ollama.models.pull
+  "modelRun" .Values.ollama.models.run
+  "nodeSelector" .Values.nodeSelector
+  "ollamaGpu" .Values.ollama.gpu
+  "ollamaInsecure" .Values.ollama.insecure
+  "ollamaMountPath" .Values.ollama.mountPath
+  "ollamaPort" .Values.ollama.port
+  "persistentVolumeExistingClaim" .Values.persistentVolume.existingClaim
+  "persistentVolumeSubPath" .Values.persistentVolume.subPath
+  "podSecurityContext" .Values.podSecurityContext
+  "resources" .Values.resources
+  "runtimeClassName" .Values.runtimeClassName
+  "securityContext" .Values.securityContext
+  "serviceAccountName" (include "ollama.serviceAccountName" .)
+  "tolerations" .Values.tolerations
+  "topologySpreadConstraints" .Values.topologySpreadConstraints
+  "volumeMounts" .Values.volumeMounts
+  "volumes" .Values.volumes
+  "affinity" .Values.affinity
+}}
+{{- $bootstrapHash := toJson $bootstrapConfig | sha256sum | trunc 8 }}
+{{- $bootstrapJobName := printf "%s-model-bootstrap-%s" ((include "ollama.fullname" .) | trunc 38 | trimSuffix "-") $bootstrapHash }}
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: {{ include "ollama.fullname" . }}-model-bootstrap
+  name: {{ $bootstrapJobName }}
   namespace: {{ include "ollama.namespace" . }}
   labels:
     {{- include "ollama.labels" . | nindent 4 }}
 spec:
   backoffLimit: 0
-  ttlSecondsAfterFinished: 300
+  {{- if ne .Values.knative.modelBootstrap.ttlSecondsAfterFinished nil }}
+  ttlSecondsAfterFinished: {{ .Values.knative.modelBootstrap.ttlSecondsAfterFinished }}
+  {{- end }}
   template:
     metadata:
       labels:

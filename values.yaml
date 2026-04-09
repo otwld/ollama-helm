@@ -19,6 +19,9 @@ knative:
   idleTimeoutSeconds: 300
   # -- Knative service annotations
   annotations: {}
+  modelBootstrap:
+    # -- Time to keep completed Knative model bootstrap Jobs before cleanup. Set to null to disable TTL-based cleanup.
+    ttlSecondsAfterFinished: 300
 
 # Docker image
 image:

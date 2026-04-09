@@ -150,6 +150,14 @@ ollama:
       - llama2
 ```
 
+## Knative bootstrap behavior
+
+When `knative.enabled=true` and model bootstrap is configured with `ollama.models.pull`, `ollama.models.run`, or `ollama.models.create`, the chart renders a separate bootstrap `Job`.
+
+- The Job is non-blocking: `helm install` and `helm upgrade` do not wait for model preload to finish.
+- The Job name includes a hash of the bootstrap-relevant inputs, so changing the model bootstrap configuration on upgrade creates a new Job and reruns bootstrap.
+- Completed bootstrap Jobs are cleaned up according to `knative.modelBootstrap.ttlSecondsAfterFinished`.
+
 ## Helm Values
 
 - See [values.yaml](values.yaml) to see the Chart's default values.
@@ -186,6 +194,7 @@ ollama:
 | knative.containerConcurrency               | int    | `0`                 | Knative service container concurrency                                                                                                                                                                                                                                                                                                                     |
 | knative.enabled                            | bool   | `false`             | Enable Knative integration                                                                                                                                                                                                                                                                                                                                |
 | knative.idleTimeoutSeconds                 | int    | `300`               | Knative service idle timeout seconds                                                                                                                                                                                                                                                                                                                      |
+| knative.modelBootstrap.ttlSecondsAfterFinished | int | `300`               | Time to keep completed Knative model bootstrap Jobs before cleanup. Set to `null` to disable TTL-based cleanup.                                                                                                                                                                                                                                         |
 | knative.responseStartTimeoutSeconds        | int    | `300`               | Knative service response start timeout seconds                                                                                                                                                                                                                                                                                                            |
 | knative.timeoutSeconds                     | int    | `300`               | Knative service timeout seconds                                                                                                                                                                                                                                                                                                                           |
 | lifecycle                                  | object | `{}`                | Lifecycle for pod assignment (override ollama.models startup pull/run)                                                                                                                                                                                                                                                                                    |
