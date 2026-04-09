@@ -81,6 +81,10 @@ jobs:
             --namespace knative-serving \
             --type merge \
             --patch '{"data":{"ingress-class":"kourier.ingress.networking.knative.dev"}}'
+          kubectl patch configmap/config-features \
+            --namespace knative-serving \
+            --type merge \
+            --patch '{"data":{"kubernetes.podspec-persistent-volume-claim":"enabled","kubernetes.podspec-persistent-volume-write":"enabled"}}'
 
           kubectl wait --namespace knative-serving --for=condition=Available deployment --all --timeout=300s
           kubectl wait --namespace kourier-system --for=condition=Available deployment --all --timeout=300s
