@@ -452,3 +452,5 @@ tests:
   labels: {}
   # -- Annotations to add to the tests
   annotations: {}
+
+podSchedulerName: ""
