@@ -60,10 +60,88 @@ spec:
       {{- if .Values.runtimeClassName }}
       runtimeClassName: {{ .Values.runtimeClassName | quote }}
       {{- end }}
-      {{- with .Values.initContainers }}
       initContainers:
+        {{- with .Values.initContainers }}
         {{- tpl (toYaml . ) $ | nindent 8 }}
-      {{- end }}
+        {{- end }}
+        {{- if or .Values.ollama.models.pull .Values.ollama.models.run .Values.ollama.models.create }}
+        - name: model-setup
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag |  default (ternary (printf "%s-rocm" .Chart.AppVersion) (.Chart.AppVersion) (and (.Values.ollama.gpu.enabled) (eq .Values.ollama.gpu.type "amd"))) }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          volumeMounts:
+            - name: ollama-data
+              mountPath: {{ .Values.ollama.mountPath | default "/root/.ollama" }}
+              {{- if .Values.persistentVolume.subPath }}
+              subPath: {{ .Values.persistentVolume.subPath }}
+              {{- end }}
+          command:
+            - /bin/sh
+            - -c
+            - |
+              trap "pkill ollama" EXIT
+
+              echo "Starting temporary Ollama server for model setup..."
+              ollama serve &
+
+              echo "Waiting for Ollama server to become responsive..."
+              while ! /bin/ollama ps > /dev/null 2>&1; do
+                sleep 5
+              done
+              echo "Ollama server is active."
+
+              {{- $allModels := list -}}
+
+              {{- if .Values.ollama.models.pull }}
+              {{- range .Values.ollama.models.pull }}
+              {{- if contains ":" . }}
+                {{- $allModels = append $allModels . }}
+              {{- else }}
+                {{- $allModels = append $allModels (printf "%s:latest" .) }}
+              {{- end }}
+              echo "Pulling model: {{ . }}"
+              /bin/ollama pull {{ternary "--insecure" "" $.Values.ollama.insecure | toString }} {{ . }}
+              {{- end }}
+              {{- end }}
+
+              {{- if .Values.ollama.models.create }}
+              {{- range .Values.ollama.models.create }}
+              {{- $allModels = append $allModels .name }}
+              {{- if .template }}
+              echo "Creating model from template: {{ .name }}"
+              cat <<EOF > {{ include "ollama.modelsMountPath" $ }}/{{ .name }}
+              {{- .template | nindent 14 }}
+              EOF
+              /bin/ollama create {{ .name }} -f {{ include "ollama.modelsMountPath" $ }}/{{ .name }}
+              {{- end }}
+              {{- if .configMapRef }}
+              echo "Creating model from ConfigMap reference: {{ .name }}"
+              /bin/ollama create {{ .name }} -f /models/{{ .name }}
+              {{- end }}
+              {{- end }}
+              {{- end }}
+
+              {{- if .Values.ollama.models.run }}
+              {{- range .Values.ollama.models.run }}
+              {{- if contains ":" . }}
+                {{- $allModels = append $allModels . }}
+              {{- else }}
+                {{- $allModels = append $allModels (printf "%s:latest" .) }}
+              {{- end }}
+              echo "Running model: {{ . }}"
+              /bin/ollama run {{ . }}
+              {{- end }}
+              {{- end }}
+
+              {{- if .Values.ollama.models.clean }}
+              echo "Cleaning up models not present in the configuration..."
+              /bin/ollama list | awk 'NR>1 {print $1}' | while read model; do
+                echo "Removing model: $model"
+                echo "{{ $allModels | join " " }}" | tr ' ' '\n' | grep -Fqx "$model" || /bin/ollama rm "$model"
+              done
+              {{- end }}
+        {{- end }}
       containers:
         - name: {{ .Chart.Name }}
           securityContext:
@@ -169,68 +247,6 @@ spec:
           {{- with .Values.lifecycle}}
           lifecycle:
             {{- toYaml . | nindent 12 }}
-          {{- else }}
-          {{- if or .Values.ollama.models.pull .Values.ollama.models.run .Values.ollama.models.create }}
-          lifecycle:
-            postStart:
-              exec:
-                command:
-                  - /bin/sh
-                  - -c
-                  - |
-                    while ! /bin/ollama ps > /dev/null 2>&1; do
-                      sleep 5
-                    done
-
-                    {{- $allModels := list -}}
-
-                    {{- if .Values.ollama.models.pull }}
-                    {{- range .Values.ollama.models.pull }}
-
-                    {{- if contains ":" . }}
-                      {{- $allModels = append $allModels . }}
-                    {{- else }}
-                      {{- $allModels = append $allModels (printf "%s:latest" .) }}
-                    {{- end }}
-
-                    /bin/ollama pull {{ternary "--insecure" "" $.Values.ollama.insecure | toString }} {{ . }}
-                    {{- end }}
-                    {{- end }}
-
-                    {{- if .Values.ollama.models.create }}
-                    {{- range .Values.ollama.models.create }}
-                    {{- $allModels = append $allModels .name }}
-                    {{- if .template }}
-                    cat <<EOF > {{ include "ollama.modelsMountPath" $ }}/{{ .name }}
-                    {{- .template | nindent 20 }}
-                    EOF
-                    /bin/ollama create {{ .name }} -f {{ include "ollama.modelsMountPath" $ }}/{{ .name }}
-                    {{- end }}
-                    {{- if .configMapRef }}
-                    /bin/ollama create {{ .name }} -f /models/{{ .name }}
-                    {{- end }}
-                    {{- end }}
-                    {{- end }}
-
-                    {{- if .Values.ollama.models.run }}
-                    {{- range .Values.ollama.models.run }}
-
-                    {{- if contains ":" . }}
-                      {{- $allModels = append $allModels . }}
-                    {{- else }}
-                      {{- $allModels = append $allModels (printf "%s:latest" .) }}
-                    {{- end }}
-
-                    /bin/ollama run {{ . }}
-                    {{- end }}
-                    {{- end }}
-
-                    {{- if .Values.ollama.models.clean }}
-                    /bin/ollama list | awk 'NR>1 {print $1}' | while read model; do
-                      echo "{{ $allModels | join " " }}" | tr ' ' '\n' | grep -Fqx "$model" || /bin/ollama rm "$model"
-                    done
-                    {{- end }}
-          {{- end }}
           {{- end }}
       {{- if and .Values.ollama.gpu.enabled .Values.ollama.gpu.draEnabled }}
       resourceClaims:
