@@ -100,9 +100,11 @@ spec:
                 ollama_pid=$!
                 trap 'kill $ollama_pid' EXIT
 
+                echo "Waiting for Ollama server to become responsive..."
                 while ! /bin/ollama ps > /dev/null 2>&1; do
                   sleep 5
                 done
+                echo "Ollama server is active."
 
                 {{- $allModels := list -}}
 
@@ -115,6 +117,7 @@ spec:
                   {{- $allModels = append $allModels (printf "%s:latest" .) }}
                 {{- end }}
 
+                echo "Pulling model: {{ . }}"
                 /bin/ollama pull {{ternary "--insecure" "" $.Values.ollama.insecure | toString }} {{ . }}
                 {{- end }}
                 {{- end }}
@@ -123,12 +126,14 @@ spec:
                 {{- range .Values.ollama.models.create }}
                 {{- $allModels = append $allModels .name }}
                 {{- if .template }}
+                echo "Creating model from template: {{ .name }}"
                 cat <<EOF > {{ include "ollama.modelsMountPath" $ }}/{{ .name }}
                 {{- .template | nindent 16 }}
                 EOF
                 /bin/ollama create {{ .name }} -f {{ include "ollama.modelsMountPath" $ }}/{{ .name }}
                 {{- end }}
                 {{- if .configMapRef }}
+                echo "Creating model from ConfigMap reference: {{ .name }}"
                 /bin/ollama create {{ .name }} -f /models/{{ .name }}
                 {{- end }}
                 {{- end }}
@@ -143,12 +148,15 @@ spec:
                   {{- $allModels = append $allModels (printf "%s:latest" .) }}
                 {{- end }}
 
+                echo "Running model: {{ . }}"
                 /bin/ollama run {{ . }}
                 {{- end }}
                 {{- end }}
 
                 {{- if .Values.ollama.models.clean }}
+                echo "Cleaning up models not present in the configuration..."
                 /bin/ollama list | awk 'NR>1 {print $1}' | while read model; do
+                  echo "Removing model: $model"
                   echo "{{ $allModels | join " " }}" | tr ' ' '\n' | grep -Fqx "$model" || /bin/ollama rm "$model"
                 done
                 {{- end }}
