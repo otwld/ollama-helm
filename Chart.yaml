@@ -12,6 +12,8 @@ annotations:
   artifacthub.io/category: ai-machine-learning
   artifacthub.io/changes: |
     - kind: changed
+      description: add schedulerName Support for Pods
+    - kind: changed
       description: add matrix CI coverage for standard Kubernetes and Knative installs
     - kind: changed
       description: make the chart compatible with Knative Serving and enable Helm tests in Knative mode

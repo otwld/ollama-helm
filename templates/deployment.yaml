@@ -32,6 +32,9 @@ spec:
         {{- toYaml . | nindent 8 }}
         {{- end }}
     spec:
+      {{- if .Values.podSchedulerName }}
+      schedulerName: {{ .Values.podSchedulerName }}
+      {{- end }}
       {{- if .Values.hostIPC }}
       hostIPC: {{ .Values.hostIPC }}
       {{- end }}
