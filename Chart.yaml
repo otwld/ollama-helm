@@ -21,6 +21,8 @@ annotations:
       description: move Knative model bootstrap to a non-blocking Job that reruns when Knative model settings change
     - kind: changed
       description: add configurable cleanup TTL for completed Knative bootstrap Jobs
+    - kind: change
+      description: fixed ResourceClaimTemplate for apiVersion resource.k8s.io/v1 which requires exactly in requests
 
 kubeVersion: "^1.16.0-0"
 home: https://ollama.ai/
