@@ -11,6 +11,8 @@ appVersion: 0.21.0
 annotations:
   artifacthub.io/category: ai-machine-learning
   artifacthub.io/changes: |
+    - kind: added
+      description: add support for Gateway API
     - kind: changed
       description: add schedulerName Support for Pods
     - kind: changed
