@@ -1,0 +1,29 @@
+{{- if .Values.gateway.enabled }}
+apiVersion: gateway.networking.k8s.io/v1
+kind: Gateway
+metadata:
+  name: {{ .Values.gateway.name | default (include "ollama.fullname" .) }}
+  namespace: {{ include "ollama.namespace" . }}
+  labels:
+    {{- include "ollama.labels" . | nindent 4 }}
+spec:
+  gatewayClassName: {{ required ".Values.gateway.className must not be empty" .Values.gateway.className }}
+  {{- with .Values.gateway.listener }}
+  listeners:
+    - name: {{ ternary "https" "http" .tls.enabled }}
+      port: {{ .port }}
+      protocol: {{ ternary "HTTPS" "HTTP" .tls.enabled }}
+      {{- with .allowedRoutes }}
+      allowedRoutes:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- if .tls.enabled }}
+      tls:
+        mode: Terminate
+        {{- with .tls.certificateRefs }}
+        certificateRefs:
+          {{- toYaml . | nindent 10 }}
+        {{- end }}
+      {{- end }}
+  {{- end }}
+{{- end }}

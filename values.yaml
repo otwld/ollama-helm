@@ -206,6 +206,67 @@ deployment:
   # -- Labels to add to the deployment
   labels: {}
 
+# Configure Gateway
+gateway:
+
+  # -- Create Gateway if gateway.enabled = true. Otherwise, httpRoute will need parentRefs to attach to an existing Gateway.
+  enabled: false
+
+  # -- Name of the Gateway. Defaults to the chart's full name if empty
+  name: ""
+
+  # -- Name of an existing Gateway Class. Mandatory non-empty field
+  className: ""
+
+  # -- Configure the listener
+  listener:
+
+    # -- Listener network port. May depend on implementation (eg. Traefik)
+    port: 80
+
+    # -- Define which Routes may be attached to this Listener
+    allowedRoutes: {}
+    #   namespaces:
+    #     from: Same
+
+    # -- TLS configuration
+    tls:
+
+      # -- Enable TLS
+      enabled: false
+
+      # -- Reference to existing certificates(s)
+      # -- See https://gateway-api.sigs.k8s.io/reference/spec/#secretobjectreference
+      certificateRefs: []
+        # - name: ollama-certificate
+        #   kind: Secret
+        #   group: ""
+
+# Configure HTTPRoute
+httpRoute:
+
+  # -- Enable HttpRoute
+  enabled: false
+
+  # -- Hostnames to match for this HTTPRoute
+  hostnames:
+    - ollama.local
+
+  # -- References to the existing Gateway(s) this route should attach to.
+  # -- Ignored if gateway.enabled is true. It will automatically attach to the created gateway.
+  # -- See https://gateway-api.sigs.k8s.io/reference/spec/#parentreference
+  parentRefs: []
+    # - name: ollama
+    #   namespace: default
+
+  # -- Routing rules. If empty, a default rule routing '/' to the Ollama service is created.
+  # -- See https://gateway-api.sigs.k8s.io/reference/spec/#httprouterule
+  rules: []
+    # - matches:
+    #   - path:
+    #       type: PathPrefix
+    #       value: /api
+
 # Configure the ingress resource that allows you to access the
 ingress:
   # -- Enable ingress controller resource
