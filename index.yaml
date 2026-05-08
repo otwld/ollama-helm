@@ -5,6 +5,42 @@ entries:
       artifacthub.io/category: ai-machine-learning
       artifacthub.io/changes: |
         - kind: changed
+          description: upgrade app version to v0.23.2
+          links:
+            - name: Ollama release v0.23.2
+              url: https://github.com/ollama/ollama/releases/tag/v0.23.2
+        - kind: added
+          description: add support for Gateway API
+        - kind: changed
+          description: add schedulerName Support for Pods
+    apiVersion: v2
+    appVersion: 0.23.2
+    created: "2026-05-08T08:13:52.631512115Z"
+    description: Get up and running with large language models locally.
+    digest: 0357f9da920ffa267d5909dda0c85e99970cefe1f390953b9a1b43d99998db7b
+    home: https://ollama.ai/
+    icon: https://ollama.ai/public/ollama.png
+    keywords:
+    - ai
+    - llm
+    - llama
+    - mistral
+    kubeVersion: ^1.16.0-0
+    maintainers:
+    - email: contact@otwld.com
+      name: OTWLD
+    name: ollama
+    sources:
+    - https://github.com/ollama/ollama
+    - https://github.com/otwld/ollama-helm
+    type: application
+    urls:
+    - https://github.com/otwld/ollama-helm/releases/download/ollama-1.56.0/ollama-1.56.0.tgz
+    version: 1.56.0
+  - annotations:
+      artifacthub.io/category: ai-machine-learning
+      artifacthub.io/changes: |
+        - kind: changed
           description: add schedulerName Support for Pods
         - kind: changed
           description: add matrix CI coverage for standard Kubernetes and Knative installs
@@ -4412,4 +4448,4 @@ entries:
     urls:
     - https://github.com/otwld/ollama-helm/releases/download/ollama-0.1.0/ollama-0.1.0.tgz
     version: 0.1.0
-generated: "2026-04-22T05:51:28.068808048Z"
+generated: "2026-05-08T08:13:52.631869752Z"
