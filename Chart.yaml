@@ -16,10 +16,6 @@ annotations:
       links:
         - name: Ollama release v0.24.0
           url: https://github.com/ollama/ollama/releases/tag/v0.24.0
-    - kind: added
-      description: add support for Gateway API
-    - kind: changed
-      description: add schedulerName Support for Pods
 
 kubeVersion: "^1.16.0-0"
 home: https://ollama.ai/
