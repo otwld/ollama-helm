@@ -4,22 +4,18 @@ description: Get up and running with large language models locally.
 
 type: application
 
-version: 1.56.0
+version: 1.57.0
 
-appVersion: 0.23.2
+appVersion: 0.24.0
 
 annotations:
   artifacthub.io/category: ai-machine-learning
   artifacthub.io/changes: |
     - kind: changed
-      description: upgrade app version to v0.23.2
+      description: upgrade app version to v0.24.0
       links:
-        - name: Ollama release v0.23.2
-          url: https://github.com/ollama/ollama/releases/tag/v0.23.2
-    - kind: added
-      description: add support for Gateway API
-    - kind: changed
-      description: add schedulerName Support for Pods
+        - name: Ollama release v0.24.0
+          url: https://github.com/ollama/ollama/releases/tag/v0.24.0
 
 kubeVersion: "^1.16.0-0"
 home: https://ollama.ai/
