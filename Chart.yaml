@@ -12,10 +12,10 @@ annotations:
   artifacthub.io/category: ai-machine-learning
   artifacthub.io/changes: |
     - kind: changed
-      description: upgrade app version to v0.30.0
+      description: upgrade app version to v0.30.2
       links:
-        - name: Ollama release v0.30.0
-          url: https://github.com/ollama/ollama/releases/tag/v0.30.0
+        - name: Ollama release v0.30.2
+          url: https://github.com/ollama/ollama/releases/tag/v0.30.2
 
 kubeVersion: "^1.16.0-0"
 home: https://ollama.ai/
