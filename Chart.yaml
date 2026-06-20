@@ -11,6 +11,8 @@ appVersion: 0.30.10
 annotations:
   artifacthub.io/category: ai-machine-learning
   artifacthub.io/changes: |
+    - kind: added
+      description: add missing fields to httproute to fix argo diff
     - kind: changed
       description: upgrade app version to v0.30.10
       links:
