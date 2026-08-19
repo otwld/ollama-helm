@@ -35,6 +35,9 @@ spec:
         {{- toYaml .backendRefs | nindent 8 }}
         {{- else }}
         - name: {{ include "ollama.fullname" $ }}
+          group: ""
+          kind: Service
+          weight: 1
           port: {{ $.Values.service.port }}
         {{- end }}
     {{- end }}
@@ -45,6 +48,9 @@ spec:
             value: /
       backendRefs:
         - name: {{ include "ollama.fullname" . }}
+          group: ""
+          kind: Service
+          weight: 1
           port: {{ .Values.service.port }}
     {{- end }}
 {{- end }}
