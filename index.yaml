@@ -5,6 +5,43 @@ entries:
       artifacthub.io/category: ai-machine-learning
       artifacthub.io/changes: |
         - kind: changed
+          description: upgrade app version to v0.33.0
+          links:
+            - name: Ollama release v0.33.0
+              url: https://github.com/ollama/ollama/releases/tag/v0.33.0
+        - kind: added
+          description: support for `revisionHistoryLimit` in Deployment via values
+          links:
+            - name: Kubernetes Deployment revisionHistoryLimit
+              url: https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#clean-up-policy
+    apiVersion: v2
+    appVersion: 0.33.0
+    created: "2026-08-27T05:48:27.313303886Z"
+    description: Get up and running with large language models locally.
+    digest: 142785a386b20da27f67a93edc1b8fc228a5bcc36f20823a13630750c819bfb3
+    home: https://ollama.ai/
+    icon: https://ollama.ai/public/ollama.png
+    keywords:
+    - ai
+    - llm
+    - llama
+    - mistral
+    kubeVersion: ^1.16.0-0
+    maintainers:
+    - email: contact@otwld.com
+      name: OTWLD
+    name: ollama
+    sources:
+    - https://github.com/ollama/ollama
+    - https://github.com/otwld/ollama-helm
+    type: application
+    urls:
+    - https://github.com/otwld/ollama-helm/releases/download/ollama-1.78.0/ollama-1.78.0.tgz
+    version: 1.78.0
+  - annotations:
+      artifacthub.io/category: ai-machine-learning
+      artifacthub.io/changes: |
+        - kind: changed
           description: upgrade app version to v0.32.15
           links:
             - name: Ollama release v0.32.15
@@ -5120,4 +5157,4 @@ entries:
     urls:
     - https://github.com/otwld/ollama-helm/releases/download/ollama-0.1.0/ollama-0.1.0.tgz
     version: 0.1.0
-generated: "2026-08-21T23:33:42.818881871Z"
+generated: "2026-08-27T05:48:27.313768091Z"
