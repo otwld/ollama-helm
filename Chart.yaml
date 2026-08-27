@@ -11,11 +11,11 @@ appVersion: 0.32.15
 annotations:
   artifacthub.io/category: ai-machine-learning
   artifacthub.io/changes: |
-    - kind: changed
-      description: upgrade app version to v0.32.15
+    - kind: added
+      description: support for `revisionHistoryLimit` in Deployment via values
       links:
-        - name: Ollama release v0.32.15
-          url: https://github.com/ollama/ollama/releases/tag/v0.32.15
+        - name: Kubernetes Deployment revisionHistoryLimit
+          url: https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#clean-up-policy
 
 kubeVersion: "^1.16.0-0"
 home: https://ollama.ai/
