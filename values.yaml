@@ -476,6 +476,9 @@ updateStrategy:
   # -- Deployment strategy can be "Recreate" or "RollingUpdate". Default is Recreate
   type: "Recreate"
 
+# -- Number of old ReplicaSets to retain for rollback. Default is 10.
+revisionHistoryLimit: 10
+
 # -- Topology Spread Constraints for pod assignment
 topologySpreadConstraints: {}
 
