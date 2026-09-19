@@ -1,0 +1,5 @@
+persistentVolume:
+  enabled: true
+  size: 50Gi
+  storageClass: aws-ebs-gp3
+  subPath: sub-directory/

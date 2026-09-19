@@ -1,0 +1,10 @@
+ingress:
+  enabled: true
+  className: alb
+  annotations:
+    alb.ingress.kubernetes.io/group.name: ollama
+  hosts:
+    - host: otwld.github.io
+      paths:
+        - path: /
+          pathType: Prefix
