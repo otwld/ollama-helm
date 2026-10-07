@@ -6,7 +6,7 @@ type: application
 
 version: 1.86.0
 
-appVersion: 0.35.1
+appVersion: 0.40.0
 
 annotations:
   artifacthub.io/category: ai-machine-learning
