@@ -1,0 +1,6 @@
+ollama:
+  models:
+    pull:
+      - moondream
+    run:
+      - moondream
