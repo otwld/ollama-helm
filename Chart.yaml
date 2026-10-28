@@ -4,18 +4,18 @@ description: Get up and running with large language models locally.
 
 type: application
 
-version: 1.92.0
+version: 1.93.0
 
-appVersion: 0.40.11
+appVersion: 0.40.12
 
 annotations:
   artifacthub.io/category: ai-machine-learning
   artifacthub.io/changes: |
     - kind: changed
-      description: upgrade app version to v0.40.11
+      description: upgrade app version to v0.40.12
       links:
-        - name: Ollama release v0.40.11
-          url: https://github.com/ollama/ollama/releases/tag/v0.40.11
+        - name: Ollama release v0.40.12
+          url: https://github.com/ollama/ollama/releases/tag/v0.40.12
 
 kubeVersion: "^1.16.0-0"
 home: https://ollama.ai/
