@@ -16,6 +16,8 @@ annotations:
       links:
         - name: Ollama release v0.40.14
           url: https://github.com/ollama/ollama/releases/tag/v0.40.14
+    - kind: fixed
+      description: fix models.clean removing untagged models from models.create
 
 kubeVersion: "^1.16.0-0"
 home: https://ollama.ai/
