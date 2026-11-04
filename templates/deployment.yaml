@@ -200,7 +200,11 @@ spec:
 
                     {{- if .Values.ollama.models.create }}
                     {{- range .Values.ollama.models.create }}
-                    {{- $allModels = append $allModels .name }}
+                    {{- if contains ":" .name }}
+                      {{- $allModels = append $allModels .name }}
+                    {{- else }}
+                      {{- $allModels = append $allModels (printf "%s:latest" .name) }}
+                    {{- end }}
                     {{- if .template }}
                     cat <<EOF > {{ include "ollama.modelsMountPath" $ }}/{{ .name }}
                     {{- .template | nindent 20 }}
@@ -228,7 +232,7 @@ spec:
 
                     {{- if .Values.ollama.models.clean }}
                     /bin/ollama list | awk 'NR>1 {print $1}' | while read model; do
-                      echo "{{ $allModels | join " " }}" | tr ' ' '\n' | grep -Fqx "$model" || /bin/ollama rm "$model"
+                      echo "{{ $allModels | join " " }}" | tr ' ' '\n' | grep -Fqxi "$model" || /bin/ollama rm "$model"
                     done
                     {{- end }}
           {{- end }}
