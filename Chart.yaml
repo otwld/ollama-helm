@@ -11,11 +11,8 @@ appVersion: 0.40.14
 annotations:
   artifacthub.io/category: ai-machine-learning
   artifacthub.io/changes: |
-    - kind: changed
-      description: upgrade app version to v0.40.14
-      links:
-        - name: Ollama release v0.40.14
-          url: https://github.com/ollama/ollama/releases/tag/v0.40.14
+    - kind: fixed
+      description: '`service.ipFamilies` and `service.ipFamilyPolicy` no longer break rendering when `knative.enabled` is true'
 
 kubeVersion: "^1.16.0-0"
 home: https://ollama.ai/
