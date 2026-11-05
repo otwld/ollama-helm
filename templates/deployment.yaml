@@ -17,7 +17,9 @@ spec:
   {{- if or .Values.updateStrategy.type .Values.updateStrategy.rollingUpdate }}
   strategy: {{ .Values.updateStrategy | toYaml | nindent 4 }}
   {{- end }}
-  revisionHistoryLimit: {{ .Values.revisionHistoryLimit | default 10 }}
+  {{- if not (kindIs "invalid" .Values.revisionHistoryLimit) }}
+  revisionHistoryLimit: {{ .Values.revisionHistoryLimit }}
+  {{- end }}
   selector:
     matchLabels:
       {{- include "ollama.selectorLabels" . | nindent 6 }}
