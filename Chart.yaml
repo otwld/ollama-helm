@@ -12,6 +12,8 @@ annotations:
   artifacthub.io/category: ai-machine-learning
   artifacthub.io/changes: |
     - kind: fixed
+      description: '`service.ipFamilies` and `service.ipFamilyPolicy` no longer break rendering when `knative.enabled` is true'
+    - kind: fixed
       description: '`revisionHistoryLimit: 0` is no longer replaced by 10 in the Deployment'
       links:
         - name: Kubernetes Deployment revisionHistoryLimit
