@@ -141,7 +141,8 @@ spec:
           {{- range .Values.ollama.models.create }}
             {{- if .configMapRef }}
             - name: {{ .name }}-config-model-volume
-              mountPath: /models
+              mountPath: /models/{{ .name }}
+              subPath: {{ .name }}
             {{- end }}
           {{- end }}
           {{- with .Values.volumeMounts }}
