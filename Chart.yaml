@@ -4,9 +4,9 @@ description: Get up and running with large language models locally.
 
 type: application
 
-version: 1.95.0
+version: 1.96.0
 
-appVersion: 0.40.14
+appVersion: 0.40.16
 
 annotations:
   artifacthub.io/category: ai-machine-learning
