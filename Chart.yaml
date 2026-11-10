@@ -11,11 +11,13 @@ appVersion: 0.40.14
 annotations:
   artifacthub.io/category: ai-machine-learning
   artifacthub.io/changes: |
-    - kind: changed
-      description: upgrade app version to v0.40.14
+    - kind: fixed
+      description: '`service.ipFamilies` and `service.ipFamilyPolicy` no longer break rendering when `knative.enabled` is true'
+    - kind: fixed
+      description: '`revisionHistoryLimit: 0` is no longer replaced by 10 in the Deployment'
       links:
-        - name: Ollama release v0.40.14
-          url: https://github.com/ollama/ollama/releases/tag/v0.40.14
+        - name: Kubernetes Deployment revisionHistoryLimit
+          url: https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#clean-up-policy
     - kind: fixed
       description: fix models.clean removing untagged models from models.create
 
