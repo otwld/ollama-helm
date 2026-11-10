@@ -123,7 +123,7 @@ spec:
                 {{- range .Values.ollama.models.create }}
                 {{- $allModels = append $allModels .name }}
                 {{- if .template }}
-                cat <<EOF > {{ include "ollama.modelsMountPath" $ }}/{{ .name }}
+                cat <<'EOF' > {{ include "ollama.modelsMountPath" $ }}/{{ .name }}
                 {{- .template | nindent 16 }}
                 EOF
                 /bin/ollama create {{ .name }} -f {{ include "ollama.modelsMountPath" $ }}/{{ .name }}

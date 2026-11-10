@@ -12,12 +12,7 @@ annotations:
   artifacthub.io/category: ai-machine-learning
   artifacthub.io/changes: |
     - kind: fixed
-      description: '`service.ipFamilies` and `service.ipFamilyPolicy` no longer break rendering when `knative.enabled` is true'
-    - kind: fixed
-      description: '`revisionHistoryLimit: 0` is no longer replaced by 10 in the Deployment'
-      links:
-        - name: Kubernetes Deployment revisionHistoryLimit
-          url: https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#clean-up-policy
+      description: 'An `ollama.models.create` template is written to the Modelfile as is: `$` and backticks are no longer expanded by the shell'
 
 kubeVersion: "^1.16.0-0"
 home: https://ollama.ai/
