@@ -18,6 +18,8 @@ annotations:
       links:
         - name: Kubernetes Deployment revisionHistoryLimit
           url: https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#clean-up-policy
+    - kind: fixed
+      description: fix models.clean removing untagged models from models.create
 
 kubeVersion: "^1.16.0-0"
 home: https://ollama.ai/
