@@ -1,0 +1,159 @@
+# chartsnap: snapshot_version=v3
+---
+# Source: ollama/templates/serviceaccount.yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: chartsnap-ollama
+  namespace: default
+  labels:
+    helm.sh/chart: ollama-1.4.1
+    app.kubernetes.io/name: ollama
+    app.kubernetes.io/instance: chartsnap
+    app.kubernetes.io/version: "0.5.7"
+    app.kubernetes.io/managed-by: Helm
+automountServiceAccountToken: true
+---
+# Source: ollama/templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: chartsnap-ollama
+  namespace: default
+  labels:
+    helm.sh/chart: ollama-1.4.1
+    app.kubernetes.io/name: ollama
+    app.kubernetes.io/instance: chartsnap
+    app.kubernetes.io/version: "0.5.7"
+    app.kubernetes.io/managed-by: Helm
+spec:
+  type: ClusterIP
+  ports:
+  - port: 11434
+    targetPort: http
+    protocol: TCP
+    name: http
+  selector:
+    app.kubernetes.io/name: ollama
+    app.kubernetes.io/instance: chartsnap
+---
+# Source: ollama/templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: chartsnap-ollama
+  namespace: default
+  labels:
+    helm.sh/chart: ollama-1.4.1
+    app.kubernetes.io/name: ollama
+    app.kubernetes.io/instance: chartsnap
+    app.kubernetes.io/version: "0.5.7"
+    app.kubernetes.io/managed-by: Helm
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: ollama
+      app.kubernetes.io/instance: chartsnap
+  template:
+    metadata:
+      labels:
+        helm.sh/chart: ollama-1.4.1
+        app.kubernetes.io/name: ollama
+        app.kubernetes.io/instance: chartsnap
+        app.kubernetes.io/version: "0.5.7"
+        app.kubernetes.io/managed-by: Helm
+    spec:
+      serviceAccountName: chartsnap-ollama
+      securityContext: {}
+      containers:
+      - name: ollama
+        securityContext: {}
+        image: "ollama/ollama:0.5.7"
+        imagePullPolicy: IfNotPresent
+        ports:
+        - name: http
+          containerPort: 11434
+          protocol: TCP
+        env:
+        envFrom:
+        args:
+        resources:
+          limits: {}
+          requests: {}
+        volumeMounts:
+        - name: ollama-data
+          mountPath: /root/.ollama
+        livenessProbe:
+          httpGet:
+            path: /
+            port: http
+          initialDelaySeconds: 60
+          periodSeconds: 10
+          timeoutSeconds: 5
+          successThreshold: 1
+          failureThreshold: 6
+        readinessProbe:
+          httpGet:
+            path: /
+            port: http
+          initialDelaySeconds: 30
+          periodSeconds: 5
+          timeoutSeconds: 3
+          successThreshold: 1
+          failureThreshold: 6
+      volumes:
+      - name: ollama-data
+        emptyDir: {}
+---
+# Source: ollama/templates/ingress.yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: chartsnap-ollama
+  namespace: default
+  labels:
+    helm.sh/chart: ollama-1.4.1
+    app.kubernetes.io/name: ollama
+    app.kubernetes.io/instance: chartsnap
+    app.kubernetes.io/version: "0.5.7"
+    app.kubernetes.io/managed-by: Helm
+  annotations:
+    alb.ingress.kubernetes.io/group.name: ollama
+spec:
+  ingressClassName: alb
+  rules:
+  - host: "otwld.github.io"
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: chartsnap-ollama
+            port:
+              number: 11434
+---
+# Source: ollama/templates/tests/test-connection.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "chartsnap-ollama-test-connection"
+  namespace: default
+  labels:
+    helm.sh/chart: ollama-1.4.1
+    app.kubernetes.io/name: ollama
+    app.kubernetes.io/instance: chartsnap
+    app.kubernetes.io/version: "0.5.7"
+    app.kubernetes.io/managed-by: Helm
+  annotations:
+    "helm.sh/hook": test
+spec:
+  containers:
+  - name: wget
+    image: busybox
+    command: ['wget']
+    args: ['chartsnap-ollama:11434']
+  restartPolicy: Never
